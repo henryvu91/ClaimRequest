@@ -1,16 +1,15 @@
 package com.vn.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Project {
@@ -28,7 +27,9 @@ public class Project {
     @Column(name = "end_date")
     private LocalDate endDate;
     @OneToMany(mappedBy = "projectByProjectId")
+    @ToString.Exclude
     private List<Working> workingsById = new ArrayList<>();
+
 
     @Override
     public boolean equals(Object o) {
@@ -53,5 +54,4 @@ public class Project {
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
         return result;
     }
-
 }

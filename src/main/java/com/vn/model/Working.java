@@ -1,16 +1,15 @@
 package com.vn.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Working {
@@ -34,16 +33,18 @@ public class Working {
     @Column(name = "end_date")
     private LocalDate endDate;
     @OneToMany(mappedBy = "workingByWorkingId")
+    @ToString.Exclude
     private List<Claim> claimsById = new ArrayList<>();
     @ManyToOne
-    @JoinColumn(name = "staft_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "staft_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Staff staffByStaffId;
     @ManyToOne
-    @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Project projectByProjectId;
     @ManyToOne
-    @JoinColumn(name = "role_in_project_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "role_in_project_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private RoleInProject roleInProjectByRoleInProjectId;
+
 
     @Override
     public boolean equals(Object o) {
@@ -72,5 +73,4 @@ public class Working {
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
         return result;
     }
-
 }
