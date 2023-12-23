@@ -1,59 +1,34 @@
 package com.vn.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.sql.Date;
-import java.util.Collection;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private int id;
+    private Integer id;
     @Basic
     @Column(name = "name")
     private String name;
     @Basic
     @Column(name = "start_date")
-    private Date startDate;
+    private LocalDate startDate;
     @Basic
     @Column(name = "end_date")
-    private Date endDate;
+    private LocalDate endDate;
     @OneToMany(mappedBy = "projectByProjectId")
-    private Collection<Working> workingsById;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
+    private List<Working> workingsById = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
@@ -79,11 +54,4 @@ public class Project {
         return result;
     }
 
-    public Collection<Working> getWorkingsById() {
-        return workingsById;
-    }
-
-    public void setWorkingsById(Collection<Working> workingsById) {
-        this.workingsById = workingsById;
-    }
 }
