@@ -1,0 +1,122 @@
+<!--
+  Created by IHau - IntelliJ IDEA.
+  User: Wkog
+  Date: 23/12/2023
+  Time: 7:56 PM
+  To change this template use File | Settings | File Templates.
+-->
+<div class="content-menu bg-body-secondary border-start border-end border-1 d-flex justify-content-start flex-column left-bar"
+     th:fragment="leftBarFragment">
+    <div aria-label="Menu" class="btn-group-vertical" role="group">
+        <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
+                id="btn-createClaim"
+                type="button">
+            <i class="bi bi-table"></i>
+            <span>Create Claim</span>
+        </button>
+        <div class="w-100">
+            <button aria-expanded="false"
+                    class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start dropdown-toggle"
+                    data-bs-target="#myClaims"
+                    data-bs-toggle="collapse"
+                    type="button">
+                My Claims
+            </button>
+            <div class="collapse" id="myClaims">
+                <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
+                        id="btn-draft"
+                        type="button">
+                    <i class="bi bi-table"></i>
+                    <span>Draft</span>
+                </button>
+                <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
+                        id="btn-pendingApproval "
+                        type="button">
+                    <i class="bi bi-table"></i>
+                    <span>Pending Approval </span>
+                </button>
+                <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
+                        id="btn-paid "
+                        type="button">
+                    <i class="bi bi-table"></i>
+                    <span>Paid</span>
+                </button>
+                <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
+                        id="btn-rejectedOrCancelled"
+                        type="button">
+                    <i class="bi bi-table"></i>
+                    <span>Rejected or Cancelled</span>
+                </button>
+            </div>
+        </div>
+        <div class="w-100">
+            <button aria-expanded="false"
+                    class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start dropdown-toggle"
+                    data-bs-target="#claimsForApproval"
+                    data-bs-toggle="collapse"
+                    type="button">
+                Claims for Approval
+            </button>
+            <div class="collapse" id="claimsForApproval">
+                <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
+                        id="btn-forMyVetting"
+                        type="button">
+                    <i class="bi bi-table"></i>
+                    <span>For My Vetting</span>
+                </button>
+                <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
+                        id="btn-approvedOrPaid"
+                        type="button">
+                    <i class="bi bi-table"></i>
+                    <span>Approved or Paid</span>
+                </button>
+            </div>
+        </div>
+        <div class="w-100">
+            <button aria-expanded="false"
+                    class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start dropdown-toggle"
+                    data-bs-target="#claimsForFinance"
+                    data-bs-toggle="collapse"
+                    type="button">
+                Claims for Finance
+            </button>
+            <div class="collapse" id="claimsForFinance">
+                <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
+                        id="btn-approved"
+                        type="button">
+                    <i class="bi bi-table"></i>
+                    <span>Approved</span>
+                </button>
+                <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
+                        id="btn-paid"
+                        type="button">
+                    <i class="bi bi-table"></i>
+                    <span>Paid</span>
+                </button>
+            </div>
+        </div>
+        <div class="w-100">
+            <button aria-expanded="false"
+                    class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start dropdown-toggle"
+                    data-bs-target="#configuration"
+                    data-bs-toggle="collapse"
+                    type="button">
+                Configuration
+            </button>
+            <div class="collapse" id="configuration">
+                <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
+                        id="btn-staffInformation"
+                        type="button">
+                    <i class="bi bi-table"></i>
+                    <span>Staff Information</span>
+                </button>
+                <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
+                        id="btn-projectInformation "
+                        type="button">
+                    <i class="bi bi-table"></i>
+                    <span>Project Information</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
