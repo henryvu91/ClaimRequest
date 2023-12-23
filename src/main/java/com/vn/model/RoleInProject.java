@@ -1,13 +1,12 @@
 package com.vn.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "role_in_project", schema = "dbo", catalog = "claim_request")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class RoleInProject {
@@ -18,7 +17,6 @@ public class RoleInProject {
     @Basic
     @Column(name = "name")
     private String name;
-
 
     @Override
     public boolean equals(Object o) {

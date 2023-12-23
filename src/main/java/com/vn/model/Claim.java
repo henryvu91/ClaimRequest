@@ -1,15 +1,15 @@
 package com.vn.model;
 
+import com.vn.utils.Status;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Claim {
@@ -43,9 +43,8 @@ public class Claim {
     @Column(name = "audit_trail")
     private String auditTrail;
     @ManyToOne
-    @JoinColumn(name = "working_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "working_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Working workingByWorkingId;
-
 
 
 
@@ -82,5 +81,4 @@ public class Claim {
         result = 31 * result + (auditTrail != null ? auditTrail.hashCode() : 0);
         return result;
     }
-
 }

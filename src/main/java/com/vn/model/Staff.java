@@ -1,16 +1,15 @@
 package com.vn.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Staff {
@@ -37,15 +36,16 @@ public class Staff {
     @Column(name = "salary")
     private BigDecimal salary;
     @ManyToOne
-    @JoinColumn(name = "department_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "department_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Department departmentByDepartmentId;
     @ManyToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Role roleByRoleId;
     @OneToMany(mappedBy = "staffByStaffId")
+    @ToString.Exclude
     private List<Working> workingsById = new ArrayList<>();
 
-   
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -75,5 +75,4 @@ public class Staff {
         result = 31 * result + (salary != null ? salary.hashCode() : 0);
         return result;
     }
-
 }
