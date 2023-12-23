@@ -1,33 +1,41 @@
 package com.vn.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Claim {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private int id;
+    private Integer id;
     @Basic
     @Column(name = "working_id")
-    private int workingId;
+    private Integer workingId;
     @Basic
     @Column(name = "date")
-    private Date date;
+    private LocalDate date;
     @Basic
     @Column(name = "from_time")
-    private Object fromTime;
+    private LocalTime fromTime;
     @Basic
     @Column(name = "to_time")
-    private Object toTime;
+    private LocalTime toTime;
     @Basic
     @Column(name = "total_hours")
     private Integer totalHours;
     @Basic
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private Status status;
     @Basic
     @Column(name = "remarks")
     private String remarks;
@@ -38,77 +46,8 @@ public class Claim {
     @JoinColumn(name = "working_id", referencedColumnName = "id", nullable = false)
     private Working workingByWorkingId;
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
-    public int getWorkingId() {
-        return workingId;
-    }
-
-    public void setWorkingId(int workingId) {
-        this.workingId = workingId;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Object getFromTime() {
-        return fromTime;
-    }
-
-    public void setFromTime(Object fromTime) {
-        this.fromTime = fromTime;
-    }
-
-    public Object getToTime() {
-        return toTime;
-    }
-
-    public void setToTime(Object toTime) {
-        this.toTime = toTime;
-    }
-
-    public Integer getTotalHours() {
-        return totalHours;
-    }
-
-    public void setTotalHours(Integer totalHours) {
-        this.totalHours = totalHours;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getRemarks() {
-        return remarks;
-    }
-
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
-    }
-
-    public String getAuditTrail() {
-        return auditTrail;
-    }
-
-    public void setAuditTrail(String auditTrail) {
-        this.auditTrail = auditTrail;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -144,11 +83,4 @@ public class Claim {
         return result;
     }
 
-    public Working getWorkingByWorkingId() {
-        return workingByWorkingId;
-    }
-
-    public void setWorkingByWorkingId(Working workingByWorkingId) {
-        this.workingByWorkingId = workingByWorkingId;
-    }
 }

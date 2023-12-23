@@ -1,90 +1,49 @@
 package com.vn.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.sql.Date;
-import java.util.Collection;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Working {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private int id;
+    private Integer id;
     @Basic
     @Column(name = "staft_id")
-    private int staftId;
+    private Integer staftId;
     @Basic
     @Column(name = "project_id")
-    private int projectId;
+    private Integer projectId;
     @Basic
     @Column(name = "role_in_project_id")
-    private int roleInProjectId;
+    private Integer roleInProjectId;
     @Basic
     @Column(name = "start_date")
-    private Date startDate;
+    private LocalDate startDate;
     @Basic
     @Column(name = "end_date")
-    private Date endDate;
+    private LocalDate endDate;
     @OneToMany(mappedBy = "workingByWorkingId")
-    private Collection<Claim> claimsById;
+    private List<Claim> claimsById = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "staft_id", referencedColumnName = "id", nullable = false)
-    private Staft staftByStaftId;
+    private Staff staffByStaffId;
     @ManyToOne
     @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false)
     private Project projectByProjectId;
     @ManyToOne
     @JoinColumn(name = "role_in_project_id", referencedColumnName = "id", nullable = false)
     private RoleInProject roleInProjectByRoleInProjectId;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getStaftId() {
-        return staftId;
-    }
-
-    public void setStaftId(int staftId) {
-        this.staftId = staftId;
-    }
-
-    public int getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
-    }
-
-    public int getRoleInProjectId() {
-        return roleInProjectId;
-    }
-
-    public void setRoleInProjectId(int roleInProjectId) {
-        this.roleInProjectId = roleInProjectId;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -114,35 +73,4 @@ public class Working {
         return result;
     }
 
-    public Collection<Claim> getClaimsById() {
-        return claimsById;
-    }
-
-    public void setClaimsById(Collection<Claim> claimsById) {
-        this.claimsById = claimsById;
-    }
-
-    public Staft getStaftByStaftId() {
-        return staftByStaftId;
-    }
-
-    public void setStaftByStaftId(Staft staftByStaftId) {
-        this.staftByStaftId = staftByStaftId;
-    }
-
-    public Project getProjectByProjectId() {
-        return projectByProjectId;
-    }
-
-    public void setProjectByProjectId(Project projectByProjectId) {
-        this.projectByProjectId = projectByProjectId;
-    }
-
-    public RoleInProject getRoleInProjectByRoleInProjectId() {
-        return roleInProjectByRoleInProjectId;
-    }
-
-    public void setRoleInProjectByRoleInProjectId(RoleInProject roleInProjectByRoleInProjectId) {
-        this.roleInProjectByRoleInProjectId = roleInProjectByRoleInProjectId;
-    }
 }
