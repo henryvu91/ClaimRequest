@@ -6,28 +6,27 @@
   To change this template use File | Settings | File Templates.
 -->
 <div th:fragment="headerFragment">
-<div>
-    <nav class="navbar navbar-expand-lg bg-body-secondary border-bottom border-1">
-        <div class="container-fluid d-flex justify-content-between align-items-center">
-            <a class="navbar-brand fw-bold" href="/">Claim Request</a>
-            <div class="btn-group">
-                <button aria-expanded="false" class="btn btn-light dropdown-toggle text-primary"
-                        data-bs-toggle="dropdown"
-                        type="button">
-                    <i class="bi bi-person-fill"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#" id="btn-userProfile">User Profile</a></li>
-                    <li>
-                        <form class="dropdown-item p-0" id="form-logout" th:action="@{/logout}" th:method="post">
-                            <button class="border border-0 bg-transparent px-3 py-1 w-100 text-start" type="submit">
-                                Logout
-                            </button>
-                        </form>
-                    </li>
-                </ul>
+    <div>
+        <nav class="navbar navbar-expand-lg bg-body-secondary border-bottom border-1">
+            <div class="container-fluid d-flex justify-content-between align-items-center">
+                <a class="navbar-brand fw-bold" href="/">Claim Request</a>
+                <div class="btn-group">
+                    <button aria-expanded="false" class="btn btn-light dropdown-toggle text-primary"
+                            data-bs-toggle="dropdown"
+                            type="button">
+                        <i class="bi bi-person-fill"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <form class="dropdown-item p-0" id="form-logout" th:action="@{/logout}" th:method="post">
+                                <button class="border border-0 bg-transparent px-3 py-1 w-100 text-start" type="submit">
+                                    Logout
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-</div>
+        </nav>
+    </div>
 </div>
