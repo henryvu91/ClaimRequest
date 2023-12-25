@@ -1,15 +1,21 @@
 package com.vn.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Table(name = "role_in_project", schema = "dbo", catalog = "claim_request")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoleInProject {
+public class Rank {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
@@ -17,18 +23,18 @@ public class RoleInProject {
     @Basic
     @Column(name = "name")
     private String name;
+    @OneToMany(mappedBy = "rankByRankId", fetch = FetchType.LAZY)
+    private List<Staff> staffById = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        RoleInProject that = (RoleInProject) o;
+        Rank rank = (Rank) o;
 
-        if (id != that.id) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-
-        return true;
+        if (id != rank.id) return false;
+        return Objects.equals(name, rank.name);
     }
 
     @Override
@@ -37,4 +43,5 @@ public class RoleInProject {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
+
 }

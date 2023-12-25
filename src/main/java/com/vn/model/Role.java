@@ -1,9 +1,13 @@
 package com.vn.model;
 
 import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.proxy.HibernateProxy;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -19,6 +23,9 @@ public class Role {
     @Basic
     @Column(name = "name")
     private String name;
+    @OneToMany(mappedBy = "roleByRoleId", fetch = FetchType.LAZY)
+    private List<Staff> staffById = new ArrayList<>();
+
 
     @Override
     public boolean equals(Object o) {
@@ -28,9 +35,7 @@ public class Role {
         Role role = (Role) o;
 
         if (id != role.id) return false;
-        if (name != null ? !name.equals(role.name) : role.name != null) return false;
-
-        return true;
+        return Objects.equals(name, role.name);
     }
 
     @Override
