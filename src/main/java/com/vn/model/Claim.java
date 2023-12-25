@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Objects;
 
 @Entity
@@ -28,10 +28,10 @@ public class Claim {
     private LocalDate date;
     @Basic
     @Column(name = "from_time")
-    private LocalDateTime fromTime;
+    private LocalTime fromTime;
     @Basic
     @Column(name = "to_time")
-    private LocalDateTime toTime;
+    private LocalTime toTime;
     @Basic
     @Column(name = "total_hours")
     private Integer totalHours;
