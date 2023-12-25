@@ -1,11 +1,14 @@
 package com.vn.model;
 
-import com.vn.utils.Status;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -25,17 +28,16 @@ public class Claim {
     private LocalDate date;
     @Basic
     @Column(name = "from_time")
-    private LocalTime fromTime;
+    private LocalDateTime fromTime;
     @Basic
     @Column(name = "to_time")
-    private LocalTime toTime;
+    private LocalDateTime toTime;
     @Basic
     @Column(name = "total_hours")
     private Integer totalHours;
     @Basic
     @Column(name = "status")
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    private String status;
     @Basic
     @Column(name = "remarks")
     private String remarks;
@@ -47,7 +49,6 @@ public class Claim {
     private Working workingByWorkingId;
 
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,15 +58,13 @@ public class Claim {
 
         if (id != claim.id) return false;
         if (workingId != claim.workingId) return false;
-        if (date != null ? !date.equals(claim.date) : claim.date != null) return false;
-        if (fromTime != null ? !fromTime.equals(claim.fromTime) : claim.fromTime != null) return false;
-        if (toTime != null ? !toTime.equals(claim.toTime) : claim.toTime != null) return false;
-        if (totalHours != null ? !totalHours.equals(claim.totalHours) : claim.totalHours != null) return false;
-        if (status != null ? !status.equals(claim.status) : claim.status != null) return false;
-        if (remarks != null ? !remarks.equals(claim.remarks) : claim.remarks != null) return false;
-        if (auditTrail != null ? !auditTrail.equals(claim.auditTrail) : claim.auditTrail != null) return false;
-
-        return true;
+        if (!Objects.equals(date, claim.date)) return false;
+        if (!Objects.equals(fromTime, claim.fromTime)) return false;
+        if (!Objects.equals(toTime, claim.toTime)) return false;
+        if (!Objects.equals(totalHours, claim.totalHours)) return false;
+        if (!Objects.equals(status, claim.status)) return false;
+        if (!Objects.equals(remarks, claim.remarks)) return false;
+        return Objects.equals(auditTrail, claim.auditTrail);
     }
 
     @Override

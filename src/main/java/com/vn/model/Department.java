@@ -1,16 +1,19 @@
 package com.vn.model;
 
 import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.proxy.HibernateProxy;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Department {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -19,6 +22,9 @@ public class Department {
     @Basic
     @Column(name = "name")
     private String name;
+    @OneToMany(mappedBy = "departmentByDepartmentId", fetch = FetchType.LAZY)
+    private List<Staff> staffById;
+
 
     @Override
     public boolean equals(Object o) {
@@ -28,9 +34,7 @@ public class Department {
         Department that = (Department) o;
 
         if (id != that.id) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-
-        return true;
+        return Objects.equals(name, that.name);
     }
 
     @Override

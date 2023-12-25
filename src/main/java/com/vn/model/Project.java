@@ -1,11 +1,14 @@
 package com.vn.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -26,10 +29,8 @@ public class Project {
     @Basic
     @Column(name = "end_date")
     private LocalDate endDate;
-    @OneToMany(mappedBy = "projectByProjectId")
-    @ToString.Exclude
-    private List<Working> workingsById = new ArrayList<>();
-
+    @OneToMany(mappedBy = "projectByProjectId", fetch = FetchType.LAZY)
+    private List<Working> workingsById;
 
     @Override
     public boolean equals(Object o) {
@@ -39,11 +40,9 @@ public class Project {
         Project project = (Project) o;
 
         if (id != project.id) return false;
-        if (name != null ? !name.equals(project.name) : project.name != null) return false;
-        if (startDate != null ? !startDate.equals(project.startDate) : project.startDate != null) return false;
-        if (endDate != null ? !endDate.equals(project.endDate) : project.endDate != null) return false;
-
-        return true;
+        if (!Objects.equals(name, project.name)) return false;
+        if (!Objects.equals(startDate, project.startDate)) return false;
+        return Objects.equals(endDate, project.endDate);
     }
 
     @Override
