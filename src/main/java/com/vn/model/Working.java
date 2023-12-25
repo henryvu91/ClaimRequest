@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,7 +34,7 @@ public class Working {
     @Column(name = "end_date")
     private LocalDate endDate;
     @OneToMany(mappedBy = "workingByWorkingId", fetch = FetchType.LAZY)
-    private List<Claim> claimsById;
+    private List<Claim> claimsById = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "staff_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Staff staffByStaffId;

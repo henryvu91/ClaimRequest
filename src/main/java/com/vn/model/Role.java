@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,7 +24,7 @@ public class Role {
     @Column(name = "name")
     private String name;
     @OneToMany(mappedBy = "roleByRoleId", fetch = FetchType.LAZY)
-    private List<Staff> staffById;
+    private List<Staff> staffById = new ArrayList<>();
 
 
     @Override

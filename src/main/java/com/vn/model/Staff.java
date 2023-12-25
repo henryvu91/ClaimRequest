@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -51,7 +52,7 @@ public class Staff {
     @JoinColumn(name = "rank_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Rank rankByRankId;
     @OneToMany(mappedBy = "staffByStaffId")
-    private List<Working> workingsById;
+    private List<Working> workingsById = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

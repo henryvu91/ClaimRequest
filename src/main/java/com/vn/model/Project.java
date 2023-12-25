@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,7 +31,7 @@ public class Project {
     @Column(name = "end_date")
     private LocalDate endDate;
     @OneToMany(mappedBy = "projectByProjectId", fetch = FetchType.LAZY)
-    private List<Working> workingsById;
+    private List<Working> workingsById = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
