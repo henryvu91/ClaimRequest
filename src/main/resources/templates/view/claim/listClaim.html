@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>List Claim</title>
+    <link
+      rel="stylesheet"
+      th:href="@{/node_modules/normalize.css/normalize.css}"
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{/node_modules/bootstrap/dist/css/bootstrap.css}"
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{/node_modules/bootstrap-icons/font/bootstrap-icons.css}"
+    />
+    <link rel="stylesheet" th:href="@{stylesheet/css/style.css}" />
+    <link
+      rel="stylesheet"
+      href="../../../static/node_modules/normalize.css/normalize.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../static/node_modules/bootstrap/dist/css/bootstrap.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../static/node_modules/bootstrap-icons/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="../../../staticstylesheet/css/style.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Thêm thư viện jQuery -->
+    <style>
+        #detail-claim {
+         display: none;
+          }
+          .table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.vertical-table {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.vertical-table thead {
+  grid-template-rows: auto;
+  grid-auto-flow: column;
+}
+
+.vertical-table th,
+.vertical-table td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+}
+         </style>
+  </head>
+  <body >
+    <div>
+      <div >
+        <div class="border-bottom border-1 mb-5 p-2 ">
+          <h1>list Draft</h1>
+        </div>
+        <div class="border border-1 rounded-3 mb-5 ">
+          <div class="border-bottom border-1 bg-body-secondary">
+            <p class="p-2 m-0">List Draft</p>
+          </div>
+          
+          <div class="container" id="view-claim">
+                 
+            <table class="table table-bordered text-center">
+            
+              <thead>
+                <tr>
+                  <th>Claim Id</th>
+                  <th>Staff Name </th>
+                  <th>Project Name</th>
+                  <th>Project Duration</th>
+                  <th>Total Hours</th>
+                  <th>Status</th>
+                  <th>action</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>John</td>
+                  <td>Doe</td>
+                  <td>john@example.sd</td>
+                  <td>John</td>
+                  <td>Doe</td>
+                  <td>john@example.com</td>
+                  <td><button class="btn btn-primary" id="viewBtn">view</button>     <button class="btn btn-danger">delete</button></td>
+                  
+
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="container" id="detail-claim" style="display: none;">
+                 
+            <table class="table table-bordered text-center ">
+              <thead >
+                <tr >
+                  <th>Claim Id</th>
+                  <th>Staff Name </th>
+                  <th>Staff Department</th>
+                  <th>Project Name</th>
+                  <th>Start Date Project</th>
+                  <th>End Date Project</th>
+                  <th>Duration Project</th>                 
+                  <th>Date</th>
+                  <th>Day</th>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Total Hours</th>
+                  <th>Remarks</th>
+                  <th>Audit trail</th>
+                  <th>Status</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>John</td>
+                  <td>Doe</td>
+                  <td>john@example.com</td>
+                  <td>John</td>
+                  <td>Doe</td>
+                  <td>john@example.com</td>
+                  <td>asdhas</td>
+                  <td>asd</td>
+                  <td>asds</td>
+                  <td>sad</td>
+                  <td>asd</td>
+                  <td>asd</td>
+                  <td>ads</td>
+                  <td></td>
+                  <td>peding approver</td>
+                  
+
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-body">
+            
+          </div>
+      
+      <script th:src="@{/javascript/main.js}"></script>
+    </div>
+    <!-- delete row -->
+    <script>
+        $(document).ready(function() {
+  $('.btn-danger').on('click', function() {
+    var row = $(this).closest('tr');
+    row.remove();
+  });
+});
+
+$(document).ready(function() {
+  $('#viewBtn').on('click', function() {
+    $('#detail-claim').toggle(); 
+    $('#overlay').fadeIn(); 
+  });
+});
+
+
+    </script>
+  </body>
+</html>
