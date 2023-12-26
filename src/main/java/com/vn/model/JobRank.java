@@ -7,15 +7,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Rank {
+@Table(name = "job_rank", schema = "dbo", catalog = "claim_request")
+public class JobRank {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
@@ -23,18 +24,20 @@ public class Rank {
     @Basic
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "rankByRankId", fetch = FetchType.LAZY)
-    private List<Staff> staffById = new ArrayList<>();
+    @OneToMany(mappedBy = "jobRankByJobRankId", fetch = FetchType.LAZY)
+    private List<Working> workingsById = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Rank rank = (Rank) o;
+        JobRank jobRank = (JobRank) o;
 
-        if (id != rank.id) return false;
-        return Objects.equals(name, rank.name);
+        if (id != jobRank.id) return false;
+        if (name != null ? !name.equals(jobRank.name) : jobRank.name != null) return false;
+
+        return true;
     }
 
     @Override
@@ -43,5 +46,4 @@ public class Rank {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
-
 }

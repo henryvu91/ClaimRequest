@@ -8,8 +8,8 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Getter
@@ -28,9 +28,6 @@ public class Staff {
     @Column(name = "role_id")
     private Integer roleId;
     @Basic
-    @Column(name = "rank_id")
-    private Integer rankId;
-    @Basic
     @Column(name = "email")
     private String email;
     @Basic
@@ -48,10 +45,7 @@ public class Staff {
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Role roleByRoleId;
-    @ManyToOne
-    @JoinColumn(name = "rank_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private Rank rankByRankId;
-    @OneToMany(mappedBy = "staffByStaffId")
+    @OneToMany(mappedBy = "staffByStaffId", fetch = FetchType.LAZY)
     private List<Working> workingsById = new ArrayList<>();
 
     @Override
@@ -64,11 +58,12 @@ public class Staff {
         if (id != staff.id) return false;
         if (departmentId != staff.departmentId) return false;
         if (roleId != staff.roleId) return false;
-        if (rankId != staff.rankId) return false;
-        if (!Objects.equals(email, staff.email)) return false;
-        if (!Objects.equals(password, staff.password)) return false;
-        if (!Objects.equals(name, staff.name)) return false;
-        return Objects.equals(salary, staff.salary);
+        if (email != null ? !email.equals(staff.email) : staff.email != null) return false;
+        if (password != null ? !password.equals(staff.password) : staff.password != null) return false;
+        if (name != null ? !name.equals(staff.name) : staff.name != null) return false;
+        if (salary != null ? !salary.equals(staff.salary) : staff.salary != null) return false;
+
+        return true;
     }
 
     @Override
@@ -76,7 +71,6 @@ public class Staff {
         int result = id;
         result = 31 * result + departmentId;
         result = 31 * result + roleId;
-        result = 31 * result + rankId;
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);

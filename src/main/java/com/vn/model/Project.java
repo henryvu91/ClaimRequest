@@ -6,10 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Getter
@@ -41,9 +42,11 @@ public class Project {
         Project project = (Project) o;
 
         if (id != project.id) return false;
-        if (!Objects.equals(name, project.name)) return false;
-        if (!Objects.equals(startDate, project.startDate)) return false;
-        return Objects.equals(endDate, project.endDate);
+        if (name != null ? !name.equals(project.name) : project.name != null) return false;
+        if (startDate != null ? !startDate.equals(project.startDate) : project.startDate != null) return false;
+        if (endDate != null ? !endDate.equals(project.endDate) : project.endDate != null) return false;
+
+        return true;
     }
 
     @Override
