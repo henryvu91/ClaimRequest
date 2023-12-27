@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface ClaimService {
     Claim addClaim(Claim claim);
-    List<Claim> findAll(SpringDataWebProperties.Pageable pageable);
+    void deleteClaim(int id);
+    Claim editClaim(Claim claim);
+    List<Claim> findAllClaim(SpringDataWebProperties.Pageable pageable);
 }
