@@ -1,5 +1,6 @@
 package com.vn.model;
 
+import com.vn.utils.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,7 +38,7 @@ public class Claim {
     private Integer totalHours;
     @Basic
     @Column(name = "status")
-    private String status;
+    private Status status;
     @Basic
     @Column(name = "remarks")
     private String remarks;
