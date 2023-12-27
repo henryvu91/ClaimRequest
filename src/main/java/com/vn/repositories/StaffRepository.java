@@ -8,4 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StaffRepository extends JpaRepository<Staff, Integer> {
     Staff findByEmail(String email);
+
+//    Check email is existed
+    boolean existsByEmail(String email);
 }
