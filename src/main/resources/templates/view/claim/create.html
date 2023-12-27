@@ -143,7 +143,7 @@
                                 <div class="col-6">
                                   <div class="mb-3">
                                     <label class="form-label" for="form-addClaimDetail__date">Date</label>
-                                    <input class="form-control shadow-none reset" type="date" name="claimDetailDate" id="form-addClaimDetail__date"    onchange="validateDate()" >
+                                    <input class="form-control shadow-none reset" type="date" name="date" id="form-addClaimDetail__date"    onchange="validateDate()" >
                                     <div id="dateValidationMessage" class="text-danger"></div>
                                   </div>
                                 
@@ -151,7 +151,7 @@
                                 <div class="col-6">
                                   <div class="mb-3">
                                     <label class="form-label" for="form-addClaimDetail__day">Day</label>
-                                    <input class="form-control shadow-none reset" type="text" name="claimDetailDay" id="form-addClaimDetail__day" placeholder="Enter the day" required>
+                                    <input class="form-control shadow-none reset" type="text"  id="form-addClaimDetail__day" placeholder="Enter the day" required>
                                   </div>
                                 </div>
                               </div>
@@ -170,19 +170,19 @@
                         <div class="col">
                           <div class="mb-3">
                             <label class="form-label" for="form-addClaimDetail__fromTime">From</label>
-                            <input class="form-control shadow-none reset" type="time" name="claimDetailFromTime" id="form-addClaimDetail__fromTime" onchange="calculateTotalHours()">
+                            <input class="form-control shadow-none reset" type="time" name="fromTime" id="form-addClaimDetail__fromTime" onchange="calculateTotalHours()">
                           </div>
                         </div>
                         <div class="col">
                           <div class="mb-3">
                             <label class="form-label" for="form-addClaimDetail__toTime">To</label>
-                            <input class="form-control shadow-none reset" type="time" name="claimDetailToTime" id="form-addClaimDetail__toTime" onchange="calculateTotalHours()">
+                            <input class="form-control shadow-none reset" type="time" name="toTime" id="form-addClaimDetail__toTime" onchange="calculateTotalHours()">
                           </div>
                         </div>
                         <div class="col">
                           <div class="mb-3">
                             <label class="form-label" for="form-addClaimDetail__totalHours">Total Hours</label>
-                            <input class="form-control shadow-none reset" id="form-addClaimDetail__totalHours" name="claimDetailTotalHours" placeholder="Enter the title" required type="number" readonly>
+                            <input class="form-control shadow-none reset" id="form-addClaimDetail__totalHours" name="totalHours" placeholder="Enter the title" required type="number" readonly>
                           </div>
                         </div>
                       </div>
@@ -195,7 +195,7 @@
              
                     <div class="mb-3">
                         <label class="form-label" for="form-addClaimDetail__remarks">Remarks</label>
-                        <textarea class="form-control shadow-none reset" id="form-addClaimDetail__remarks" name="claimDetailTotalHours" required style="resize: vertical; overflow: auto;"></textarea>
+                        <textarea class="form-control shadow-none reset" id="form-addClaimDetail__remarks" name="remarks" required style="resize: vertical; overflow: auto;"></textarea>
                       </div>
 
                       <div class="mb-3">
