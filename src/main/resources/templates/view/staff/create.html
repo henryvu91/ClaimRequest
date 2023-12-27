@@ -1,249 +1,200 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" th:replace="~{layout/template::areas(~{::title}, ~{::main})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="" name="description">
     <meta content="width=device-width, initial-scale=1" name="viewport">
-    <title>Login Page</title>
+    <title>Staff Create Page</title>
     <link href="./favicon.ico" rel="icon" type="image/x-icon">
-    <link rel="stylesheet" th:href="@{/node_modules/normalize.css/normalize.css}">
-    <link rel="stylesheet" th:href="@{/node_modules/bootstrap/dist/css/bootstrap.css}">
-    <link rel="stylesheet" th:href="@{/node_modules/bootstrap-icons/font/bootstrap-icons.css}">
-    <link rel="stylesheet" th:href="@{stylesheet/css/style.css}">
-
-    <style>
-        .error {
-            color:red;
-        }
-    </style>
 </head>
 <body>
-<div class="container-fluid bg-grey min-vh-100 d-flex">
-    <div
-            class="container w-75 bg-white border border-grey border-round align-self-center main-form px-0"
-    >
-        <h2
-                class="title text-grey bg-grey m-0 py-2 pl-3 border-bottom border-grey"
-        >
-            Create New Staff
-        </h2>
+<main>
+    <div class="container-fluid bg-grey min-vh-100 d-flex">
+        <div class="container w-75 bg-white border border-grey border-round align-self-center main-form px-0">
+            <h2 class="title text-grey bg-grey m-0 py-2 pl-3 border-bottom border-grey">
+                Create New Staff
+            </h2>
 
-        <form th:action="@{/staff/create}" method="post" class="p-4" id="createStaffForm" th:object="${newStaff}">
-            <div class="mb-3">
-                <label class="form-label" for="form-createStaff__name"
-                >Staff Name</label
-                >
-                <input
-                        class="form-control shadow-none reset"
-                        id="form-createStaff__name"
-                        th:field="*{name}"
-                        placeholder="Enter the staff name"
-                        required
-                        type="text"
-                />
-                <div
-                        class="text-danger"
-                        th:errors="*{name}"
-                        th:if="${#fields.hasErrors('name')}"
-                >
-                    Name Error
+            <form class="p-4" id="createStaffForm" method="post" th:action="@{/staff/create}" th:object="${newStaff}">
+                <div class="mb-3">
+                    <label class="form-label" for="form-createStaff__name">Staff Name</label>
+                    <input class="form-control shadow-none reset"
+                           id="form-createStaff__name"
+                           placeholder="Enter the staff name"
+                           required
+                           th:field="*{name}"
+                           type="text"/>
+                    <div class="text-danger"
+                         th:errors="*{name}"
+                         th:if="${#fields.hasErrors('name')}">
+                        Name Error
+                    </div>
                 </div>
-            </div>
 
-            <div class="mb-3">
-                <label class="form-label" for="form-createStaff__email"
-                >Email</label
-                >
-                <input
-                        class="form-control shadow-none reset"
-                        id="form-createStaff__email"
-                        th:field="*{email}"
-                        placeholder="Enter the email"
-                        required
-                        type="email"
-                />
-                <div
-                        class="text-danger"
-                        th:errors="*{email}"
-                        th:if="${#fields.hasErrors('email')}"
-                >
-                    Email Error
+                <div class="mb-3">
+                    <label class="form-label" for="form-createStaff__email">Email</label>
+                    <input class="form-control shadow-none reset"
+                           id="form-createStaff__email"
+                           placeholder="Enter the email"
+                           required
+                           th:field="*{email}"
+                           type="email"/>
+                    <div class="text-danger" th:errors="*{email}" th:if="${#fields.hasErrors('email')}">
+                        Email Error
+                    </div>
                 </div>
-            </div>
 
-            <div class="mb-3">
-                <label class="form-label" for="form-createStaff__password"
-                >Password</label
-                >
-                <input
-                        class="form-control shadow-none reset"
-                        id="form-createStaff__password"
-                        th:field="*{password}"
-                        placeholder="Enter the password"
-                        required
-                        type="password"
-                />
-                <div
-                        class="text-danger"
-                        th:errors="*{password}"
-                        th:if="${#fields.hasErrors('password')}"
-                >
-                    Password Error
+                <div class="mb-3">
+                    <label class="form-label" for="form-createStaff__password">Password</label>
+                    <input class="form-control shadow-none reset"
+                           id="form-createStaff__password"
+                           placeholder="Enter the password"
+                           required
+                           th:field="*{password}"
+                           type="password"/>
+                    <div class="text-danger"
+                         th:errors="*{password}"
+                         th:if="${#fields.hasErrors('password')}">
+                        Password Error
+                    </div>
                 </div>
-            </div>
 
-            <div class="mb-3">
-                <label class="form-label" for="form-createStaff__department"
-                >Department</label
-                >
-
-                <select
-                        class="form-control shadow-none reset"
-                        id="form-createStaff__department"
-                        required
-                        th:field="*{departmentId}"
-                >
-                    <option th:each="item: ${departments}" th:value="${item.id}" th:text="${item.name}"></option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label" for="form-createStaff__role"
-                >Role</label
-                >
-
-                <select
-                        class="form-control shadow-none reset"
-                        id="form-createStaff__role"
-                        required
-                        name="roleId"
-                >
-                    <option th:each="role: ${roles}" th:value="${role.id}" th:text="${role.name}" th:selected="${role.name=='ROLE_USER'}"></option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label" for="form-createStaff__salary"
-                >Salary</label
-                >
-                <input
-                        class="form-control shadow-none reset"
-                        id="form-createStaff__salary"
-                        th:field="*{salary}"
-                        type="number"
-                />
-                <div
-                        class="text-danger"
-                        th:errors="*{salary}"
-                        th:if="${#fields.hasErrors('salary')}"
-                >
-                    Salary Error
+                <div class="mb-3">
+                    <label class="form-label" for="form-createStaff__department">Department</label>
+                    <select
+                            class="form-control shadow-none reset"
+                            id="form-createStaff__department"
+                            required
+                            th:field="*{departmentId}">
+                        <option th:each="item: ${departments}" th:text="${item.name}" th:value="${item.id}"></option>
+                    </select>
                 </div>
-            </div>
 
-            <button type="submit" class="btn btn-success my-2 py-2 btn-font-size">
-                Save
-            </button>
-            <button type="reset" class="btn btn-success my-2 py-2 btn-font-size">
-                Reset
-            </button>
-            <a th:href="@{/staff/view}" class="btn btn-success my-2 py-2 btn-font-size">
-                Cancel
-            </a>
-        </form>
+                <div class="mb-3">
+                    <label class="form-label" for="form-createStaff__role">Role</label>
+
+                    <select class="form-control shadow-none reset"
+                            id="form-createStaff__role"
+                            name="roleId"
+                            required>
+                        <option th:each="role: ${roles}" th:selected="${role.name=='ROLE_USER'}" th:text="${role.name}"
+                                th:value="${role.id}"></option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="form-createStaff__salary">Salary</label>
+                    <input class="form-control shadow-none reset"
+                           id="form-createStaff__salary"
+                           th:field="*{salary}"
+                           type="number"/>
+                    <div class="text-danger"
+                         th:errors="*{salary}"
+                         th:if="${#fields.hasErrors('salary')}">
+                        Salary Error
+                    </div>
+                </div>
+
+                <button class="btn btn-success my-2 py-2 btn-font-size" type="submit">
+                    Save
+                </button>
+                <button class="btn btn-success my-2 py-2 btn-font-size" type="reset">
+                    Reset
+                </button>
+                <a class="btn btn-success my-2 py-2 btn-font-size" th:href="@{/staff/view}">
+                    Cancel
+                </a>
+            </form>
+        </div>
     </div>
-</div>
-<script th:src="@{/node_modules/jquery/dist/jquery.js}"></script>
-<script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.js}"></script>
-<script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>
-<script th:src="@{/javascript/main.js}">
-</script>
-<script>
-    $(document).ready(function () {
+    </script>
+    <script>
+        $(document).ready(function () {
 
-        $("#createStaffForm").validate({
-            errorPlacement: function (error, element) {
-                error.insertBefore(element);
-            },
-
-            rules: {
-                name: {
-                    required: true,
+            $("#createStaffForm").validate({
+                errorPlacement: function (error, element) {
+                    error.insertBefore(element);
                 },
 
-                email: {
-                    required: true,
-                    email: true,
+                rules: {
+                    name: {
+                        required: true,
+                    },
+
+                    email: {
+                        required: true,
+                        email: true,
+                    },
+
+                    password: {
+                        required: true,
+                        password: true,
+                    },
+                    departmentId: {
+                        required: true
+                    },
+
+                    roleId: {
+                        required: true
+                    },
+
+                    salary: {
+                        required: true,
+                        isNumber: true,
+                        isPositive: true
+                    }
+                },
+                messages: {
+                    name: {
+                        required: "Name must be filled",
+
+                    },
+
+                    email: {
+                        required: "Email must be filled",
+                        email: "Email is invalid"
+                    },
+
+                    password: {
+                        required: "Password must be filled",
+                        password: "Password does not accept space",
+                    },
+
+                    departmentId: {
+                        required: "Department must be filled"
+                    },
+
+                    roleId: {
+                        required: "Role must be filled"
+                    },
+
+                    salary: {
+                        required: "Salary must be filled",
+                        isNumber: "Salary must be number",
+                        isPositive: "Salary must be positive"
+                    }
                 },
 
-                password:{
-                    required: true,
-                    password:true,
+                submitHandler: function (form) {
+                    form.submit();
                 },
-                departmentId:{
-                  required:true
-                },
+            });
 
-                roleId:{
-                    required:true
-                },
+            $.validator.methods.password = function (value, element) {
+                let passwordReg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+                return passwordReg.test(value);
+            };
 
-                salary:{
-                    required:true,
-                    isNumber:true,
-                    isPositive:true
-                }
-            },
-            messages: {
-                name: {
-                    required: "Name must be filled",
+            $.validator.methods.isNumber = function (value, element) {
+                return !isNaN(value);
+            }
 
-                },
-
-                email: {
-                    required: "Email must be filled",
-                    email: "Email is invalid"
-                },
-
-                password: {
-                    required: "Password must be filled",
-                    password: "Password does not accept space",
-                },
-
-                departmentId:{
-                    required: "Department must be filled"
-                },
-
-                roleId:{
-                    required:"Role must be filled"
-                },
-
-                salary:{
-                    required:"Salary must be filled",
-                    isNumber:"Salary must be number",
-                    isPositive:"Salary must be positive"
-                }
-            },
-
-            submitHandler: function (form) {
-                form.submit();
-            },
+            $.validator.methods.isPositive = function (value, element) {
+                return value > 0;
+            }
         });
-
-        $.validator.methods.password = function (value, element) {
-            let passwordReg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-            return passwordReg.test(value);
-        };
-
-        $.validator.methods.isNumber = function (value,element){
-            return !isNaN(value);
-        }
-
-        $.validator.methods.isPositive = function (value,element){
-            return value > 0;
-        }
-    });
-</script>
+    </script>
+</main>
 </body>
 </html>
