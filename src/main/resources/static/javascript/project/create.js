@@ -65,10 +65,7 @@ $(document).ready(function () {
     let $buttons = $currentRow.find("td:last").children().detach();
     $currentRow.remove();
     if ($prevRow.length) {
-      $prevRow
-        .find("td:last")
-        .append($buttons)
-        .addClass("d-flex justify-content-evenly");
+      $prevRow.find("td:last").append($buttons);
     }
     toggleDeleteButton();
   });
@@ -99,6 +96,7 @@ $(document).ready(function () {
         required: true,
       },
       projectName: {
+        minlength: 3,
         required: true,
       },
       projectStartDate: {
@@ -126,6 +124,7 @@ $(document).ready(function () {
         required: "Please enter Project Code",
       },
       projectName: {
+        minlength: "Project Name must be at least 3 characters",
         required: "Please enter Project Name",
       },
       projectStartDate: {

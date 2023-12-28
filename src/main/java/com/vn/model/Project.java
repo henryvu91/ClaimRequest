@@ -23,6 +23,9 @@ public class Project {
     @Column(name = "id")
     private Integer id;
     @Basic
+    @Column(name = "code")
+    private String code;
+    @Basic
     @Column(name = "name")
     private String name;
     @Basic
