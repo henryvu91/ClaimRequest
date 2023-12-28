@@ -1,0 +1,104 @@
+<!--
+  Created by IHau - IntelliJ IDEA.
+  User: Wkog
+  Date: 25/12/2023
+  Time: 9:21 AM
+  To change this template use File | Settings | File Templates.
+-->
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Manage Project</title>
+    <link href="./favicon.ico" rel="icon" type="image/x-icon">
+    <link href="" rel="stylesheet">
+</head>
+<body>
+<div>
+    <div class="border-bottom border-1 mb-5 p-2">
+        <h1>Create Project</h1>
+    </div>
+    <div class="border border-1 rounded-3 mb-5">
+        <div class="border-bottom border-1 bg-body-secondary">
+            <p class="p-2 m-0">Project Information</p>
+        </div>
+        <div class="p-3">
+            <form id="form-addProject" method="post" novalidate th:action="@{/project/create}"
+                  th:object="${addProjectForm}">
+                <div class="mb-3" th:if="${not #strings.isEmpty(message)}">
+                    <div class="alert alert-danger py-2 px-3" role="alert"
+                         th:text="${message}">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="form-addProject__name">Code</label>
+                    <input class="form-control shadow-none reset" id="form-addProject__code" name="projectCode"
+                           placeholder="Enter The Project Code"
+                           required
+                           type="text">
+                    <!--                    <div class="text-danger" th:errors="*{title}"-->
+                    <!--                         th:if="${#fields.hasErrors('title')}">-->
+                    <!--                        Title Error-->
+                    <!--                    </div>-->
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="form-addProject__name">Name</label>
+                    <input class="form-control shadow-none reset" id="form-addProject__name" name="projectName"
+                           placeholder="Enter The Project Name"
+                           required
+                           type="text">
+                    <!--                    <div class="text-danger" th:errors="*{title}"-->
+                    <!--                         th:if="${#fields.hasErrors('title')}">-->
+                    <!--                        Title Error-->
+                    <!--                    </div>-->
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="form-addProject__duration">Duration</label>
+                    <input class="form-control shadow-none reset duration" disabled id="form-addProject__duration"
+                           name="projectDuration"
+                           placeholder=""
+                           type="text">
+                    <!--                    <div class="text-danger" th:errors="*{title}"-->
+                    <!--                         th:if="${#fields.hasErrors('title')}">-->
+                    <!--                        Title Error-->
+                    <!--                    </div>-->
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="form-addProject__startDate">Start Date</label>
+                    <input class="form-control shadow-none reset startDate" id="form-addProject__startDate"
+                           name="projectFrom"
+                           type="date">
+                    <!--                    <div class="text-danger" th:errors="*{title}"-->
+                    <!--                         th:if="${#fields.hasErrors('title')}">-->
+                    <!--                        Title Error-->
+                    <!--                    </div>-->
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="form-addProject__endDate">End Date</label>
+                    <input class="form-control shadow-none reset endDate" id="form-addProject__endDate"
+                           name="projectTo"
+                           type="date">
+                    <!--                    <div class="text-danger" th:errors="*{title}"-->
+                    <!--                         th:if="${#fields.hasErrors('title')}">-->
+                    <!--                        Title Error-->
+                    <!--                    </div>-->
+                </div>
+
+
+                <button class="btn btn-outline-secondary" type="submit">Submit button</button>
+                <button class="btn btn-outline-secondary resetDataForm" type="button">Reset button</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script th:src="@{/javascript/main.js}"></script>
+</body>
+</html>

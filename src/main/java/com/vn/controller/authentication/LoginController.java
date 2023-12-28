@@ -13,6 +13,7 @@ public class LoginController {
             String message = (String) model.asMap().get("message");
             model.addAttribute("message", message);
         }
+        model.addAttribute("pageTitle", "Login Page");
         return "view/login";
     }
 }

@@ -7,9 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -38,6 +38,7 @@ public class Claim {
     private Integer totalHours;
     @Basic
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private Status status;
     @Basic
     @Column(name = "remarks")
@@ -58,15 +59,13 @@ public class Claim {
 
         if (id != claim.id) return false;
         if (workingId != claim.workingId) return false;
-        if (date != null ? !date.equals(claim.date) : claim.date != null) return false;
-        if (fromTime != null ? !fromTime.equals(claim.fromTime) : claim.fromTime != null) return false;
-        if (toTime != null ? !toTime.equals(claim.toTime) : claim.toTime != null) return false;
-        if (totalHours != null ? !totalHours.equals(claim.totalHours) : claim.totalHours != null) return false;
-        if (status != null ? !status.equals(claim.status) : claim.status != null) return false;
-        if (remarks != null ? !remarks.equals(claim.remarks) : claim.remarks != null) return false;
-        if (auditTrail != null ? !auditTrail.equals(claim.auditTrail) : claim.auditTrail != null) return false;
-
-        return true;
+        if (!Objects.equals(date, claim.date)) return false;
+        if (!Objects.equals(fromTime, claim.fromTime)) return false;
+        if (!Objects.equals(toTime, claim.toTime)) return false;
+        if (!Objects.equals(totalHours, claim.totalHours)) return false;
+        if (!Objects.equals(status, claim.status)) return false;
+        if (!Objects.equals(remarks, claim.remarks)) return false;
+        return Objects.equals(auditTrail, claim.auditTrail);
     }
 
     @Override
