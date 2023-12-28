@@ -11,12 +11,12 @@
         <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
                 id="btn-createClaim"
                 type="button">
-            <i class="bi bi-table"></i>
+            <i class="bi bi-pencil-square"></i>
             <span>Create Claim</span>
         </button>
         <div class="w-100">
             <button aria-expanded="false"
-                    class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start dropdown-toggle"
+                    class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start dropdown-toggle d-flex justify-content-between align-items-center"
                     data-bs-target="#myClaims"
                     data-bs-toggle="collapse"
                     type="button">
@@ -51,7 +51,7 @@
         </div>
         <div class="w-100">
             <button aria-expanded="false"
-                    class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start dropdown-toggle"
+                    class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start dropdown-toggle d-flex justify-content-between align-items-center"
                     data-bs-target="#claimsForApproval"
                     data-bs-toggle="collapse"
                     type="button">
@@ -74,7 +74,7 @@
         </div>
         <div class="w-100">
             <button aria-expanded="false"
-                    class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start dropdown-toggle"
+                    class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start dropdown-toggle d-flex justify-content-between align-items-center"
                     data-bs-target="#claimsForFinance"
                     data-bs-toggle="collapse"
                     type="button">
@@ -97,25 +97,45 @@
         </div>
         <div class="w-100">
             <button aria-expanded="false"
-                    class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start dropdown-toggle"
+                    class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start dropdown-toggle d-flex justify-content-between align-items-center"
                     data-bs-target="#configuration"
                     data-bs-toggle="collapse"
                     type="button">
                 Configuration
             </button>
             <div class="collapse" id="configuration">
-                <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
-                        id="btn-staffInformation"
-                        type="button">
-                    <i class="bi bi-table"></i>
-                    <span>Staff Information</span>
-                </button>
-                <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
-                        id="btn-projectInformation "
-                        type="button">
-                    <i class="bi bi-table"></i>
-                    <span>Project Information</span>
-                </button>
+                <div>
+                    <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start px-3"
+                            id="btn-staffInformation"
+                            type="button">
+                        <i class="bi bi-people"></i>
+                        <span>Staff Information</span>
+                    </button>
+                </div>
+                <div>
+                    <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start dropdown-toggle d-flex justify-content-between align-items-center px-3"
+                            data-bs-target="#projectInformation"
+                            data-bs-toggle="collapse"
+                            id="btn-projectInformation"
+                            type="button">
+                        <i class="bi bi-kanban"></i>
+                        <span>Project Information</span>
+                    </button>
+                    <div class="collapse" id="projectInformation">
+                        <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start px-5"
+                                id="btn-projectInformation-create"
+                                type="button">
+                            <i class="bi bi-pencil-square"></i>
+                            <span>Create</span>
+                        </button>
+                        <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start px-5"
+                                id="btn-projectInformation-view"
+                                type="button">
+                            <i class="bi bi-table"></i>
+                            <span>View</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
