@@ -1,6 +1,7 @@
 package com.vn.repositories;
 
 import com.vn.dto.StaffIdNameDto;
+import com.vn.dto.StaffIdNameDto2;
 import com.vn.dto.StaffViewDetailDto;
 import com.vn.model.Staff;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,7 +19,7 @@ public interface StaffRepository extends JpaRepository<Staff, Integer> {
     boolean existsByEmail(String email);
 
     @Query("SELECT s.id,s.name FROM Staff s")
-    List<StaffIdNameDto> findAllStaffName();
+    List<StaffIdNameDto2> findAllStaffName();
 
 //    Get the detail information of staff
 

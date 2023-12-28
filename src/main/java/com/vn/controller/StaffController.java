@@ -1,7 +1,10 @@
 package com.vn.controller;
 
 import com.vn.dto.StaffIdNameDto;
+import com.vn.dto.StaffIdNameDto2;
 import com.vn.dto.StaffViewDetailDto;
+import com.vn.mapper.StaffMapper;
+import com.vn.mapper.StaffViewMapper;
 import com.vn.model.Department;
 import com.vn.model.Role;
 import com.vn.model.Staff;
@@ -32,6 +35,12 @@ public class StaffController {
 
     @Autowired
     RoleService roleService;
+
+    @Autowired
+    StaffMapper staffMapper;
+
+    @Autowired
+    StaffViewMapper staffViewMapper;
 
 //    Show the UI to create new staff
     @GetMapping("/staff/createStaff")
@@ -82,7 +91,7 @@ public class StaffController {
     public String viewStaffUI(
             @RequestParam(name = "id",required = false) Integer id
             ,ModelMap modelMap){
-        List<StaffIdNameDto> nameList = staffService.findAllStaffName();
+       List <StaffIdNameDto2> nameList = staffService.findAll().stream().map(m->staffMapper.toDto(m)).toList();
 
 //        check the list is empty
         if(!nameList.isEmpty()){
@@ -92,7 +101,7 @@ public class StaffController {
                 id = nameList.get(0).getId();
             }
 //            get staff information
-            StaffViewDetailDto viewStaff = staffService.findStaffViewDetailById(id);
+            StaffViewDetailDto viewStaff = staffViewMapper.toDto(staffService.findById(id));
             if(viewStaff==null){
 //                TODO: error message
             }else {

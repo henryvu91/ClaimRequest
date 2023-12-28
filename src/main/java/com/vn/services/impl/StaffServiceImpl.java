@@ -1,6 +1,7 @@
 package com.vn.services.impl;
 
 import com.vn.dto.StaffIdNameDto;
+import com.vn.dto.StaffIdNameDto2;
 import com.vn.dto.StaffViewDetailDto;
 import com.vn.model.Staff;
 import com.vn.repositories.DepartmentRepository;
@@ -74,7 +75,7 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public List<StaffIdNameDto> findAllStaffName() {
+    public List<StaffIdNameDto2> findAllStaffName() {
         return staffRepository.findAllStaffName();
     }
 
