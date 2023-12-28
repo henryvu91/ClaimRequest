@@ -11,13 +11,22 @@
     <link rel="stylesheet" th:href="@{/node_modules/bootstrap/dist/css/bootstrap.css}">
     <link rel="stylesheet" th:href="@{/node_modules/bootstrap-icons/font/bootstrap-icons.css}">
     <link rel="stylesheet" th:href="@{stylesheet/css/style.css}">
+    <style>
+        input {
+            border: none;
+        }
+
+        .modal-body {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+    </style>
 </head>
 <body>
 <main>
-
     <table class="table table-bordered">
         <thead>
-            <tr>
+            <tr class="bg-secondary">
                 <th>Claim Id</th>
                 <th>Staff Name</th>
                 <th>Project Name</th>
@@ -37,113 +46,39 @@
                     </td>
                     <td th:text="${c.totalHours}"></td>
                     <td>
-                        <button class="detail btn btn-primary" type="button" data-toggle="modal" data-target="#exampleModalCenter">
-                            Detail
+                        <button type="button" id="detail" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                           Detail
                         </button>
                     </td>
                 </tr>
             </th:block>
         </tbody>
     </table>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <nav class="m-3">
+        <ul class="pagination justify-content-end">
+            <li th:if="${currentPage > 1}" class="page-item"><a class="page-link" th:href="@{'?pageNo='+${currentPage - 1}}">Previous</a></li>
+            <li th:each="i : ${#numbers.sequence(1, totalPage)}" th:classappend="${currentPage == i ? 'active' : ''}" class="page-item">
+                <a th:text="${i}" class="page-link" th:href="@{'?pageNo='+${i}}"></a>
+            </li>
+            <li th:if="${currentPage < totalPage}" class="page-item"><a class="page-link" th:href="@{'?pageNo='+${currentPage + 1}}">Next</a></li>
+        </ul>
+    </nav>
+   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Detail Claim</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title" id="exampleModalLabel">Claim Detail</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body" id="modal-body-content">
-                    <!-- Modal content will be dynamically added here -->
-                </div>
+                <div class="modal-body" id="modal-body-content"></div>
             </div>
         </div>
     </div>
-
-
-
-
 </main>
 
 <script th:src="@{/node_modules/jquery/dist/jquery.js}"></script>
 <script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.js}"></script>
-
-
-
-
-
-<script>
-    $(document).ready(function () {
-        $(document).ready(function () {
-            $('.detail').click(function () {
-                var rowId = $(this).closest('tr').data('rowid'); // Remove this line as data-rowid is not present in your code
-                var staffName = $(this).closest('tr').find('td:eq(1)').text();
-                var projectName = $(this).closest('tr').find('td:eq(2)').text();
-                var modalContent =
-                    `<div class="table-striped">
-                            <table class="table">
-                                <tbody>
-                                    <tr>
-                                        <th>Staff name</th>
-                                        <td>${staffName}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Project Name</th>
-                                        <td>${projectName}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Staff name</th>
-                                        <td>${staffName}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Project Name</th>
-                                        <td>${projectName}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Staff name</th>
-                                        <td>${staffName}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Project Name</th>
-                                        <td>${projectName}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Staff name</th>
-                                        <td>${staffName}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Project Name</th>
-                                        <td>${projectName}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Staff name</th>
-                                        <td>${staffName}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Project Name</th>
-                                        <td>${projectName}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Staff name</th>
-                                        <td>${staffName}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Project Name</th>
-                                        <td>${projectName}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>`;
-            $('#modal-body-content').html(modalContent);
-        });
-    });
-
-</script>
-
+<script th:src="@{/javascript/view_claim.js}"></script>
 <script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>
 <script th:src="@{/javascript/main.js}"></script>
 </body>

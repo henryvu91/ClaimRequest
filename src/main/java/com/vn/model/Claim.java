@@ -2,10 +2,7 @@ package com.vn.model;
 
 import com.vn.utils.Status;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -16,6 +13,7 @@ import java.time.LocalTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Claim {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
