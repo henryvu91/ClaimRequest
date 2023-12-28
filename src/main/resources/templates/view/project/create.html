@@ -91,7 +91,132 @@
                     <!--                        Title Error-->
                     <!--                    </div>-->
                 </div>
+                <div class="border border-1 rounded-3 mb-5">
+                    <div class="border-bottom border-1 bg-body-secondary">
+                        <p class="p-2 m-0">Staff Information</p>
+                    </div>
+                    <div class="mb-3 p-3">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Job Rank</th>
+                                <th scope="col">Start Date</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>
+                                    <select aria-label="Select Name" class="form-select" name="workingName">
+                                        <option selected>Open this select menu</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select aria-label="Select Job Rank" class="form-select"
+                                            disabled id="form-addWorking__jobRank-01">
+                                        <option selected value="1">PM</option>
+                                    </select>
+                                    <input name="workingJobRank" type="hidden" value="1">
 
+                                </td>
+                                <td>
+                                    <div>
+                                        <input class="form-control shadow-none reset startDate"
+                                               id="form-addWorking__startDate-01"
+                                               name="workingStartDate"
+                                               type="date">
+                                        <!--                    <div class="text-danger" th:errors="*{title}"-->
+                                        <!--                         th:if="${#fields.hasErrors('title')}">-->
+                                        <!--                        Title Error-->
+                                        <!--                    </div>-->
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>
+                                    <select aria-label="Select Name" class="form-select" name="workingName">
+                                        <option selected>Open this select menu</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select aria-label="Select Job Rank" class="form-select"
+                                            disabled id="form-addWorking__jobRank-02">
+                                        <option selected value="2">QA</option>
+                                    </select>
+                                    <input name="workingJobRank" type="hidden" value="2">
+                                </td>
+                                <td>
+                                    <div>
+                                        <input class="form-control shadow-none reset startDate"
+                                               id="form-addWorking__startDate-02"
+                                               name="workingStartDate"
+                                               type="date">
+                                        <!--                    <div class="text-danger" th:errors="*{title}"-->
+                                        <!--                         th:if="${#fields.hasErrors('title')}">-->
+                                        <!--                        Title Error-->
+                                        <!--                    </div>-->
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>
+                                    <select aria-label="Select Name" class="form-select" name="workingName">
+                                        <option selected>Open this select menu</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select aria-label="Select Job Rank" class="form-select" name="workingJobRank">
+                                        <option selected>Open this select menu</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div>
+                                        <input class="form-control shadow-none reset startDate"
+                                               id="form-addWorking__startDate-03"
+                                               name="workingStartDate"
+                                               type="date">
+                                        <!--                    <div class="text-danger" th:errors="*{title}"-->
+                                        <!--                         th:if="${#fields.hasErrors('title')}">-->
+                                        <!--                        Title Error-->
+                                        <!--                    </div>-->
+                                    </div>
+                                </td>
+                                <td class="d-flex justify-content-evenly">
+                                    <button class="btn btn-outline-secondary new-record-btn"
+                                            id="btn-addWorking-newRecord"
+                                            type="button">
+                                        New Record
+                                    </button>
+                                    <button class="btn btn-outline-danger delete-record-btn"
+                                            id="btn-addWorking-deleteRecord"
+                                            type="button">
+                                        Delete Record
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
                 <button class="btn btn-outline-secondary" type="submit">Submit button</button>
                 <button class="btn btn-outline-secondary resetDataForm" type="button">Reset button</button>
@@ -100,5 +225,6 @@
     </div>
 </div>
 <script th:src="@{/javascript/main.js}"></script>
+<script th:src="@{/javascript/project/create.js}"></script>
 </body>
 </html>
