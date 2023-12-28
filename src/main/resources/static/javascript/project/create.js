@@ -1,5 +1,8 @@
 $(document).ready(function () {
   const $tableBody = $(".table tbody");
+  let $projectStartDate = $("#form-addProject__startDate");
+  let $today = new Date();
+  let $formattedDate = $today.toISOString().substring(0, 10);
 
   function toggleDeleteButton() {
     $tableBody
@@ -29,14 +32,21 @@ $(document).ready(function () {
           </select>
         </td>
         <td>
-          <input class="form-control shadow-none reset startDate" name="workingStartDate" type="date">
+        <div>
+          <label class="form-label" for="form-addWorking__startDate-0${newIndex}" hidden="hidden"></label>
+          <input class="form-control shadow-none reset startDateRecord" id="form-addWorking__startDate-0${newIndex}" name="workingStartDate" type="date">
+        </div>
         </td>
-        <td class="d-flex justify-content-evenly">
+        <td>
         </td>
       </tr>
     `);
 
     $tableBody.append($newRow);
+    $newRow
+      .find('input[type="date"]')
+      .val($formattedDate)
+      .attr("min", $projectStartDate.val());
     toggleDeleteButton();
   }
 
@@ -46,10 +56,6 @@ $(document).ready(function () {
     let $buttons = $currentRow.find("td:last").children().detach();
 
     addNewRow();
-    let $startDate = $(".startDate");
-    let today = new Date();
-    let formattedDate = today.toISOString().substring(0, 10);
-    $startDate.val(formattedDate);
     $tableBody.find("tr:last td:last").append($buttons);
     toggleDeleteButton();
   });
@@ -67,4 +73,83 @@ $(document).ready(function () {
     toggleDeleteButton();
   });
   toggleDeleteButton();
+
+  $("#form-addProject").validate({
+    errorClass: "is-invalid",
+    validClass: "is-valid",
+    errorElement: "div",
+    errorPlacement: function (error, element) {
+      error.addClass("invalid-feedback");
+      if (element.prop("type") === "checkbox") {
+        error.insertAfter(element.next("label"));
+      } else {
+        error.insertAfter(element);
+      }
+    },
+    highlight: function (element, errorClass, validClass) {
+      $(element).addClass(errorClass).removeClass(validClass);
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      $(element).addClass(validClass).removeClass(errorClass);
+    },
+    rules: {
+      projectCode: {
+        minlength: 3,
+        maxLength: 20,
+        required: true,
+      },
+      projectName: {
+        required: true,
+      },
+      projectStartDate: {
+        required: true,
+      },
+      projectEndDate: {
+        greaterThan: "#form-addProject__startDate",
+        required: true,
+      },
+      workingName: {
+        required: true,
+      },
+      workingJobRank: {
+        required: true,
+      },
+      workingStartDate: {
+        required: true,
+        greaterThan: "#form-addProject__startDate",
+      },
+    },
+    messages: {
+      projectCode: {
+        minlength: "Project Code must be at least 3 characters",
+        maxLength: "Project Code must be less than 20 characters",
+        required: "Please enter Project Code",
+      },
+      projectName: {
+        required: "Please enter Project Name",
+      },
+      projectStartDate: {
+        required: "Please enter Project Start Date",
+      },
+      projectEndDate: {
+        greaterThanEqual:
+          "Project End Date must be greater than Project Start Date",
+        required: "Please enter Project End Date",
+      },
+      workingName: {
+        required: "Please enter Working Name",
+      },
+      workingJobRank: {
+        required: "Please enter Working Job Rank",
+      },
+      workingStartDate: {
+        required: "Please enter Working Start Date",
+        greaterThanEqual:
+          "Working Start Date must be greater than Project Start Date",
+      },
+    },
+    submitHandler: function (form) {
+      form.submit();
+    },
+  });
 });

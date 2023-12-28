@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label" for="form-addProject__name">Code</label>
+                    <label class="form-label" for="form-addProject__code">Code</label>
                     <input class="form-control shadow-none reset" id="form-addProject__code" name="projectCode"
                            placeholder="Enter The Project Code"
                            required
@@ -73,7 +73,7 @@
                 <div class="mb-3">
                     <label class="form-label" for="form-addProject__startDate">Start Date</label>
                     <input class="form-control shadow-none reset startDate" id="form-addProject__startDate"
-                           name="projectFrom"
+                           name="projectStartDate"
                            type="date">
                     <!--                    <div class="text-danger" th:errors="*{title}"-->
                     <!--                         th:if="${#fields.hasErrors('title')}">-->
@@ -84,7 +84,7 @@
                 <div class="mb-3">
                     <label class="form-label" for="form-addProject__endDate">End Date</label>
                     <input class="form-control shadow-none reset endDate" id="form-addProject__endDate"
-                           name="projectTo"
+                           name="projectEndDate"
                            type="date">
                     <!--                    <div class="text-danger" th:errors="*{title}"-->
                     <!--                         th:if="${#fields.hasErrors('title')}">-->
@@ -95,7 +95,7 @@
                     <div class="border-bottom border-1 bg-body-secondary">
                         <p class="p-2 m-0">Staff Information</p>
                     </div>
-                    <div class="mb-3 p-3">
+                    <div class="p-3">
                         <table class="table">
                             <thead>
                             <tr>
@@ -127,7 +127,9 @@
                                 </td>
                                 <td>
                                     <div>
-                                        <input class="form-control shadow-none reset startDate"
+                                        <label class="form-label" for="form-addWorking__startDate-01"
+                                               hidden="hidden"></label>
+                                        <input class="form-control shadow-none reset startDateRecord"
                                                id="form-addWorking__startDate-01"
                                                name="workingStartDate"
                                                type="date">
@@ -158,7 +160,9 @@
                                 </td>
                                 <td>
                                     <div>
-                                        <input class="form-control shadow-none reset startDate"
+                                        <label class="form-label" for="form-addWorking__startDate-02"
+                                               hidden="hidden"></label>
+                                        <input class="form-control shadow-none reset startDateRecord"
                                                id="form-addWorking__startDate-02"
                                                name="workingStartDate"
                                                type="date">
@@ -190,7 +194,9 @@
                                 </td>
                                 <td>
                                     <div>
-                                        <input class="form-control shadow-none reset startDate"
+                                        <label class="form-label" for="form-addWorking__startDate-03"
+                                               hidden="hidden"></label>
+                                        <input class="form-control shadow-none reset startDateRecord"
                                                id="form-addWorking__startDate-03"
                                                name="workingStartDate"
                                                type="date">
@@ -200,13 +206,13 @@
                                         <!--                    </div>-->
                                     </div>
                                 </td>
-                                <td class="d-flex justify-content-evenly">
+                                <td>
                                     <button class="btn btn-outline-secondary new-record-btn"
                                             id="btn-addWorking-newRecord"
                                             type="button">
                                         New Record
                                     </button>
-                                    <button class="btn btn-outline-danger delete-record-btn"
+                                    <button class="btn btn-outline-danger delete-record-btn ms-3"
                                             id="btn-addWorking-deleteRecord"
                                             type="button">
                                         Delete Record
@@ -217,7 +223,6 @@
                         </table>
                     </div>
                 </div>
-
                 <button class="btn btn-outline-secondary" type="submit">Submit button</button>
                 <button class="btn btn-outline-secondary resetDataForm" type="button">Reset button</button>
             </form>
