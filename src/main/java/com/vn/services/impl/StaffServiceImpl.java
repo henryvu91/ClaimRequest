@@ -1,5 +1,7 @@
 package com.vn.services.impl;
 
+import com.vn.dto.StaffIdNameDto;
+import com.vn.dto.StaffViewDetailDto;
 import com.vn.model.Staff;
 import com.vn.repositories.DepartmentRepository;
 import com.vn.repositories.RoleRepository;
@@ -56,5 +58,28 @@ public class StaffServiceImpl implements StaffService {
         return staffRepository.save(staff);
     }
 
+    @Override
+    public Staff update(Staff staff) {
+//        Get the staff from database
+        Staff updateStaff = staffRepository.findById(staff.getId()).orElse(null);
+        if(updateStaff==null){
+            return null;
+        }
 
+        updateStaff.setDepartmentId(staff.getDepartmentId());
+        updateStaff.setRoleId(staff.getRoleId());
+        updateStaff.setSalary(staff.getSalary());
+
+        return staffRepository.save(updateStaff);
+    }
+
+    @Override
+    public List<StaffIdNameDto> findAllStaffName() {
+        return staffRepository.findAllStaffName();
+    }
+
+    @Override
+    public StaffViewDetailDto findStaffViewDetailById(Integer id) {
+        return staffRepository.findStaffViewDetailById(id);
+    }
 }
