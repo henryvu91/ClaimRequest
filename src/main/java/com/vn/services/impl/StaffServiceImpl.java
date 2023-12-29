@@ -1,10 +1,16 @@
 package com.vn.services.impl;
 
+import com.vn.dto.StaffIdNameDto;
+import com.vn.dto.StaffViewDetailDto;
 import com.vn.model.Staff;
+import com.vn.repositories.DepartmentRepository;
+import com.vn.repositories.RoleRepository;
 import com.vn.repositories.StaffRepository;
 import com.vn.services.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import java.util.List;
 
@@ -12,6 +18,14 @@ import java.util.List;
 public class StaffServiceImpl implements StaffService {
     @Autowired
     StaffRepository staffRepository;
+
+    @Autowired
+    DepartmentRepository departmentRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
     @Override
     public Staff findById(Integer id) {
         return staffRepository.findById(id).orElse(null);
@@ -27,5 +41,45 @@ public class StaffServiceImpl implements StaffService {
         return staffRepository.findAll();
     }
 
+    @Override
+    public Staff save(Staff staff, BindingResult result) {
 
+//        Check email not duplicate
+        String email = staff.getEmail();
+        if(staffRepository.existsByEmail(email)){
+//            Add the error message
+            result.rejectValue("email","MSG21");
+            return null;
+        }
+// Encode the password
+        String encodePassword = passwordEncoder.encode(staff.getPassword());
+        staff.setPassword(encodePassword);
+//        Add new staff
+        return staffRepository.save(staff);
+    }
+
+    @Override
+    public Staff update(Staff staff) {
+//        Get the staff from database
+        Staff updateStaff = staffRepository.findById(staff.getId()).orElse(null);
+        if(updateStaff==null){
+            return null;
+        }
+
+        updateStaff.setDepartmentId(staff.getDepartmentId());
+        updateStaff.setRoleId(staff.getRoleId());
+        updateStaff.setSalary(staff.getSalary());
+
+        return staffRepository.save(updateStaff);
+    }
+
+    @Override
+    public List<StaffIdNameDto> findAllStaffName() {
+        return staffRepository.findAllStaffName();
+    }
+
+    @Override
+    public StaffViewDetailDto findStaffViewDetailById(Integer id) {
+        return staffRepository.findStaffViewDetailById(id);
+    }
 }

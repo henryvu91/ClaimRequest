@@ -1,10 +1,18 @@
 package com.vn.model;
 
+import com.vn.utils.validateGroup.ValidateCreateStaffGroup;
+import com.vn.utils.validateGroup.ValidateUpdateStaffGroup;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Range;
+import org.thymeleaf.util.Validate;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -22,21 +30,29 @@ public class Staff {
     private Integer id;
     @Basic
     @Column(name = "department_id")
+    @NotBlank(groups = {ValidateCreateStaffGroup.class, ValidateUpdateStaffGroup.class},message = "{MSG8}")
     private Integer departmentId;
     @Basic
     @Column(name = "role_id")
+    @NotBlank(groups = {ValidateCreateStaffGroup.class,ValidateUpdateStaffGroup.class},message = "{MSG8}")
     private Integer roleId;
     @Basic
     @Column(name = "email")
+    @NotBlank(groups = {ValidateCreateStaffGroup.class},message = "{MSG8}")
+    @Email(groups = {ValidateCreateStaffGroup.class},message = "{MSG19}")
     private String email;
     @Basic
     @Column(name = "password")
+    @NotBlank(groups = {ValidateCreateStaffGroup.class},message = "{MSG8}")
+    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$",groups = {ValidateCreateStaffGroup.class},message = "{MSG20}")
     private String password;
     @Basic
     @Column(name = "name")
     private String name;
     @Basic
     @Column(name = "salary")
+    @Range(min = 1L,groups = {ValidateCreateStaffGroup.class, ValidateUpdateStaffGroup.class},message = "{MSG8}")
+    @NotBlank(groups = {ValidateCreateStaffGroup.class, ValidateUpdateStaffGroup.class})
     private BigDecimal salary;
     @ManyToOne
     @JoinColumn(name = "department_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
