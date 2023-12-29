@@ -25,7 +25,7 @@
             Staff Information
         </h2>
 
-        <div class="p-4" id="viewStaffForm" th:object="${viewStaff}">
+        <div class="p-4" id="viewStaffForm" >
             <div class="mb-3 row">
                 <label
                         class="form-label font-weight-bold mr-2 col-2"
@@ -42,40 +42,33 @@
                     <option th:each="item: ${nameList}" th:value="${item.id}" th:text="${item.name}"></option>
                 </select>
             </div>
+            <div id="viewDetail">
+<!--                <div class="mb-3">-->
+<!--                    <span-->
+<!--                            class="form-label font-weight-bold mr-2"-->
+<!--                    >Department:-->
+<!--                    </span>-->
+<!--                    <span th:text="*{departmentName}">Accounting</span>-->
+<!--                </div>-->
 
-            <div class="mb-3">
-                <span
-                        class="form-label font-weight-bold mr-2"
-                >Department:
-                </span>
-                <span th:text="*{departmentName}">Accounting</span>
+<!--                <div class="mb-3">-->
+<!--                    <span-->
+<!--                            class="form-label font-weight-bold mr-2"-->
+<!--                    >Role:-->
+<!--                    </span>-->
+<!--                    <span th:text="*{roleName}">BM</span>-->
+<!--                </div>-->
+
+<!--                <div class="mb-3">-->
+<!--                    <span-->
+<!--                            class="form-label font-weight-bold mr-2"-->
+<!--                    >Salary:-->
+<!--                    </span>-->
+<!--                    <span th:text="*{salary}">$1000</span>-->
+<!--                </div>-->
             </div>
 
-            <div class="mb-3">
-                <span
-                        class="form-label font-weight-bold mr-2"
-                >Role:
-                </span>
-                <span th:text="*{roleName}">BM</span>
-            </div>
 
-            <div class="mb-3">
-                <span
-                        class="form-label font-weight-bold mr-2"
-                >Salary:
-                </span>
-                <span th:text="*{salary}">$1000</span>
-            </div>
-
-            <a th:href="@{/staff/create}" class="btn btn-success my-2 py-2"
-            >Create New</a
-            >
-
-            <a th:href="@{/staff/update(id=${viewStaff.id})}" class="btn btn-success my-2 py-2">Edit</a>
-
-            <a th:href="@{/staff/delete}" class="btn btn-success my-2 py-2"
-            >Delete</a
-            >
         </div>
     </div>
 </div>
@@ -84,90 +77,30 @@
 <script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>
 <script th:src="@{/javascript/main.js}">
 </script>
+
 <script>
     $(document).ready(function () {
+        const nameStaffField = $("#form-viewStaff__name");
 
-        $("#createStaffForm").validate({
-            errorPlacement: function (error, element) {
-                error.insertBefore(element);
-            },
+    // load the detail in firstTime
+    loadDetail(nameStaffField.val());
 
-            rules: {
-                name: {
-                    required: true,
-                },
-
-                email: {
-                    required: true,
-                    email: true,
-                },
-
-                password:{
-                    required: true,
-                    password:true,
-                },
-                departmentId:{
-                  required:true
-                },
-
-                roleId:{
-                    required:true
-                },
-
-                salary:{
-                    required:true,
-                    isNumber:true,
-                    isPositive:true
-                }
-            },
-            messages: {
-                name: {
-                    required: "Name must be filled",
-
-                },
-
-                email: {
-                    required: "Email must be filled",
-                    email: "Email is invalid"
-                },
-
-                password: {
-                    required: "Password must be filled",
-                    password: "Password does not accept space",
-                },
-
-                departmentId:{
-                    required: "Department must be filled"
-                },
-
-                roleId:{
-                    required:"Role must be filled"
-                },
-
-                salary:{
-                    required:"Salary must be filled",
-                    isNumber:"Salary must be number",
-                    isPositive:"Salary must be positive"
-                }
-            },
-
-            submitHandler: function (form) {
-                form.submit();
-            },
+    //     add event change in name
+        nameStaffField.change(function () {
+           let idStaff = this.value;
+           loadDetail(idStaff);
         });
 
-        $.validator.methods.password = function (value, element) {
-            let passwordReg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-            return passwordReg.test(value);
-        };
+    function loadDetail(staffId) {
+        $.ajax({
+                url:"/staff/viewDetail?id="+staffId,
+                success:function (result) {
+                    $("#viewDetail").html(result)
+                }
+            }
 
-        $.validator.methods.isNumber = function (value,element){
-            return !isNaN(value);
-        }
-
-        $.validator.methods.isPositive = function (value,element){
-            return value > 0;
-        }
+        )
+    }
     });
 </script>
 </body>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:object="${viewStaff}">
+<div class="mb-3">
+                    <span
+                            class="form-label font-weight-bold mr-2"
+                    >Department:
+                    </span>
+    <span th:text="*{departmentName}">Accounting</span>
+</div>
+
+<div class="mb-3">
+                    <span
+                            class="form-label font-weight-bold mr-2"
+                    >Role:
+                    </span>
+    <span th:text="*{roleName}">BM</span>
+</div>
+
+<div class="mb-3">
+                    <span
+                            class="form-label font-weight-bold mr-2"
+                    >Salary:
+                    </span>
+    <span th:text="*{salary}">$1000</span>
+</div>
+    <a th:href="@{/staff/create}" class="btn btn-success my-2 py-2"
+    >Create New</a
+    >
+
+    <a th:href="@{/staff/update(id=${viewStaff.id})}" class="btn btn-success my-2 py-2">Edit</a>
+
+    <a th:href="@{/staff/delete}" class="btn btn-success my-2 py-2"
+    >Delete</a
+    >
+</div>
+</html>
