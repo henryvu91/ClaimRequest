@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>List Claim</title>
+    <link
+      rel="stylesheet"
+      th:href="@{/node_modules/normalize.css/normalize.css}"
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{/node_modules/bootstrap/dist/css/bootstrap.css}"
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{/node_modules/bootstrap-icons/font/bootstrap-icons.css}"
+    />
+    <link rel="stylesheet" th:href="@{stylesheet/css/style.css}" />
+    <link
+      rel="stylesheet"
+      href="../../../static/node_modules/normalize.css/normalize.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../static/node_modules/bootstrap/dist/css/bootstrap.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../static/node_modules/bootstrap-icons/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="../../../staticstylesheet/css/style.css" />
+     <!-- Thêm thư viện jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <!-- thư viện bootstrap không có trong static -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <style>
+       .modal-dialog {
+       max-width: 800px !important;
+       width: 100% !important;
+       }
+       .custom-input {
+      width: 100px;
+      height: 50px;
+      border: none;
+      background-color: rgb(89, 225, 203);
+      color: white;
+    }
+    #fixed-column {
+      max-width:  150px;
+      word-wrap: break-word;
+    }
+    #fixed-column1 {
+      max-width:   300px; 
+      word-wrap: break-word; 
+    }
+   
+         </style>
+  </head>
+  <body >
+    <div>
+     
+      <div >
+        
+        <div class="border-bottom border-1 mb-5 p-2 ">
+          <h1>View Draft</h1>
+        </div>
+        <input type="text" class="form-control custom-input" name="status" placeholder="status" />
+        <div class="border border-1 rounded-3 mb-5 ">
+          <div class="border-bottom border-1 bg-body-secondary">
+            <p class="p-2 m-0">View Draft</p>
+          </div>        
+          <div class="container" id="view-claim">
+                 
+            <table class="table table-bordered text-center">
+            
+              <thead>
+                <tr>
+                  <th >Claim Id </th>
+                  <th>Staff Name </th>
+                  <th>Project Name</th>
+                  <th>Project Duration</th>
+                  <th>Total Hours</th>
+                  
+                  <th>action</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td id="fixed-column">Johnsadasdasdasdasdsadasdasdasd</td>
+                  <td id="fixed-column1">Doeasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdaddadsasdasdasdasd</td>
+                  <td id="fixed-column1">john@exexamasdasdasdasdasdasdasda</td>
+                  <td id="fixed-column">John</td>
+                  <td id="fixed-column">Doe</td>
+                  
+                  <td id="fixed-column"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                      View
+                      </button>
+                      <button type="button" class="btn btn-danger" id="btnDelete" data-toggle="modal" data-target="#exampleModalCenter">
+                        Delete
+                      </button>
+                  
+
+                </tr>
+                
+                
+              </tbody>
+            </table>
+          </div>
+          
+                  <!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Detail Claim</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Staff Name</span>
+          </div>
+          <input type="text" class="form-control" placeholder="Username" name="staffName" aria-label="Username" aria-describedby="basic-addon1" disabled>
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Staff Department</span>
+          </div>
+          <input type="text" class="form-control" placeholder="Username" name="staffDepartment" aria-label="Username" aria-describedby="basic-addon1" disabled>
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Staff Id</span>
+          </div>
+          <input type="text" class="form-control" placeholder="Username" name="staffId" aria-label="Username" aria-describedby="basic-addon1" disabled>
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Project Name</span>
+          </div>
+          <input type="text" class="form-control" placeholder="Username" name="name" aria-label="Username" aria-describedby="basic-addon1" disabled>
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Role In Project</span>
+          </div>
+          <input type="text" class="form-control" placeholder="Username" name="roleInProject" aria-label="Username" aria-describedby="basic-addon1" disabled>
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Start Project</span>
+          </div>
+          <input type="text" class="form-control" placeholder="Username" aria-label="Username" name="startDate" aria-describedby="basic-addon1" disabled>
+          <div class="input-group-prepend">
+            <span class="input-group-text">End Project</span>
+          </div>
+          <input type="text" class="form-control" placeholder="Day" aria-label="Day" name="endDate"  aria-describedby="basic-addon2" disabled>
+          <div class="input-group-prepend">
+            <span class="input-group-text">Total Hours</span>
+          </div>
+          <input type="text" class="form-control" placeholder="Day" aria-label="Day"  aria-describedby="basic-addon2" disabled>
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Date</span>
+          </div>
+          <input type="text" class="form-control" placeholder="Username" name="date" aria-label="Username" aria-describedby="basic-addon1" disabled>
+          <div class="input-group-prepend">
+            <span class="input-group-text">Day</span>
+          </div>
+          <input type="text" class="form-control" placeholder="Day"  aria-label="Day" aria-describedby="basic-addon2" disabled>
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">From Time</span>
+          </div>
+          <input type="text" class="form-control" placeholder="Username" aria-label="Username" name="fromTime" aria-describedby="basic-addon1" disabled>
+          <div class="input-group-prepend">
+            <span class="input-group-text">To Time</span>
+          </div>
+          <input type="text" class="form-control" placeholder="Day" aria-label="Day" name="toTime"  aria-describedby="basic-addon2" disabled>
+          <div class="input-group-prepend">
+            <span class="input-group-text">Total Hours</span>
+          </div>
+          <input type="text" class="form-control" placeholder="Day" aria-label="Day" name="totalHours" aria-describedby="basic-addon2" disabled>
+        </div>
+       
+       
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Remarks</span>
+          </div>
+          <input type="text" class="form-control" placeholder="Username" aria-label="Username" name="remarks" aria-describedby="basic-addon1" disabled>
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Audit Trail</span>
+          </div>
+          <input type="text" class="form-control" placeholder="Username" aria-label="Username" name="auditTrail" aria-describedby="basic-addon1" disabled>
+        </div>
+ 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success">OK</button>
+        <button type="button" class="btn btn-danger">Cancal</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+   <!-- model khi delete -->
+   <!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">       
+        <span>ARE YOU SURE TO DELETE?</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="btnToDelete">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+      <script th:src="@{/javascript/main.js}"></script>
+    </div>
+   
+    <script>
+      // Gắn sự kiện click cho nút OK
+  document.getElementById("btnToDelete").addEventListener("click", function() {
+    // Xóa hàng chứa nút Delete
+    var row = document.getElementById("view-claim").getElementsByTagName("tbody")[0].getElementsByTagName("tr")[0];
+    if (row) {
+      row.parentNode.removeChild(row);
+    }
+  
+    $('#exampleModalCenter').modal('hide');
+  });
+   
+    </script>
+  </body>
+</html>

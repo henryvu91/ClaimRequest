@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Claim</title>
+    <link rel="stylesheet" th:href="@{/node_modules/normalize.css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/node_modules/bootstrap/dist/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/node_modules/bootstrap-icons/font/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{stylesheet/css/style.css}">
+    <!--    <link href="../../../static/node_modules/normalize.css/normalize.css" rel="stylesheet">-->
+    <!--    <link href="../../../static/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">-->
+    <!--    <link href="../../../static/node_modules/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">-->
+    <!--    <link href="../../../static/stylesheet/css/style.css" rel="stylesheet">-->
+    <!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> &lt;!&ndash; Thêm thư viện jQuery &ndash;&gt;-->
+</head>
+<body>
+
+<div>
+    <div>
+        <div class="border-bottom border-1 mb-5 p-2 ">
+            <h1>Add Claim</h1>
+        </div>
+        <div class="border border-1 rounded-3 mb-5 ">
+            <div class="border-bottom border-1 bg-body-secondary">
+                <p class="p-2 m-0">Content Form Elements</p>
+            </div>
+            <div class="p-3 w70">
+                <form id="form-addClaim" method="post" novalidate th:action="@{/claim/create}"
+                      th:object="${addClaimFrom}">
+                    <div class="mb-3"><label class="form-label" for="form-addClaim__status">status</label>
+                        <input class="form-control shadow-none reset " disabled id="form-addClaim__status"
+
+                               name="status" placeholder="Enter the title" required type="text">
+                    </div>
+                    <div class="mb-3"><label class="form-label" for="form-addClaim__staff-id">Staff Id</label>
+                        <input class="form-control shadow-none reset w70" disabled id="form-addClaim__staff-id"
+                               name="staffId" placeholder="Enter the title" required type="text">
+                    </div>
+                    <div class="mb-3"><label class="form-label" for="form-addClaim__staff-name">Staff Name</label>
+                        <input class="form-control shadow-none reset w70" disabled id="form-addClaim__staff-name"
+                               name="staffName" placeholder="Enter the title" required
+                               type="text">
+                    </div>
+                    <div class="mb-3 w70"><label class="form-label" for="form-addClaim__staff-department">Staff
+                        Department </label>
+                        <input class="form-control shadow-none reset" disabled
+                               id="form-addClaim__staff-department" name="staffDepartment" placeholder="Enter the title"
+                               required type="text">
+                    </div>
+                    <!--    mô phỏng-->
+                    <div class="mb-3 w70"><label class="form-label" for="form-addClaim__project-name">Project
+                        Name</label> <select class="form-control shadow-none reset" id="form-addClaim__project-name"
+
+                                             name="projectName" required>
+
+                        <option selected value="">Select a project</option>
+
+                        <option value="project1">Project 1</option>
+
+                    </select>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3 p-3"><label class="form-label" for="form-addClaimDetail__startDate">Start
+                                    Date Project</label>
+                                    <input class="form-control shadow-none w-100 reset"
+                                           id="form-addClaimDetail__startDate" name="startDate"
+                                           onchange="calculateDuration()" type="date">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-3 p-3"><label class="form-label" for="form-addClaimDetail__endDate">End
+                                    Date Project</label>
+                                    <input class="form-control shadow-none w-100 reset"
+                                           id="form-addClaimDetail__endDate" name="endDate"
+                                           onchange="calculateDuration()" type="date">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-3 p-3"><label class="form-label" for="form-addClaim__project-duration">Project
+                                    Duration</label>
+                                    <input class="form-control shadow-none reset" disabled
+                                           id="form-addClaim__project-duration" name="projectDuration"
+                                           placeholder="Enter the title" required
+                                           type="text">
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!--BẢNG date và day -->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="p-3">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="mb-3"><label class="form-label" for="form-addClaimDetail__date">Chose
+                                                Date Project</label>
+                                                <input class="form-control shadow-none reset"
+                                                       id="form-addClaimDetail__date" name="date"
+                                                       onchange="validateDate()" type="date">
+                                                <div class="text-danger" id="dateValidationMessage"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="mb-3"><label class="form-label" for="form-addClaimDetail__day">Day</label>
+                                                <input class="form-control shadow-none reset"
+                                                       id="form-addClaimDetail__day"
+                                                       placeholder="Enter the day" required
+                                                       type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+               
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div class="p-3">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3"><label class="form-label" for="form-addClaimDetail__fromTime">
+                                            From</label>
+                                            <input class="form-control shadow-none reset"
+                                                   id="form-addClaimDetail__fromTime" name="fromTime"
+                                                   onchange="calculateTotalHours()" type="time">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3"><label class="form-label"
+                                                                 for="form-addClaimDetail__toTime"> To</label>
+                                            <input class="form-control shadow-none reset"
+                                                   id="form-addClaimDetail__toTime" name="toTime"
+                                                   onchange="calculateTotalHours()" type="time">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3"><label class="form-label"
+                                                                 for="form-addClaimDetail__totalHours">Total
+                                            Hours</label>
+                                            <input class="form-control shadow-none reset"
+                                                   id="form-addClaimDetail__totalHours" name="totalHours"
+                                                   placeholder="Enter the title" readonly required type="number">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                 <div class="mb-3"><label class="form-label" for="form-addClaimDetail__remarks">Remarks</label> <textarea
+                        class="form-control shadow-none reset" id="form-addClaimDetail__remarks" name="remarks" required
+                        style="resize: vertical; overflow: auto;"></textarea>
+                 </div>
+                 <div class="mb-3"><label class="form-label" for="form-addClaimDetail__audit-trail">Audit trail </label>
+                    <input class="form-control shadow-none reset" disabled
+                           id="form-addClaimDetail__audit-trail" name="auditTrail" placeholder="Enter the title"
+                           required type="text">
+                 </div>
+                 <div class="data-card" id="dataCard" style="display: none;">
+                    <p>Created by <span id="creatorName"></span> on <span id="creationTime"></span></p>
+                 </div>
+                 <button class="btn btn-success" id="submitBtn" type="submit"> Submit button</button>
+                 <button class="btn btn-warning" id="saveBtn" type="button"> save button</button>
+                 <button class="btn btn-danger" type="button"> cancel</button>
+                 <button class="btn btn-primary" type="button"> update</button>
+             </form> 
+            </div>
+        </div>
+    </div> <!-- logic sử lí tính thứ theo ngày-->
+</div>
+<script th:src="@{/node_modules/jquery/dist/jquery.js}"></script>
+<script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.js}"></script>
+<script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>
+<script th:src="@{/javascript/main.js}"></script>
+<script th:src="@{/javascript/claim/create-claim}"></script>
+</body>
+</html>
