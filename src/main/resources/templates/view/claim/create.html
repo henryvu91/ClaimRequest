@@ -25,9 +25,11 @@
                 <p class="p-2 m-0">Content Form Elements</p>
             </div>
             <div class="p-3 w70">
-                <form id="form-addClaim" method="post" novalidate>
+                <form id="form-addClaim" method="post" novalidate th:action="@{/claim/create}"
+                      th:object="${addClaimFrom}">
                     <div class="mb-3"><label class="form-label" for="form-addClaim__status">status</label>
                         <input class="form-control shadow-none reset " disabled id="form-addClaim__status"
+
                                name="status" placeholder="Enter the title" required type="text">
                     </div>
                     <div class="mb-3"><label class="form-label" for="form-addClaim__staff-id">Staff Id</label>
@@ -113,7 +115,7 @@
                             </div>
                         </div>
                     </div>
-                </form> <!--BẢNG FROM TO -->
+               
                 <div class="container">
                     <div class="row">
                         <div class="col">
@@ -148,29 +150,32 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="mb-3"><label class="form-label" for="form-addClaimDetail__remarks">Remarks</label> <textarea
+                 </div>
+                 <div class="mb-3"><label class="form-label" for="form-addClaimDetail__remarks">Remarks</label> <textarea
                         class="form-control shadow-none reset" id="form-addClaimDetail__remarks" name="remarks" required
                         style="resize: vertical; overflow: auto;"></textarea>
-                </div>
-                <div class="mb-3"><label class="form-label" for="form-addClaimDetail__audit-trail">Audit trail </label>
+                 </div>
+                 <div class="mb-3"><label class="form-label" for="form-addClaimDetail__audit-trail">Audit trail </label>
                     <input class="form-control shadow-none reset" disabled
                            id="form-addClaimDetail__audit-trail" name="auditTrail" placeholder="Enter the title"
                            required type="text">
-                </div>
-                <div class="data-card" id="dataCard" style="display: none;">
+                 </div>
+                 <div class="data-card" id="dataCard" style="display: none;">
                     <p>Created by <span id="creatorName"></span> on <span id="creationTime"></span></p>
-                </div>
-                <button class="btn btn-success" id="submitBtn" type="submit"> Submit button</button>
-                <button class="btn btn-warning" id="saveBtn" type="button"> save button</button>
-                <button class="btn btn-danger" type="button"> cancel</button>
-                <button class="btn btn-primary" type="button"> update</button>
+                 </div>
+                 <button class="btn btn-success" id="submitBtn" type="submit"> Submit button</button>
+                 <button class="btn btn-warning" id="saveBtn" type="button"> save button</button>
+                 <button class="btn btn-danger" type="button"> cancel</button>
+                 <button class="btn btn-primary" type="button"> update</button>
+             </form> 
             </div>
         </div>
-        <script th:src="@{/javascript/main.js}"></script>
     </div> <!-- logic sử lí tính thứ theo ngày-->
 </div>
-<script th:src="@{/javascript/claim/create-claim.js}"></script>
+<script th:src="@{/node_modules/jquery/dist/jquery.js}"></script>
+<script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.js}"></script>
+<script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>
 <script th:src="@{/javascript/main.js}"></script>
+<script th:src="@{/javascript/claim/create-claim}"></script>
 </body>
 </html>
