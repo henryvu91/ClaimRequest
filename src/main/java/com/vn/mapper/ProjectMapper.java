@@ -9,8 +9,8 @@ public interface ProjectMapper {
     Project toEntity(ProjectDTO projectDTO);
 
     @AfterMapping
-    default void linkWorkingsById(@MappingTarget Project project) {
-        project.getWorkingsById().forEach(workingsById -> workingsById.setProjectByProjectId(project));
+    default void linkWorkingById(@MappingTarget Project project) {
+        project.getWorkingsById().forEach(workingById -> workingById.setProjectByProjectId(project));
     }
 
     ProjectDTO toDto(Project project);
