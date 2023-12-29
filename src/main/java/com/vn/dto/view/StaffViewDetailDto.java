@@ -1,4 +1,4 @@
-package com.vn.dto;
+package com.vn.dto.view;
 
 import com.vn.utils.validateGroup.ValidateCreateStaffGroup;
 import jakarta.validation.constraints.Email;

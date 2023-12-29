@@ -1,7 +1,9 @@
 package com.vn.services.impl;
 
-import com.vn.dto.StaffIdNameDto;
-import com.vn.dto.StaffViewDetailDto;
+import com.vn.dto.form.StaffUpdateInfoDto;
+import com.vn.dto.view.StaffIdNameDto;
+import com.vn.dto.view.StaffViewDetailDto;
+import com.vn.mapper.form.StaffUpdateInfoMapper;
 import com.vn.model.Staff;
 import com.vn.repositories.DepartmentRepository;
 import com.vn.repositories.RoleRepository;
@@ -26,23 +28,25 @@ public class StaffServiceImpl implements StaffService {
     RoleRepository roleRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    StaffUpdateInfoMapper staffUpdateInfoMapper;
     @Override
-    public Staff findById(Integer id) {
+    public com.vn.model.Staff findById(Integer id) {
         return staffRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Staff findByEmail(String email) {
+    public com.vn.model.Staff findByEmail(String email) {
         return staffRepository.findByEmail(email);
     }
 
     @Override
-    public List<Staff> findAll() {
+    public List<com.vn.model.Staff> findAll() {
         return staffRepository.findAll();
     }
 
     @Override
-    public Staff save(Staff staff, BindingResult result) {
+    public com.vn.model.Staff save(com.vn.model.Staff staff, BindingResult result) {
 
 //        Check email not duplicate
         String email = staff.getEmail();
@@ -59,16 +63,14 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public Staff update(Staff staff) {
+    public Staff update(StaffUpdateInfoDto staff) {
 //        Get the staff from database
-        Staff updateStaff = staffRepository.findById(staff.getId()).orElse(null);
+        com.vn.model.Staff updateStaff = staffRepository.findById(staff.getId()).orElse(null);
         if(updateStaff==null){
             return null;
         }
 
-        updateStaff.setDepartmentId(staff.getDepartmentId());
-        updateStaff.setRoleId(staff.getRoleId());
-        updateStaff.setSalary(staff.getSalary());
+        staffUpdateInfoMapper.partialUpdate(staff,updateStaff);
 
         return staffRepository.save(updateStaff);
     }
