@@ -10,7 +10,7 @@ import java.util.List;
  * DTO for {@link com.vn.model.Project}
  */
 @Value
-public class ProjectDto implements Serializable {
+public class ProjectDTO implements Serializable {
     Integer id;
     String code;
     String name;
