@@ -1,6 +1,6 @@
-package com.vn.mapper;
+package com.vn.mapper.view;
 
-import com.vn.dto.StaffViewDetailDto;
+import com.vn.dto.view.StaffViewDetailDto;
 import com.vn.model.Staff;
 import org.mapstruct.*;
 

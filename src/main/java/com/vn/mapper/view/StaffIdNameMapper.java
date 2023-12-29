@@ -1,11 +1,11 @@
-package com.vn.mapper;
+package com.vn.mapper.view;
 
-import com.vn.dto.StaffIdNameDto;
+import com.vn.dto.view.StaffIdNameDto;
 import com.vn.model.Staff;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
-public interface StaffMapper {
+public interface StaffIdNameMapper {
 
     @Mapping(source = "id",target = "id")
     @Mapping(source = "name",target = "name")

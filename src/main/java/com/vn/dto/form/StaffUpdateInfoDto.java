@@ -1,6 +1,5 @@
-package com.vn.dto;
+package com.vn.dto.form;
 
-import com.vn.utils.validateGroup.ValidateCreateStaffGroup;
 import com.vn.utils.validateGroup.ValidateUpdateStaffGroup;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -26,44 +26,88 @@
         <h2
                 class="title text-grey bg-grey m-0 py-2 pl-3 border-bottom border-grey"
         >
-            Update Staff Information
+            Create New Staff
         </h2>
 
-        <form class="p-4" id="updateStaffForm" th:action="@{/staff/updateStaff}" th:object="${updateStaff}" method="post">
-            <input type="hidden" th:field="*{id}"/>
-<!--            Start name-->
+        <form th:action="@{/staff/create}" method="post" class="p-4" id="createStaffForm" th:object="${newStaff}">
             <div class="mb-3">
-                <label class="form-label" for="form-updateStaff__name"
+                <label class="form-label" for="form-createStaff__name"
                 >Staff Name</label
                 >
-                <p
+                <input
                         class="form-control shadow-none reset"
-                        id="form-updateStaff__name"
-                        th:text="*{name}"
-                ></p>
-                <!--            End name-->
-
-                <!--            Start department-->
+                        id="form-createStaff__name"
+                        th:field="*{name}"
+                        placeholder="Enter the staff name"
+                        required
+                        type="text"
+                />
+                <div
+                        class="text-danger"
+                        th:errors="*{name}"
+                        th:if="${#fields.hasErrors('name')}"
+                >
+                    Name Error
+                </div>
             </div>
 
             <div class="mb-3">
-                <label class="form-label" for="form-updateStaff__department"
+                <label class="form-label" for="form-createStaff__email"
+                >Email</label
+                >
+                <input
+                        class="form-control shadow-none reset"
+                        id="form-createStaff__email"
+                        th:field="*{email}"
+                        placeholder="Enter the email"
+                        required
+                        type="email"
+                />
+                <div
+                        class="text-danger"
+                        th:errors="*{email}"
+                        th:if="${#fields.hasErrors('email')}"
+                >
+                    Email Error
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="form-createStaff__password"
+                >Password</label
+                >
+                <input
+                        class="form-control shadow-none reset"
+                        id="form-createStaff__password"
+                        th:field="*{password}"
+                        placeholder="Enter the password"
+                        required
+                        type="password"
+                />
+                <div
+                        class="text-danger"
+                        th:errors="*{password}"
+                        th:if="${#fields.hasErrors('password')}"
+                >
+                    Password Error
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="form-createStaff__department"
                 >Department</label
                 >
 
                 <select
                         class="form-control shadow-none reset"
-                        id="form-updateStaff__department"
+                        id="form-createStaff__department"
                         required
                         th:field="*{departmentId}"
                 >
                     <option th:each="item: ${departments}" th:value="${item.id}" th:text="${item.name}"></option>
                 </select>
-
             </div>
-            <!--            End department-->
 
-            <!--            Start Role-->
             <div class="mb-3">
                 <label class="form-label" for="form-createStaff__role"
                 >Role</label
@@ -78,18 +122,15 @@
                     <option th:each="role: ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
                 </select>
             </div>
-            <!--            End Role-->
 
-            <!--            Start Salary-->
             <div class="mb-3">
-                <label class="form-label" for="form-updateStaff__salary"
+                <label class="form-label" for="form-createStaff__salary"
                 >Salary</label
                 >
                 <input
                         class="form-control shadow-none reset"
-                        id="form-updateStaff__salary"
+                        id="form-createStaff__salary"
                         th:field="*{salary}"
-                        required
                         type="number"
                 />
                 <div
@@ -100,7 +141,6 @@
                     Salary Error
                 </div>
             </div>
-            <!--            End Salary-->
 
             <button type="submit" class="btn btn-success my-2 py-2 btn-font-size">
                 Save
@@ -120,7 +160,7 @@
 <script>
     $(document).ready(function () {
 
-        $("#updateStaffForm").validate({
+        $("#createStaffForm").validate({
             errorPlacement: function (error, element) {
                 error.insertBefore(element);
             },
@@ -130,6 +170,15 @@
                     required: true,
                 },
 
+                email: {
+                    required: true,
+                    email: true,
+                },
+
+                password:{
+                    required: true,
+                    password:true,
+                },
                 departmentId:{
                   required:true
                 },
@@ -148,6 +197,16 @@
                 name: {
                     required: "Name must be filled",
 
+                },
+
+                email: {
+                    required: "Email must be filled",
+                    email: "Email is invalid"
+                },
+
+                password: {
+                    required: "Password must be filled",
+                    password: "Password does not accept space",
                 },
 
                 departmentId:{
@@ -170,6 +229,11 @@
             },
         });
 
+        $.validator.methods.password = function (value, element) {
+            let passwordReg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+            return passwordReg.test(value);
+        };
+
         $.validator.methods.isNumber = function (value,element){
             return !isNaN(value);
         }
@@ -177,7 +241,6 @@
         $.validator.methods.isPositive = function (value,element){
             return value > 0;
         }
-
     });
 </script>
 </body>
