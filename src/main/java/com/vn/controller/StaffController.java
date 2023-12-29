@@ -1,8 +1,10 @@
 package com.vn.controller;
 
 import com.vn.dto.StaffIdNameDto;
+import com.vn.dto.StaffUpdateInfoDto;
 import com.vn.dto.StaffViewDetailDto;
 import com.vn.mapper.StaffMapper;
+import com.vn.mapper.StaffUpdateInfoMapper;
 import com.vn.mapper.StaffViewMapper;
 import com.vn.model.Department;
 import com.vn.model.Role;
@@ -40,6 +42,9 @@ public class StaffController {
 
     @Autowired
     StaffViewMapper staffViewMapper;
+
+    @Autowired
+    StaffUpdateInfoMapper staffUpdateInfoMapper;
 
 //    Show the UI to create new staff
     @GetMapping("/staff/createStaff")
@@ -118,7 +123,8 @@ public class StaffController {
             @RequestParam("id") Integer id,
             ModelMap modelMap){
 
-        Staff staff = staffService.findById(id);
+//        Staff staff = staffService.findById(id);
+        StaffUpdateInfoDto staff = staffUpdateInfoMapper.toDto(staffService.findById(id));
         List<Department> departments = departmentService.findAll();
         List<Role> roles = roleService.findAll();
         modelMap.addAttribute("updateStaff",staff);
@@ -130,7 +136,7 @@ public class StaffController {
     //    Method to create new staff in database
     @PostMapping("/staff/updateStaff")
     public String updateStaff(
-            @Validated @ModelAttribute(name = "updateStaff")Staff staff
+            @Validated @ModelAttribute(name = "updateStaff")StaffUpdateInfoDto staff
             , BindingResult result
             , ModelMap modelMap){
 
@@ -142,7 +148,7 @@ public class StaffController {
         }else{
 
 //        Save staff into db
-            Staff addedStaff = staffService.update(staff);
+            Staff addedStaff = staffService.update(staffUpdateInfoMapper.toEntity(staff));
             if(addedStaff == null){
                 isError = true;
                 //TODO: Add message error
