@@ -67,11 +67,11 @@
                 <span th:text="*{salary}">$1000</span>
             </div>
 
-            <a th:href="@{/createStaff}" class="btn btn-success my-2 py-2"
+            <a th:href="@{/staff/createStaff}" class="btn btn-success my-2 py-2"
             >Create New</a
             >
 
-            <a th:href="@{/editStaff}" class="btn btn-success my-2 py-2">Edit</a>
+            <a th:href="@{/staff/updateStaff(id=${viewStaff.id})}" class="btn btn-success my-2 py-2">Edit</a>
 
             <a th:href="@{/deleteStaff}" class="btn btn-success my-2 py-2"
             >Delete</a

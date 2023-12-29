@@ -1,7 +1,6 @@
 package com.vn.controller;
 
 import com.vn.dto.StaffIdNameDto;
-import com.vn.dto.StaffIdNameDto2;
 import com.vn.dto.StaffViewDetailDto;
 import com.vn.mapper.StaffMapper;
 import com.vn.mapper.StaffViewMapper;
@@ -57,7 +56,7 @@ public class StaffController {
 //    Method to create new staff in database
     @PostMapping("/staff/createStaff")
     public String createStaff(
-            @Validated(ValidateCreateStaffGroup.class) @ModelAttribute(name = "newStaff")Staff staff
+            @Validated @ModelAttribute(name = "newStaff")Staff staff
             , BindingResult result
             , ModelMap modelMap){
 
@@ -84,14 +83,15 @@ public class StaffController {
             modelMap.addAttribute("roles",roles);
             return "view/staff/createStaff";
         }else{
-            return "view/staff/viewStaff";
+            return "redirect:/staff/viewStaff";
         }
     }
     @GetMapping("/staff/viewStaff")
     public String viewStaffUI(
             @RequestParam(name = "id",required = false) Integer id
             ,ModelMap modelMap){
-       List <StaffIdNameDto2> nameList = staffService.findAll().stream().map(m->staffMapper.toDto(m)).toList();
+//       List <StaffIdNameDto> nameList = staffService.findAll().stream().map(m->staffMapper.toDto(m)).toList();
+       List <StaffIdNameDto> nameList = staffService.findAllStaffName();
 
 //        check the list is empty
         if(!nameList.isEmpty()){
@@ -101,7 +101,8 @@ public class StaffController {
                 id = nameList.get(0).getId();
             }
 //            get staff information
-            StaffViewDetailDto viewStaff = staffViewMapper.toDto(staffService.findById(id));
+//            StaffViewDetailDto viewStaff = staffViewMapper.toDto(staffService.findById(id));
+            StaffViewDetailDto viewStaff = staffService.findStaffViewDetailById(id);
             if(viewStaff==null){
 //                TODO: error message
             }else {
@@ -156,7 +157,7 @@ public class StaffController {
             modelMap.addAttribute("roles",roles);
             return "view/staff/updateStaff";
         }else{
-            return "view/staff/viewStaff";
+            return "redirect:/staff/viewStaff";
         }
     }
 }

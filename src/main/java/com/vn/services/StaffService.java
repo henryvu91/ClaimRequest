@@ -1,7 +1,6 @@
 package com.vn.services;
 
 import com.vn.dto.StaffIdNameDto;
-import com.vn.dto.StaffIdNameDto2;
 import com.vn.dto.StaffViewDetailDto;
 import com.vn.model.Staff;
 import org.springframework.validation.BindingResult;
@@ -20,7 +19,7 @@ public interface StaffService {
 
     Staff update(Staff staff);
 
-    List<StaffIdNameDto2> findAllStaffName();
+    List<StaffIdNameDto> findAllStaffName();
 
     StaffViewDetailDto findStaffViewDetailById(Integer id);
 }

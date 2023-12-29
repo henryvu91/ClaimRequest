@@ -88,7 +88,7 @@
                 <input
                         class="form-control shadow-none reset"
                         id="form-updateStaff__salary"
-                        name="salary"
+                        th:field="*{salary}"
                         required
                         type="number"
                 />
@@ -177,6 +177,7 @@
         $.validator.methods.isPositive = function (value,element){
             return value > 0;
         }
+
     });
 </script>
 </body>
