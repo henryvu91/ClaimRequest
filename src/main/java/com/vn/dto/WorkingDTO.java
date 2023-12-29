@@ -1,6 +1,6 @@
 package com.vn.dto;
 
-import lombok.Data;
+import lombok.Value;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -8,12 +8,12 @@ import java.time.LocalDate;
 /**
  * DTO for {@link com.vn.model.Working}
  */
-@Data
+@Value
 public class WorkingDTO implements Serializable {
-    Integer workingId;
-    Integer workingStaffId;
-    Integer workingProjectId;
-    Integer workingJobRankId;
-    LocalDate workingStartDate;
-    LocalDate workingEndDate;
+    Integer id;
+    Integer staffId;
+    Integer projectId;
+    Integer jobRankId;
+    LocalDate startDate;
+    LocalDate endDate;
 }

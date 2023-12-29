@@ -2,20 +2,14 @@ package com.vn.mapper;
 
 import com.vn.dto.WorkingDTO;
 import com.vn.model.Working;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.*;
 
-@Mapper
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public interface WorkingMapper {
-    WorkingMapper INSTANCE = Mappers.getMapper(WorkingMapper.class);
+    Working toEntity(WorkingDTO workingDTO);
 
-    @Mapping(source = "id", target = "workingId")
-    @Mapping(source = "staffId", target = "workingStaffId")
-    @Mapping(source = "projectId", target = "workingProjectId")
-    @Mapping(source = "jobRankId", target = "workingJobRankId")
-    @Mapping(source = "startDate", target = "workingStartDate")
-    @Mapping(source = "endDate", target = "workingEndDate")
-    WorkingDTO toDTO(Working working);
+    WorkingDTO toDto(Working working);
 
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    Working partialUpdate(WorkingDTO workingDTO, @MappingTarget Working working);
 }

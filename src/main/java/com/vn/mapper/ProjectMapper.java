@@ -1,20 +1,20 @@
 package com.vn.mapper;
 
-import com.vn.dto.ProjectDTO;
+import com.vn.dto.ProjectDto;
 import com.vn.model.Project;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.*;
 
-@Mapper
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, uses = {WorkingMapper.class})
 public interface ProjectMapper {
-    ProjectMapper INSTANCE = Mappers.getMapper(ProjectMapper.class);
+    Project toEntity(ProjectDto projectDto);
 
-    @Mapping(source = "id", target = "projectId")
-    @Mapping(source = "code", target = "projectCode")
-    @Mapping(source = "name", target = "projectName")
-    @Mapping(source = "startDate", target = "projectStartDate")
-    @Mapping(source = "endDate", target = "projectEndDate")
-    ProjectDTO toDTO(Project project);
+    @AfterMapping
+    default void linkWorkingsById(@MappingTarget Project project) {
+        project.getWorkingsById().forEach(workingsById -> workingsById.setProjectByProjectId(project));
+    }
 
+    ProjectDto toDto(Project project);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    Project partialUpdate(ProjectDto projectDto, @MappingTarget Project project);
 }
