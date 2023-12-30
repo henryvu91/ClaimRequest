@@ -17,7 +17,6 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Project {
-    //TODO: Sửa lại Project Code trong Database
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")

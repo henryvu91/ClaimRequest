@@ -90,14 +90,19 @@
                 <configuration>
                     <excludes>
                         <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
+                            <source>${java.version}</source> <!-- depending on your project -->
+                            <target>${java.version}</target> <!-- depending on your project -->
                             <annotationProcessorPaths>
+                                <path>
+                                    <groupId>org.projectlombok</groupId>
+                                    <artifactId>lombok</artifactId>
+                                </path>
                                 <path>
                                     <groupId>org.mapstruct</groupId>
                                     <artifactId>mapstruct-processor</artifactId>
                                     <version>${org.mapstruct.version}</version>
                                 </path>
+                                <!-- other annotation processors -->
                             </annotationProcessorPaths>
                         </exclude>
                     </excludes>
