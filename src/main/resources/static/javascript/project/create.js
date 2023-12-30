@@ -144,9 +144,6 @@ $(document).ready(function () {
         required: "Please enter Working Start Date",
       },
     },
-    submitHandler: function (form) {
-      alert("Submit");
-      console.log("Submit");
-    },
+    submitHandler: function (form) {},
   });
 });
