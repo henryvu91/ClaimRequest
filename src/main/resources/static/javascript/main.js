@@ -12,7 +12,7 @@ $(document).ready(function () {
   $startDate.val(formattedDate);
   $startDateRecord.val(formattedDate);
   $endDate.attr("min", formattedDate);
-  $startDateRecord.attr("min", formattedDate);
+  $startDateRecord.attr("min", $startDate.val());
 
   function calculateDuration() {
     let startDateVal = new Date($startDate.val());
@@ -33,12 +33,17 @@ $(document).ready(function () {
     $(".startDateRecord").attr("min", $newMinDate);
     calculateDuration();
   });
-  $endDate.on("change", calculateDuration);
+  $endDate.on("change", function () {
+    let $newMaxDate = $endDate.val();
+    // $startDateRecord.attr("max", $newMaxDate);
+    $(".startDateRecord").attr("max", $newMaxDate);
+    calculateDuration();
+  });
 
   $("#btn-projectInformation-create")
     .off("click")
     .on("click", function (e) {
-      e.preventDefault();
+      // e.preventDefault();
       $contentMain.children().remove();
       $contentMain.load("project/create");
     });
@@ -46,7 +51,7 @@ $(document).ready(function () {
   $("#btn-projectInformation-view")
     .off("click")
     .click(function (e) {
-      e.preventDefault();
+      // e.preventDefault();
       $contentMain.children().remove();
       $contentMain.load("project/view");
     });

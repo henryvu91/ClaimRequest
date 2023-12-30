@@ -1,6 +1,8 @@
 $(document).ready(function () {
   const $tableBody = $(".table tbody");
   let $projectStartDate = $("#form-addProject__startDate");
+  let $projectEndDate = $("#form-addProject__endDate");
+
   let $today = new Date();
   let $formattedDate = $today.toISOString().substring(0, 10);
 
@@ -16,7 +18,7 @@ $(document).ready(function () {
       <tr>
         <th scope="row">${newIndex}</th>
         <td>
-          <select aria-label="Select Name" class="form-select" name="workingName">
+          <select aria-label="Select Name" class="form-select" name="workingStaffId">
             <option selected>Open this select menu</option>
             <option value="1">One</option>
             <option value="2">Two</option>
@@ -24,7 +26,7 @@ $(document).ready(function () {
           </select>
         </td>
         <td>
-          <select aria-label="Select Job Rank" class="form-select" name="workingJobRank">
+          <select aria-label="Select Job Rank" class="form-select" name="workingJobRankId">
             <option selected>Open this select menu</option>
             <option value="1">One</option>
             <option value="2">Two</option>
@@ -46,7 +48,8 @@ $(document).ready(function () {
     $newRow
       .find('input[type="date"]')
       .val($formattedDate)
-      .attr("min", $projectStartDate.val());
+      .attr("min", $projectStartDate.val())
+      .attr("max", $projectEndDate.val());
     toggleDeleteButton();
   }
 
@@ -92,7 +95,7 @@ $(document).ready(function () {
     rules: {
       projectCode: {
         minlength: 3,
-        maxLength: 20,
+        maxlength: 20,
         required: true,
       },
       projectName: {
@@ -103,7 +106,6 @@ $(document).ready(function () {
         required: true,
       },
       projectEndDate: {
-        greaterThan: "#form-addProject__startDate",
         required: true,
       },
       workingName: {
@@ -114,13 +116,12 @@ $(document).ready(function () {
       },
       workingStartDate: {
         required: true,
-        greaterThan: "#form-addProject__startDate",
       },
     },
     messages: {
       projectCode: {
         minlength: "Project Code must be at least 3 characters",
-        maxLength: "Project Code must be less than 20 characters",
+        maxlength: "Project Code must be less than 20 characters",
         required: "Please enter Project Code",
       },
       projectName: {
@@ -131,8 +132,6 @@ $(document).ready(function () {
         required: "Please enter Project Start Date",
       },
       projectEndDate: {
-        greaterThanEqual:
-          "Project End Date must be greater than Project Start Date",
         required: "Please enter Project End Date",
       },
       workingName: {
@@ -143,12 +142,11 @@ $(document).ready(function () {
       },
       workingStartDate: {
         required: "Please enter Working Start Date",
-        greaterThanEqual:
-          "Working Start Date must be greater than Project Start Date",
       },
     },
     submitHandler: function (form) {
-      form.submit();
+      alert("Submit");
+      console.log("Submit");
     },
   });
 });
