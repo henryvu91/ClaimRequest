@@ -30,7 +30,7 @@ public class StaffServiceImpl implements StaffService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    //    @Autowired
+    @Autowired
     StaffUpdateInfoMapper staffUpdateInfoMapper;
 
     @Override

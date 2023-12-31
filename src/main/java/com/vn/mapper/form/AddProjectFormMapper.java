@@ -7,12 +7,12 @@ import org.mapstruct.*;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, uses = {AddWorkByProjectMapper.class})
 public interface AddProjectFormMapper {
 
-    @Mapping(source = "id", target = "projectId")
-    @Mapping(source = "code", target = "projectCode")
-    @Mapping(source = "name", target = "projectName")
-    @Mapping(source = "startDate", target = "projectStartDate")
-    @Mapping(source = "endDate", target = "projectEndDate")
-    @Mapping(source = "workingsById", target = "projectWorkingsById")
+    @Mapping(source = "projectId", target = "id")
+    @Mapping(source = "projectCode", target = "code")
+    @Mapping(source = "projectName", target = "name")
+    @Mapping(source = "projectStartDate", target = "startDate")
+    @Mapping(source = "projectEndDate", target = "endDate")
+    @Mapping(source = "projectWorkingsById", target = "workingsById")
     Project toEntity(AddProjectFormDTO addProjectFormDTO);
 
     @AfterMapping
@@ -20,12 +20,12 @@ public interface AddProjectFormMapper {
         project.getWorkingsById().forEach(workingsById -> workingsById.setProjectByProjectId(project));
     }
 
-    @Mapping(source = "projectId", target = "id")
-    @Mapping(source = "projectCode", target = "code")
-    @Mapping(source = "projectName", target = "name")
-    @Mapping(source = "projectStartDate", target = "startDate")
-    @Mapping(source = "projectEndDate", target = "endDate")
-    @Mapping(source = "projectWorkingsById", target = "workingsById")
+    @Mapping(source = "id", target = "projectId")
+    @Mapping(source = "code", target = "projectCode")
+    @Mapping(source = "name", target = "projectName")
+    @Mapping(source = "startDate", target = "projectStartDate")
+    @Mapping(source = "endDate", target = "projectEndDate")
+    @Mapping(source = "workingsById", target = "projectWorkingsById")
     AddProjectFormDTO toDto(Project project);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
