@@ -39,10 +39,10 @@
                     <input class="form-control shadow-none reset" id="form-addProject__code" name="projectCode"
                            placeholder="Enter The Project Code"
                            type="text">
-                    <!--                    <div class="text-danger" th:errors="*{title}"-->
-                    <!--                         th:if="${#fields.hasErrors('title')}">-->
-                    <!--                        Title Error-->
-                    <!--                    </div>-->
+                    <div class="text-danger" th:errors="*{projectCode}"
+                         th:if="${#fields.hasErrors('projectCode')}">
+                        Title Error
+                    </div>
                 </div>
 
                 <div class="mb-3">
@@ -50,10 +50,10 @@
                     <input class="form-control shadow-none reset" id="form-addProject__name" name="projectName"
                            placeholder="Enter The Project Name"
                            type="text">
-                    <!--                    <div class="text-danger" th:errors="*{title}"-->
-                    <!--                         th:if="${#fields.hasErrors('title')}">-->
-                    <!--                        Title Error-->
-                    <!--                    </div>-->
+                    <div class="text-danger" th:errors="*{projectName}"
+                         th:if="${#fields.hasErrors('projectName')}">
+                        Error Message
+                    </div>
                 </div>
 
                 <div class="mb-3">
@@ -62,10 +62,6 @@
                            name="projectDuration"
                            placeholder=""
                            type="text">
-                    <!--                    <div class="text-danger" th:errors="*{title}"-->
-                    <!--                         th:if="${#fields.hasErrors('title')}">-->
-                    <!--                        Title Error-->
-                    <!--                    </div>-->
                 </div>
 
                 <div class="mb-3">
@@ -73,10 +69,10 @@
                     <input class="form-control shadow-none reset startDate" id="form-addProject__startDate"
                            name="projectStartDate"
                            type="date">
-                    <!--                    <div class="text-danger" th:errors="*{title}"-->
-                    <!--                         th:if="${#fields.hasErrors('title')}">-->
-                    <!--                        Title Error-->
-                    <!--                    </div>-->
+                    <div class="text-danger" th:errors="*{projectStartDate}"
+                         th:if="${#fields.hasErrors('projectStartDate')}">
+                        Error Message
+                    </div>
                 </div>
 
                 <div class="mb-3">
@@ -84,10 +80,10 @@
                     <input class="form-control shadow-none reset endDate" id="form-addProject__endDate"
                            name="projectEndDate"
                            type="date">
-                    <!--                    <div class="text-danger" th:errors="*{title}"-->
-                    <!--                         th:if="${#fields.hasErrors('title')}">-->
-                    <!--                        Title Error-->
-                    <!--                    </div>-->
+                    <div class="text-danger" th:errors="*{projectEndDate}"
+                         th:if="${#fields.hasErrors('projectEndDate')}">
+                        Error Message
+                    </div>
                 </div>
                 <div class="border border-1 rounded-3 mb-5">
                     <div class="border-bottom border-1 bg-body-secondary">
@@ -114,6 +110,16 @@
                                         <option value="2">Two</option>
                                         <option value="3">Three</option>
                                     </select>
+                                    <div>
+                                        <input class="form-control shadow-none reset"
+                                               id="form-addProject__workingStaffId" name="workingStaffId"
+                                               placeholder="Enter The Staff Name"
+                                               type="text">
+                                        <div class="text-danger" th:errors="*{workingStaffId}"
+                                             th:if="${#fields.hasErrors('workingStaffId')}">
+                                            Error Message
+                                        </div>
+                                    </div>
                                 </td>
                                 <td>
                                     <select aria-label="Select Job Rank" class="form-select"

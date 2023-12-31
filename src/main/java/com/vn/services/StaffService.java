@@ -10,13 +10,13 @@ import java.util.List;
 
 public interface StaffService {
 
-    com.vn.model.Staff findById(Integer id);
+    Staff findById(Integer id);
 
-    com.vn.model.Staff findByEmail(String email);
+    Staff findByEmail(String email);
 
-    List<com.vn.model.Staff> findAll();
+    List<Staff> findAll();
 
-    com.vn.model.Staff save(com.vn.model.Staff staff, BindingResult result);
+    Staff save(Staff staff, BindingResult result);
 
     Staff update(StaffUpdateInfoDto staff);
 
