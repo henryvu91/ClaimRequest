@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Login Page</title>
+    <link href="./favicon.ico" rel="icon" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/node_modules/normalize.css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/node_modules/bootstrap/dist/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/node_modules/bootstrap-icons/font/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{stylesheet/css/style.css}">
+
+
+</head>
+<body>
+<div class="container-fluid bg-grey min-vh-100 d-flex">
+    <div
+            class="container w-75 bg-white border border-grey border-round align-self-center main-form px-0"
+    >
+        <h2
+                class="title text-grey bg-grey m-0 py-2 pl-3 border-bottom border-grey"
+        >
+            Staff Information
+        </h2>
+
+        <div class="p-4" id="viewStaffForm" th:object="${viewStaff}">
+            <div class="mb-3 row">
+                <label
+                        class="form-label font-weight-bold mr-2 col-2"
+                        for="form-viewStaff__name"
+                >Staff Name:
+                </label>
+
+                <select
+                        class="shadow-none reset col-6"
+                        name="name"
+                        id="form-viewStaff__name"
+                        required
+                >
+                    <option th:each="item: ${nameList}" th:value="${item.id}" th:text="${item.name}"></option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <span
+                        class="form-label font-weight-bold mr-2"
+                >Department:
+                </span>
+                <span th:text="*{departmentName}">Accounting</span>
+            </div>
+
+            <div class="mb-3">
+                <span
+                        class="form-label font-weight-bold mr-2"
+                >Role:
+                </span>
+                <span th:text="*{roleName}">BM</span>
+            </div>
+
+            <div class="mb-3">
+                <span
+                        class="form-label font-weight-bold mr-2"
+                >Salary:
+                </span>
+                <span th:text="*{salary}">$1000</span>
+            </div>
+
+            <a th:href="@{/staff/create}" class="btn btn-success my-2 py-2"
+            >Create New</a
+            >
+
+            <a th:href="@{/staff/update(id=${viewStaff.id})}" class="btn btn-success my-2 py-2">Edit</a>
+
+            <a th:href="@{/staff/delete}" class="btn btn-success my-2 py-2"
+            >Delete</a
+            >
+        </div>
+    </div>
+</div>
+<script th:src="@{/node_modules/jquery/dist/jquery.js}"></script>
+<script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.js}"></script>
+<script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>
+<script th:src="@{/javascript/main.js}">
+</script>
+<script>
+    $(document).ready(function () {
+
+        $("#createStaffForm").validate({
+            errorPlacement: function (error, element) {
+                error.insertBefore(element);
+            },
+
+            rules: {
+                name: {
+                    required: true,
+                },
+
+                email: {
+                    required: true,
+                    email: true,
+                },
+
+                password:{
+                    required: true,
+                    password:true,
+                },
+                departmentId:{
+                  required:true
+                },
+
+                roleId:{
+                    required:true
+                },
+
+                salary:{
+                    required:true,
+                    isNumber:true,
+                    isPositive:true
+                }
+            },
+            messages: {
+                name: {
+                    required: "Name must be filled",
+
+                },
+
+                email: {
+                    required: "Email must be filled",
+                    email: "Email is invalid"
+                },
+
+                password: {
+                    required: "Password must be filled",
+                    password: "Password does not accept space",
+                },
+
+                departmentId:{
+                    required: "Department must be filled"
+                },
+
+                roleId:{
+                    required:"Role must be filled"
+                },
+
+                salary:{
+                    required:"Salary must be filled",
+                    isNumber:"Salary must be number",
+                    isPositive:"Salary must be positive"
+                }
+            },
+
+            submitHandler: function (form) {
+                form.submit();
+            },
+        });
+
+        $.validator.methods.password = function (value, element) {
+            let passwordReg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+            return passwordReg.test(value);
+        };
+
+        $.validator.methods.isNumber = function (value,element){
+            return !isNaN(value);
+        }
+
+        $.validator.methods.isPositive = function (value,element){
+            return value > 0;
+        }
+    });
+</script>
+</body>
+</html>
