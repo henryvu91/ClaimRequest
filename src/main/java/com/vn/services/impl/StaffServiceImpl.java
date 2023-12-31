@@ -87,4 +87,16 @@ public class StaffServiceImpl implements StaffService {
     public StaffViewDetailDto findStaffViewDetailById(Integer id) {
         return staffRepository.findStaffViewDetailById(id);
     }
+
+    @Override
+    public List<StaffIdNameDto> findByNameLike(String query) {
+        //TODO: Xoa sout sau khi hoan thien
+        query = "%" + query + "%";
+        System.out.println(query);
+        List<StaffIdNameDto> findByNameLike = staffRepository.findByNameLike(query);
+        for (StaffIdNameDto staffIdNameDto : findByNameLike) {
+            System.out.println(staffIdNameDto.getName());
+        }
+        return findByNameLike;
+    }
 }

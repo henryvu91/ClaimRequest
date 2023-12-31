@@ -1,7 +1,7 @@
 package com.vn.controller;
 
 import com.vn.services.impl.StaffServiceImpl;
-import com.vn.utils.session.IdAndUsernameSession;
+import com.vn.utils.session.UserInfoSession;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +26,7 @@ public class HomeController {
         }
 
         if (principal != null) {
-            IdAndUsernameSession.checkAndAddSession(principal, session, staffService);
+            UserInfoSession.checkAndAddSession(principal, session, staffService);
         }
 
         model.addAttribute("pageTitle", "Home Page");

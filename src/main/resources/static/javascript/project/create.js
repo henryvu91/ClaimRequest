@@ -18,12 +18,14 @@ $(document).ready(function () {
       <tr>
         <th scope="row">${newIndex}</th>
         <td>
-          <select aria-label="Select Name" class="form-select" name="workingStaffId">
-            <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
+            <div class="autocomplete-dropdown position-relative">
+                <input class="autocomplete-staff-id" name="workingStaffId" type="hidden">
+                <input class="form-control shadow-none reset autocomplete-input"
+                       id="form-addProject__workingStaffId-01" name="workingStaffName"
+                       placeholder="Enter The Staff Name"
+                       type="text">
+                <div class="dropdown-menu overflow-auto w-100 autocomplete-results position-absolute"></div>
+            </div>
         </td>
         <td>
           <select aria-label="Select Job Rank" class="form-select" name="workingJobRankId">
@@ -74,6 +76,108 @@ $(document).ready(function () {
   });
   toggleDeleteButton();
 
+  let isProgrammaticChange = false;
+
+  function debounce(func, wait, immediate) {
+    let $timeout;
+    return function () {
+      let $context = this,
+        args = arguments;
+      let $later = function () {
+        $timeout = null;
+        if (!immediate) func.apply($context, args);
+      };
+      let $callNow = immediate && !$timeout;
+      clearTimeout($timeout);
+      $timeout = setTimeout($later, wait);
+      if ($callNow) func.apply($context, args);
+    };
+  }
+
+  $(document).on(
+    "click",
+    ".autocomplete-dropdown .dropdown-item",
+    function (e) {
+      e.preventDefault();
+      let $item = $(this);
+      let $dropdown = $item.closest(".autocomplete-dropdown");
+      let $input = $dropdown.find(".autocomplete-input");
+      let $hiddenInput = $dropdown.find(".autocomplete-staff-id");
+
+      // Set the input value and the hidden input value
+      isProgrammaticChange = true;
+      $input.val($item.text());
+      $hiddenInput.val($item.data("staff-id"));
+
+      setTimeout(function () {
+        isProgrammaticChange = false;
+      }, 1000);
+
+      $(".autocomplete-results").removeClass("show");
+    },
+  );
+
+  $(document).on(
+    "input",
+    ".autocomplete-input",
+    debounce(function () {
+      if (!isProgrammaticChange) {
+        let $input = $(this);
+        let $parent = $input.parent(".autocomplete-dropdown");
+        let $dropdown = $parent.find(".autocomplete-results");
+        let $value = $input.val();
+
+        if ($value.length > 0) {
+          let existingValues = [];
+          $(".autocomplete-input")
+            .not($input)
+            .each(function () {
+              existingValues.push($(this).val());
+            });
+
+          $.ajax({
+            url: "/api/search-staff",
+            type: "GET",
+            data: { query: $value },
+            success: function (data) {
+              $dropdown.children().remove();
+              $.each(data, function (index, staff) {
+                if ($.inArray(staff.name, existingValues) === -1) {
+                  $dropdown.append(
+                    `<a class="dropdown-item" href="#" data-staff-id="${staff.id}">${staff.name}</a>`,
+                  );
+                }
+              });
+              $dropdown.toggleClass("show", $dropdown.children().length > 0);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              console.error("Error fetching staff:", textStatus, errorThrown);
+              $dropdown.empty();
+              $dropdown.removeClass("show");
+            },
+          });
+        } else {
+          $dropdown.removeClass("show");
+        }
+      }
+    }, 250),
+  );
+
+  $(document).on("click", function (e) {
+    let $target = $(e.target);
+    let $currentAutocompleteResults = $target
+      .closest(".autocomplete-dropdown")
+      .find(".autocomplete-results");
+
+    if (
+      !$currentAutocompleteResults.length &&
+      !$target.is(".autocomplete-input")
+    ) {
+      // Close all dropdowns using the cached selector
+      $(".autocomplete-results").removeClass("show");
+    }
+  });
+
   $("#form-addProject").validate({
     errorClass: "is-invalid",
     validClass: "is-valid",
@@ -108,7 +212,7 @@ $(document).ready(function () {
       projectEndDate: {
         required: true,
       },
-      workingName: {
+      workingStaffName: {
         required: true,
       },
       workingJobRank: {
@@ -134,8 +238,8 @@ $(document).ready(function () {
       projectEndDate: {
         required: "Please enter Project End Date",
       },
-      workingName: {
-        required: "Please enter Working Name",
+      workingStaffName: {
+        required: "Please enter Staff Name",
       },
       workingJobRank: {
         required: "Please enter Working Job Rank",

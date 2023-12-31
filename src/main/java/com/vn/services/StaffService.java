@@ -23,4 +23,6 @@ public interface StaffService {
     List<StaffIdNameDto> findAllStaffName();
 
     StaffViewDetailDto findStaffViewDetailById(Integer id);
+
+    List<StaffIdNameDto> findByNameLike(String query);
 }

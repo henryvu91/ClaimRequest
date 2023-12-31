@@ -101,20 +101,16 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
+                            <tr th:each="work, iterStat : *{projectWorkingsById}">
                                 <th scope="row">1</th>
                                 <td>
-                                    <select aria-label="Select Name" class="form-select" name="workingStaffId">
-                                        <option selected>Open this select menu</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                    <div>
-                                        <input class="form-control shadow-none reset"
-                                               id="form-addProject__workingStaffId" name="workingStaffId"
+                                    <div class="autocomplete-dropdown position-relative">
+                                        <input class="autocomplete-staff-id" name="workingStaffId" type="hidden">
+                                        <input class="form-control shadow-none reset autocomplete-input"
+                                               id="form-addProject__workingStaffId-01" name="workingStaffName"
                                                placeholder="Enter The Staff Name"
                                                type="text">
+                                        <div class="dropdown-menu overflow-auto w-100 autocomplete-results position-absolute"></div>
                                         <!--                                        <div class="text-danger" th:errors="*{projectWorkingsById.workingStaffId}"-->
                                         <!--                                             th:if="${#fields.hasErrors('projectWorkingsById.workingStaffId')}">-->
                                         <!--                                            Error Message-->
@@ -148,12 +144,19 @@
                             <tr>
                                 <th scope="row">2</th>
                                 <td>
-                                    <select aria-label="Select Name" class="form-select" name="workingStaffId">
-                                        <option selected>Open this select menu</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
+                                    <div class="autocomplete-dropdown position-relative">
+                                        <input class="autocomplete-staff-id" name="workingStaffId" type="hidden">
+                                        <input class="form-control shadow-none reset autocomplete-input"
+                                               id="form-addProject__workingStaffId-02" name="workingStaffName"
+                                               placeholder="Enter The Staff Name"
+                                               type="text">
+
+                                        <div class="dropdown-menu overflow-auto w-100 autocomplete-results position-absolute"></div>
+                                        <!--                                        <div class="text-danger" th:errors="*{projectWorkingsById.workingStaffId}"-->
+                                        <!--                                             th:if="${#fields.hasErrors('projectWorkingsById.workingStaffId')}">-->
+                                        <!--                                            Error Message-->
+                                        <!--                                        </div>-->
+                                    </div>
                                 </td>
                                 <td>
                                     <select aria-label="Select Job Rank" class="form-select"
@@ -181,12 +184,19 @@
                             <tr>
                                 <th scope="row">3</th>
                                 <td>
-                                    <select aria-label="Select Name" class="form-select" name="workingStaffId">
-                                        <option selected>Open this select menu</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
+                                    <div class="autocomplete-dropdown position-relative">
+                                        <input class="autocomplete-staff-id" name="workingStaffId" type="hidden">
+                                        <input class="form-control shadow-none reset autocomplete-input"
+                                               id="form-addProject__workingStaffId-03" name="workingStaffName"
+                                               placeholder="Enter The Staff Name"
+                                               type="text">
+
+                                        <div class="dropdown-menu overflow-auto w-100 autocomplete-results position-absolute"></div>
+                                        <!--                                        <div class="text-danger" th:errors="*{projectWorkingsById.workingStaffId}"-->
+                                        <!--                                             th:if="${#fields.hasErrors('projectWorkingsById.workingStaffId')}">-->
+                                        <!--                                            Error Message-->
+                                        <!--                                        </div>-->
+                                    </div>
                                 </td>
                                 <td>
                                     <select aria-label="Select Job Rank" class="form-select" name="workingJobRankId">
@@ -197,7 +207,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <div>
+                                    <div class="autocomplete-dropdown">
                                         <label class="form-label" for="form-addWorking__startDate-03"
                                                hidden="hidden"></label>
                                         <input class="form-control shadow-none reset startDateRecord"

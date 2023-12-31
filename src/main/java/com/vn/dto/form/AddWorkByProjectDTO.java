@@ -20,5 +20,6 @@ public class AddWorkByProjectDTO implements Serializable {
     Integer workingJobRankId;
     @NotNull(message = "Working Start Date is required")
     LocalDate workingStartDate;
+    @NotNull(message = "Working End Date is required")
     LocalDate workingEndDate;
 }

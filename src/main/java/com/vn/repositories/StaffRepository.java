@@ -15,7 +15,7 @@ import java.util.List;
 public interface StaffRepository extends JpaRepository<Staff, Integer> {
     Staff findByEmail(String email);
 
-//    Check email is existed
+    //    Check email is existed
     boolean existsByEmail(String email);
 
     @Query("SELECT new com.vn.dto.view.StaffIdNameDto(s.id,s.name) FROM Staff s")
@@ -25,4 +25,6 @@ public interface StaffRepository extends JpaRepository<Staff, Integer> {
 
     @Query("SELECT new com.vn.dto.view.StaffViewDetailDto(s.id, s.email, s.name, s.salary, s.departmentByDepartmentId.name, s.roleByRoleId.name) FROM Staff s WHERE s.id=:id")
     StaffViewDetailDto findStaffViewDetailById(@Param("id") Integer id);
+
+    List<StaffIdNameDto> findByNameLike(String query);
 }
