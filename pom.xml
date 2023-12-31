@@ -108,7 +108,7 @@
                     <target>${java.version}</target> <!-- depending on your project -->
                     <annotationProcessorPaths>
                         <path>
-                            <groupId>org.projectlombok</groupId> <!-- IMPORTANT - LOMBOK BEFORE MAPSTRUCT -->
+                            <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                             <version>${lombok.version}</version>
                         </path>
