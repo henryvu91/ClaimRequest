@@ -36,10 +36,13 @@ public class StaffController {
     @Autowired
     RoleService roleService;
 
+    //    @Autowired
     StaffIdNameMapper staffIdNameMapper;
 
+    //    @Autowired
     StaffViewMapper staffViewMapper;
 
+    //    @Autowired
     StaffUpdateInfoMapper staffUpdateInfoMapper;
 
     //    Show the UI to create new staff

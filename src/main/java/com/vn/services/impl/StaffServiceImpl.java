@@ -29,7 +29,8 @@ public class StaffServiceImpl implements StaffService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
-    
+
+    //    @Autowired
     StaffUpdateInfoMapper staffUpdateInfoMapper;
 
     @Override
