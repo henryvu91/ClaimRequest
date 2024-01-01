@@ -17,11 +17,13 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Project {
-    //TODO: Sửa lại Project Code trong Database
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     private Integer id;
+    @Basic
+    @Column(name = "code")
+    private String code;
     @Basic
     @Column(name = "name")
     private String name;
@@ -31,7 +33,7 @@ public class Project {
     @Basic
     @Column(name = "end_date")
     private LocalDate endDate;
-    @OneToMany(mappedBy = "projectByProjectId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "projectByProjectId", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Working> workingsById = new ArrayList<>();
 
     @Override
@@ -44,6 +46,7 @@ public class Project {
         if (id != project.id) return false;
         if (!Objects.equals(name, project.name)) return false;
         if (!Objects.equals(startDate, project.startDate)) return false;
+        if (!Objects.equals(code, project.code)) return false;
         return Objects.equals(endDate, project.endDate);
     }
 
@@ -53,6 +56,7 @@ public class Project {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
+        result = 31 * result + (code != null ? code.hashCode() : 0);
         return result;
     }
 }
