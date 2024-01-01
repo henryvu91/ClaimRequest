@@ -1,6 +1,10 @@
 package com.vn.utils.auth;
 
+import com.vn.dto.view.StaffViewDetailDto;
+import com.vn.mapper.view.StaffViewMapper;
+import com.vn.mapper.view.StaffViewMapperImpl;
 import com.vn.model.Staff;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +18,9 @@ public class CustomUserDetail implements UserDetails {
     @Serial
     private static final long serialVersionUID = 1L;
     private final Staff staff;
+
+
+    private final StaffViewMapper staffViewMapper = new StaffViewMapperImpl();
 
     public CustomUserDetail(Staff staff) {
         this.staff = staff;
@@ -54,5 +61,16 @@ public class CustomUserDetail implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Integer getUserId(){
+        return staff.getId();
+    }
+    public String getName(){
+        return staff.getName();
+    }
+
+    public StaffViewDetailDto getUserInfo(){
+        return staffViewMapper.toDto(staff);
     }
 }
