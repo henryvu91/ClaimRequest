@@ -26,33 +26,36 @@ public class StaffServiceImpl implements StaffService {
 
     @Autowired
     RoleRepository roleRepository;
+
     @Autowired
     PasswordEncoder passwordEncoder;
+
     @Autowired
     StaffUpdateInfoMapper staffUpdateInfoMapper;
+
     @Override
-    public com.vn.model.Staff findById(Integer id) {
+    public Staff findById(Integer id) {
         return staffRepository.findById(id).orElse(null);
     }
 
     @Override
-    public com.vn.model.Staff findByEmail(String email) {
+    public Staff findByEmail(String email) {
         return staffRepository.findByEmail(email);
     }
 
     @Override
-    public List<com.vn.model.Staff> findAll() {
+    public List<Staff> findAll() {
         return staffRepository.findAll();
     }
 
     @Override
-    public com.vn.model.Staff save(com.vn.model.Staff staff, BindingResult result) {
+    public Staff save(Staff staff, BindingResult result) {
 
 //        Check email not duplicate
         String email = staff.getEmail();
-        if(staffRepository.existsByEmail(email)){
+        if (staffRepository.existsByEmail(email)) {
 //            Add the error message
-            result.rejectValue("email","MSG21");
+            result.rejectValue("email", "MSG21");
             return null;
         }
 // Encode the password
@@ -66,11 +69,11 @@ public class StaffServiceImpl implements StaffService {
     public Staff update(StaffUpdateInfoDto staff) {
 //        Get the staff from database
         com.vn.model.Staff updateStaff = staffRepository.findById(staff.getId()).orElse(null);
-        if(updateStaff==null){
+        if (updateStaff == null) {
             return null;
         }
 
-        staffUpdateInfoMapper.partialUpdate(staff,updateStaff);
+        staffUpdateInfoMapper.partialUpdate(staff, updateStaff);
 
         return staffRepository.save(updateStaff);
     }
@@ -83,5 +86,15 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public StaffViewDetailDto findStaffViewDetailById(Integer id) {
         return staffRepository.findStaffViewDetailById(id);
+    }
+
+    @Override
+    public List<StaffIdNameDto> findByNameLike(String query) {
+        if (query == null) {
+            return null;
+        }
+        query = "%" + query.replaceAll("[^a-zA-Z0-9\\s]", "") + "%";
+        List<StaffIdNameDto> findByNameLike = staffRepository.findByNameLike(query);
+        return findByNameLike;
     }
 }

@@ -1,55 +1,60 @@
 $(document).ready(function () {
   let $contentMain = $("#content-main");
 
-  $(document).ready(function () {
-    let $startDate = $(".startDate");
-    let $endDate = $(".endDate");
-    let $duration = $(".duration");
+  let $startDate = $(".startDate");
+  let $endDate = $(".endDate");
+  let $duration = $(".duration");
+  let $startDateRecord = $(".startDateRecord");
 
-    let today = new Date();
-    let formattedDate = today.toISOString().substring(0, 10);
+  let today = new Date();
+  let formattedDate = today.toISOString().substring(0, 10);
 
-    $startDate.val(formattedDate);
-    $endDate.attr("min", formattedDate);
+  $startDate.val(formattedDate);
+  $startDateRecord.val(formattedDate);
+  $endDate.attr("min", formattedDate);
+  $startDateRecord.attr("min", $startDate.val());
 
-    function calculateDuration() {
-      let startDateVal = new Date($startDate.val());
-      let endDateVal = new Date($endDate.val());
+  function calculateDuration() {
+    let startDateVal = new Date($startDate.val());
+    let endDateVal = new Date($endDate.val());
 
-      if (!isNaN(startDateVal.getTime()) && !isNaN(endDateVal.getTime())) {
-        let timeDiff = endDateVal - startDateVal;
-        let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-        $duration.val(`${diffDays + 1} Days`);
-      } else {
-        $duration.val("");
-      }
+    if (!isNaN(startDateVal.getTime()) && !isNaN(endDateVal.getTime())) {
+      let timeDiff = endDateVal - startDateVal;
+      let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      $duration.val(`${diffDays + 1} Days`);
+    } else {
+      $duration.val("");
     }
+  }
 
-    // Event listener for start date changes
-    $startDate.on("change", function () {
-      let newMinDate = $startDate.val();
-      $endDate.attr("min", newMinDate);
-      calculateDuration();
-    });
-
-    // Event listener for end date changes
-    $endDate.on("change", calculateDuration);
+  $startDate.on("change", function () {
+    let $newMinDate = $startDate.val();
+    $endDate.attr("min", $newMinDate);
+    $(".startDateRecord").attr("min", $newMinDate);
+    calculateDuration();
+  });
+  $endDate.on("change", function () {
+    let $newMaxDate = $endDate.val();
+    // $startDateRecord.attr("max", $newMaxDate);
+    $(".startDateRecord").attr("max", $newMaxDate);
+    calculateDuration();
   });
 
   $("#btn-projectInformation-create")
     .off("click")
     .on("click", function (e) {
-      e.preventDefault();
-      //include profile.html file into index.html
+      // e.preventDefault();
       $contentMain.children().remove();
       $contentMain.load("project/create");
     });
-  $("#btn-projectInformation-view").click(function (e) {
-    e.preventDefault();
-    //include profile.html file into index.html
-    $contentMain.children().remove();
-    $contentMain.load("project/view");
-  });
+
+  $("#btn-projectInformation-view")
+    .off("click")
+    .click(function (e) {
+      // e.preventDefault();
+      $contentMain.children().remove();
+      $contentMain.load("project/view");
+    });
 
   $("#btn-logout").click(function (e) {
     e.preventDefault();
