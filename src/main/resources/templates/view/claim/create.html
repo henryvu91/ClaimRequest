@@ -98,7 +98,8 @@
                                                 Date Project</label>
                                                 <input class="form-control shadow-none reset"
                                                        id="form-addClaimDetail__date" name="date"
-                                                       onchange="validateDate()" type="date">
+                                                       onchange="validateDate()" type="date"
+                                                       required>
                                                 <div class="text-danger" id="dateValidationMessage"></div>
                                             </div>
                                         </div>
@@ -115,59 +116,65 @@
                             </div>
                         </div>
                     </div>
-               
-                <div class="container">
-                    <div class="row">
-                        <div class="col">
-                            <div class="p-3">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="mb-3"><label class="form-label" for="form-addClaimDetail__fromTime">
-                                            From</label>
-                                            <input class="form-control shadow-none reset"
-                                                   id="form-addClaimDetail__fromTime" name="fromTime"
-                                                   onchange="calculateTotalHours()" type="time">
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="p-3">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-3"><label class="form-label"
+                                                                     for="form-addClaimDetail__fromTime">
+                                                From</label>
+                                                <input class="form-control shadow-none reset"
+                                                       id="form-addClaimDetail__fromTime" name="fromTime"
+                                                       onchange="calculateTotalHours()" type="time"
+                                                       required>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="mb-3"><label class="form-label"
-                                                                 for="form-addClaimDetail__toTime"> To</label>
-                                            <input class="form-control shadow-none reset"
-                                                   id="form-addClaimDetail__toTime" name="toTime"
-                                                   onchange="calculateTotalHours()" type="time">
+                                        <div class="col">
+                                            <div class="mb-3"><label class="form-label"
+                                                                     for="form-addClaimDetail__toTime"> To</label>
+                                                <input class="form-control shadow-none reset"
+                                                       id="form-addClaimDetail__toTime" name="toTime"
+                                                       onchange="calculateTotalHours()" type="time"
+                                                       required>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="mb-3"><label class="form-label"
-                                                                 for="form-addClaimDetail__totalHours">Total
-                                            Hours</label>
-                                            <input class="form-control shadow-none reset"
-                                                   id="form-addClaimDetail__totalHours" name="totalHours"
-                                                   placeholder="Enter the title" readonly required type="number">
+                                        <div class="col">
+                                            <div class="mb-3"><label class="form-label"
+                                                                     for="form-addClaimDetail__totalHours">Total
+                                                Hours</label>
+                                                <input class="form-control shadow-none reset"
+                                                       id="form-addClaimDetail__totalHours" name="totalHours"
+                                                       placeholder="Enter the title" readonly required type="number">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                 </div>
-                 <div class="mb-3"><label class="form-label" for="form-addClaimDetail__remarks">Remarks</label> <textarea
-                        class="form-control shadow-none reset" id="form-addClaimDetail__remarks" name="remarks" required
-                        style="resize: vertical; overflow: auto;"></textarea>
-                 </div>
-                 <div class="mb-3"><label class="form-label" for="form-addClaimDetail__audit-trail">Audit trail </label>
-                    <input class="form-control shadow-none reset" disabled
-                           id="form-addClaimDetail__audit-trail" name="auditTrail" placeholder="Enter the title"
-                           required type="text">
-                 </div>
-                 <div class="data-card" id="dataCard" style="display: none;">
-                    <p>Created by <span id="creatorName"></span> on <span id="creationTime"></span></p>
-                 </div>
-                 <button class="btn btn-success" id="submitBtn" type="submit"> Submit button</button>
-                 <button class="btn btn-warning" id="saveBtn" type="button"> save button</button>
-                 <button class="btn btn-danger" type="button"> cancel</button>
-                 <button class="btn btn-primary" type="button"> update</button>
-             </form> 
+                    <div class="mb-3"><label class="form-label" for="form-addClaimDetail__remarks">Remarks</label>
+                        <textarea
+                                class="form-control shadow-none reset" id="form-addClaimDetail__remarks" name="remarks"
+                                required
+                                style="resize: vertical; overflow: auto;"></textarea>
+                    </div>
+                    <div class="mb-3"><label class="form-label" for="form-addClaimDetail__audit-trail">Audit
+                        trail </label>
+                        <input class="form-control shadow-none reset" disabled
+                               id="form-addClaimDetail__audit-trail" name="auditTrail" placeholder="Enter the title"
+                               required type="text">
+                    </div>
+                    <div class="data-card" id="dataCard" style="display: none;">
+                        <p>Created by <span id="creatorName"></span> on <span id="creationTime"></span></p>
+                    </div>
+                    <button class="btn btn-success" id="createBtn" type="submit"> create button</button>
+                    <button class="btn btn-warning" id="saveBtn" type="button"> save button</button>
+                    <button class="btn btn-danger" type="button"> cancel</button>
+                    <button class="btn btn-primary" type="button"> update</button>
+                </form>
             </div>
         </div>
     </div> <!-- logic sử lí tính thứ theo ngày-->
@@ -176,6 +183,6 @@
 <script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.js}"></script>
 <script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>
 <script th:src="@{/javascript/main.js}"></script>
-<script th:src="@{/javascript/claim/create-claim}"></script>
+<script th:src="@{/javascript/claim/create-claim.js}"></script>
 </body>
 </html>

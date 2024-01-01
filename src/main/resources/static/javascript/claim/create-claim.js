@@ -36,23 +36,30 @@ $(document).ready(function () {
 
     // Logic tính total hours
     function calculateTotalHours() {
-        var fromTime = $('#form-addClaimDetail__fromTime').val();
-        var toTime = $('#form-addClaimDetail__toTime').val();
-        var fromTimeObj = new Date("1970-01-01T" + fromTime + "Z");
-        var toTimeObj = new Date("1970-01-01T" + toTime + "Z");
-
-        var totalHours = (toTimeObj - fromTimeObj) / (1000 * 60 * 60);
-        totalHours = Math.round(totalHours * 100) / 100;
-        $('#form-addClaimDetail__totalHours').val(totalHours);
-    }
-
-    $('#form-addClaimDetail__fromTime, #form-addClaimDetail__toTime').on('change', function () {
-        calculateTotalHours();
-    });
+      var fromTime = $('#form-addClaimDetail__fromTime').val();
+      var toTime = $('#form-addClaimDetail__toTime').val();
+      var fromTimeObj = new Date("1970-01-01T" + fromTime + "Z");
+      var toTimeObj = new Date("1970-01-01T" + toTime + "Z");
+  
+      if (toTimeObj < fromTimeObj) {
+          $('#form-addClaimDetail__toTime').addClass('is-invalid');
+          $('#toTimeValidationMessage').text('Vui lòng nhập lại giờ.');
+          return;
+      }
+  
+      var totalHours = (toTimeObj - fromTimeObj) / (1000 * 60 * 60);
+      totalHours = Math.round(totalHours * 100) / 100;
+      $('#form-addClaimDetail__totalHours').val(totalHours);
+      $('#form-addClaimDetail__toTime').removeClass('is-invalid');
+      $('#toTimeValidationMessage').text('');
+  }
+  
+  $('#form-addClaimDetail__fromTime, #form-addClaimDetail__toTime').on('change', function () {
+      calculateTotalHours();
+  });
 
     // Hiển thị audit trail
-    $('#saveBtn').on('click', function () {
-        alert("Thành công");
+    $('#saveBtn').on('click', function () {       
         let currentTime = new Date();
         let formattedTime = currentTime.toLocaleString();
         $('#form-addClaimDetail__audit-trail').val("Created by " + creatorName + " on " + formattedTime);
@@ -149,3 +156,23 @@ $("#form-addClaim").validate({
       form.submit();
     },
   });
+  // h của to phải lớn hơn from trong ngày
+ 
+  // $(document).ready(function() {
+  //   var fromTimeInput = $("#form-addClaimDetail__fromTime");
+  //   var toTimeInput = $("#form-addClaimDetail__toTime");
+  //   var createButton = $("#createButton");
+  
+  //   toTimeInput.on("change", function() {
+  //     var fromTime = fromTimeInput.val();
+  //     var toTime = toTimeInput.val();
+  //     var fromDateTime = new Date("1970-01-01T" + fromTime + "Z");
+  //     var toDateTime = new Date("1970-01-01T" + toTime + "Z");
+  
+  //     if (toDateTime <= fromDateTime) {      
+        
+  //       toTimeInput.val("");
+  //       toTimeInput.attr("placeholder", "Please enter a valid time");
+  //     } 
+  //   });
+  // });
