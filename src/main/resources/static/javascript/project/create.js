@@ -1,5 +1,6 @@
 $(document).ready(function () {
-  var jobRanksData = null;
+  let $contentMain = $(this).find("#content-main");
+  let $jobRanksData = null;
 
   function addOptionsToSelectElement($selectElement, data) {
     $selectElement.children().remove();
@@ -12,7 +13,7 @@ $(document).ready(function () {
   }
 
   function loadAndPopulateSelectElements() {
-    if (jobRanksData) {
+    if ($jobRanksData) {
       populateAllSelectElements();
     } else {
       $.ajax({
@@ -20,7 +21,7 @@ $(document).ready(function () {
         type: "GET",
         dataType: "json",
         success: function (data) {
-          jobRanksData = data.filter(function (item) {
+          $jobRanksData = data.filter(function (item) {
             return item.name !== "PM" && item.name !== "QA";
           });
           populateAllSelectElements();
@@ -34,7 +35,7 @@ $(document).ready(function () {
 
   function populateAllSelectElements() {
     $(".jobRankSelect").each(function () {
-      addOptionsToSelectElement($(this), jobRanksData);
+      addOptionsToSelectElement($(this), $jobRanksData);
     });
   }
 
@@ -57,37 +58,41 @@ $(document).ready(function () {
   }
 
   function addNewRow() {
-    let newIndex = $tableBody.find("tr").length + 1;
+    let newIndex = $tableBody.find("tr").length;
     let $newRow = $(`
-      <tr>
-        <th scope="row">${newIndex}</th>
-        <td>
-            <div class="autocomplete-dropdown position-relative">
-                <input class="autocomplete-staff-id" name="workingStaffId" type="hidden">
-                <input class="form-control shadow-none reset autocomplete-input"
-                       id="form-addProject__workingStaffId-01" name="workingStaffName"
-                       placeholder="Enter The Staff Name"
-                       type="text"
-                       autocomplete="off">
-                <div class="dropdown-menu overflow-auto w-100 autocomplete-results position-absolute  mt-2"></div>
-            </div>
-        </td>
-        <td>
+    <tr>
+      <th scope="row">${newIndex + 1}</th>
+      <td>
+        <div class="autocomplete-dropdown position-relative">
+          <input class="autocomplete-staff-id" type="hidden" name="projectWorkingsById[${newIndex}].workingStaffId">
+          <input class="form-control shadow-none reset autocomplete-input"
+                 id="form-addProject__workingStaffId-${newIndex + 1}" 
+                 placeholder="Enter The Staff Name"
+                 type="text"
+                 autocomplete="off">
+          <div class="dropdown-menu overflow-auto w-100 autocomplete-results position-absolute mt-2"></div>
+        </div>
+      </td>
+      <td>
         <div>
-            <select aria-label="Select Job Rank" class="form-select jobRankSelect" name="workingJobRankId">
+          <select aria-label="Select Job Rank" class="form-select jobRankSelect" 
+                  name="projectWorkingsById[${newIndex}].workingJobRankId">
+            <!-- Populate options here -->
           </select>
         </div>
-        </td>
-        <td>
+      </td>
+      <td>
         <div>
-          <label class="form-label" for="form-addWorking__startDate-0${newIndex}" hidden="hidden"></label>
-          <input class="form-control shadow-none reset startDateRecord" id="form-addWorking__startDate-0${newIndex}" name="workingStartDate" type="date">
+          <input class="form-control shadow-none reset startDateRecord" 
+                 id="form-addWorking__startDate-${newIndex}" 
+                 name="projectWorkingsById[${newIndex}].workingStartDate" 
+                 type="date">
         </div>
-        </td>
-        <td>
-        </td>
-      </tr>
-    `);
+      </td>
+      <td>
+      </td>
+    </tr>
+  `);
 
     $tableBody.append($newRow);
     $newRow
@@ -95,7 +100,9 @@ $(document).ready(function () {
       .val($formattedDate)
       .attr("min", $projectStartDate.val())
       .attr("max", $projectEndDate.val());
-    populateAllSelectElements();
+    $newRow.find("jobRankSelect").each(function () {
+      addOptionsToSelectElement($(this), $jobRanksData);
+    });
     toggleDeleteButton();
   }
 
@@ -305,6 +312,18 @@ $(document).ready(function () {
         required: "Please enter Working Start Date",
       },
     },
-    submitHandler: function (form) {},
+    submitHandler: function (form) {
+      $.ajax({
+        type: "POST",
+        url: "/project/create",
+        data: $(form).serialize(),
+        success: function (data) {
+          $contentMain.html(data);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.error("Error loading page:", textStatus, errorThrown);
+        },
+      });
+    },
   });
 });
