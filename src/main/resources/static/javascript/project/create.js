@@ -1,4 +1,47 @@
 $(document).ready(function () {
+  var jobRanksData = null;
+
+  function addOptionsToSelectElement($selectElement, data) {
+    $selectElement.children().remove();
+
+    $.each(data, function (index, item) {
+      $selectElement.append(
+        $("<option></option>").val(item.id).text(item.name),
+      );
+    });
+  }
+
+  function loadAndPopulateSelectElements() {
+    if (jobRanksData) {
+      populateAllSelectElements();
+    } else {
+      $.ajax({
+        url: "/api/get-jobRank",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+          jobRanksData = data.filter(function (item) {
+            return item.name !== "PM" && item.name !== "QA";
+          });
+          populateAllSelectElements();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.error("Error fetching job ranks:", textStatus, errorThrown);
+        },
+      });
+    }
+  }
+
+  function populateAllSelectElements() {
+    $(".jobRankSelect").each(function () {
+      addOptionsToSelectElement($(this), jobRanksData);
+    });
+  }
+
+  $(function () {
+    loadAndPopulateSelectElements();
+  });
+
   $(".autocomplete-input").attr("autocomplete", "off");
   const $tableBody = $(".table tbody");
   let $projectStartDate = $("#form-addProject__startDate");
@@ -26,16 +69,12 @@ $(document).ready(function () {
                        placeholder="Enter The Staff Name"
                        type="text"
                        autocomplete="off">
-                <div class="dropdown-menu overflow-auto w-100 autocomplete-results position-absolute"></div>
+                <div class="dropdown-menu overflow-auto w-100 autocomplete-results position-absolute  mt-2"></div>
             </div>
         </td>
         <td>
         <div>
-            <select aria-label="Select Job Rank" class="form-select" name="workingJobRankId">
-            <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <select aria-label="Select Job Rank" class="form-select jobRankSelect" name="workingJobRankId">
           </select>
         </div>
         </td>
@@ -56,11 +95,12 @@ $(document).ready(function () {
       .val($formattedDate)
       .attr("min", $projectStartDate.val())
       .attr("max", $projectEndDate.val());
+    populateAllSelectElements();
     toggleDeleteButton();
   }
 
   $(document).on("click", ".new-record-btn", function () {
-    $(this).parent().removeClass();
+    $(this).closest("td").removeClass();
     let $currentRow = $(this).closest("tr");
     let $buttons = $currentRow.find("td:last").children().detach();
 
@@ -110,14 +150,17 @@ $(document).ready(function () {
 
       // Set the input value and the hidden input value
       isProgrammaticChange = true;
-      $input.val($item.text());
+      setTimeout(function () {
+        $input.val($item.text()).prop("disabled", true);
+      }, 200);
+
       $hiddenInput.val($item.data("staff-id"));
 
       setTimeout(function () {
         isProgrammaticChange = false;
       }, 1000);
 
-      $(".autocomplete-results").removeClass("show");
+      $(".autocomplete-results").removeClass("show").children().remove();
     },
   );
 
@@ -127,7 +170,7 @@ $(document).ready(function () {
     debounce(function () {
       if (!isProgrammaticChange) {
         let $input = $(this);
-        let $parent = $input.parent(".autocomplete-dropdown");
+        let $parent = $input.closest(".autocomplete-dropdown");
         let $dropdown = $parent.find(".autocomplete-results");
         let $value = $input.val();
 
@@ -164,8 +207,19 @@ $(document).ready(function () {
           $dropdown.removeClass("show");
         }
       }
-    }, 250),
+    }, 400),
   );
+
+  $(document).on("click", "td", function () {
+    let $input = $(this).find(".autocomplete-input:disabled");
+    if ($input) {
+      $input.prop("disabled", false).focus();
+      $input
+        .closest(".autocomplete-dropdown")
+        .find(".autocomplete-staff-id")
+        .val("");
+    }
+  });
 
   $(document).on("click", function (e) {
     let $target = $(e.target);
@@ -177,8 +231,7 @@ $(document).ready(function () {
       !$currentAutocompleteResults.length &&
       !$target.is(".autocomplete-input")
     ) {
-      // Close all dropdowns using the cached selector
-      $(".autocomplete-results").removeClass("show");
+      $(".autocomplete-results").removeClass("show").children().remove();
     }
   });
 
