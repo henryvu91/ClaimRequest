@@ -1,7 +1,9 @@
 package com.vn.controller;
 
 import com.vn.dto.form.AddProjectFormDTO;
+import com.vn.services.ProjectService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +17,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/project")
 public class ProjectController {
     private static final String PROJECT_CREATE_LINK = "view/project/create";
+
+    private final ProjectService projectService;
+
+    @Autowired
+    public ProjectController(ProjectService projectService) {
+        this.projectService = projectService;
+    }
 
     @GetMapping("/view")
     public String viewProjectGet() {
@@ -39,8 +48,12 @@ public class ProjectController {
             model.addAttribute("errors", result.getAllErrors());
             return PROJECT_CREATE_LINK;
         }
-        System.out.println(addProjectFormDTO.toString());
-
+        String message = projectService.saveProject(addProjectFormDTO);
+        if (message.equals("Add new Project successfully!")) {
+            redirectAttributes.addFlashAttribute("message", message);
+            return "redirect:/project/view";
+        }
+        model.addAttribute("message", message);
         return PROJECT_CREATE_LINK;
     }
 }

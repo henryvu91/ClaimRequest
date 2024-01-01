@@ -100,7 +100,7 @@ $(document).ready(function () {
       .val($formattedDate)
       .attr("min", $projectStartDate.val())
       .attr("max", $projectEndDate.val());
-    $newRow.find("jobRankSelect").each(function () {
+    $newRow.find(".jobRankSelect").each(function () {
       addOptionsToSelectElement($(this), $jobRanksData);
     });
     toggleDeleteButton();
