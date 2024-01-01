@@ -9,4 +9,6 @@ public interface ProjectService {
     Page<AddProjectFormDTO> getContentPaginated(int pageNo, int pageSize);
 
     Integer countRecords();
+
+    String deleteProject(Integer projectId);
 }

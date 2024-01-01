@@ -41,6 +41,7 @@
                             <th scope="col">Name</th>
                             <th scope="col">Start Date</th>
                             <th scope="col">End Date</th>
+                            <th scope="col">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -50,6 +51,12 @@
                             <td th:text="${project.projectName}"></td>
                             <td th:text="${project.projectStartDate}"></td>
                             <td th:text="${project.projectEndDate}"></td>
+                            <!--                            <td><a th:href="@{/project/edit/{id}(id=${project.projectId})}">Edit</a></td>-->
+                            <td>
+                                <a class="btn btn-outline-danger btn-delete-projectById"
+                                   th:data-id="${project.projectId}">Delete</a>
+                            </td>
+                            <!--                            <td><a th:href="@{/project/view/{id}(id=${project.projectId})}">View</a></td>-->
                         </tr>
                         </tbody>
                     </table>
