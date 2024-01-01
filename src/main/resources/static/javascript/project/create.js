@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  $(".autocomplete-input").attr("autocomplete", "off");
   const $tableBody = $(".table tbody");
   let $projectStartDate = $("#form-addProject__startDate");
   let $projectEndDate = $("#form-addProject__endDate");
@@ -23,17 +24,20 @@ $(document).ready(function () {
                 <input class="form-control shadow-none reset autocomplete-input"
                        id="form-addProject__workingStaffId-01" name="workingStaffName"
                        placeholder="Enter The Staff Name"
-                       type="text">
+                       type="text"
+                       autocomplete="off">
                 <div class="dropdown-menu overflow-auto w-100 autocomplete-results position-absolute"></div>
             </div>
         </td>
         <td>
-          <select aria-label="Select Job Rank" class="form-select" name="workingJobRankId">
+        <div>
+            <select aria-label="Select Job Rank" class="form-select" name="workingJobRankId">
             <option selected>Open this select menu</option>
             <option value="1">One</option>
             <option value="2">Two</option>
             <option value="3">Three</option>
           </select>
+        </div>
         </td>
         <td>
         <div>

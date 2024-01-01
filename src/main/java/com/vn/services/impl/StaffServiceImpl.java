@@ -90,13 +90,11 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public List<StaffIdNameDto> findByNameLike(String query) {
-        //TODO: Xoa sout sau khi hoan thien
-        query = "%" + query + "%";
-        System.out.println(query);
-        List<StaffIdNameDto> findByNameLike = staffRepository.findByNameLike(query);
-        for (StaffIdNameDto staffIdNameDto : findByNameLike) {
-            System.out.println(staffIdNameDto.getName());
+        if (query == null) {
+            return null;
         }
+        query = "%" + query.replaceAll("[^a-zA-Z0-9\\s]", "") + "%";
+        List<StaffIdNameDto> findByNameLike = staffRepository.findByNameLike(query);
         return findByNameLike;
     }
 }
