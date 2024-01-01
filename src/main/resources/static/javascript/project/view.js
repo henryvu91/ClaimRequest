@@ -50,7 +50,6 @@ $(document).ready(function () {
     .off("click")
     .on("click", ".btn-delete-projectById", function () {
       let recordId = $(this).data("id");
-      console.log(recordId);
       if (confirm("Are you sure you want to delete this record?")) {
         $.ajax({
           url: "/project/delete",
