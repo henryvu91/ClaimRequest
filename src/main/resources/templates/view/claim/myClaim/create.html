@@ -31,7 +31,7 @@
                     <div class="mb-3"><label class="form-label" for="form-addClaim__status">Status</label>
                         <input class="form-control shadow-none reset " disabled id="form-addClaim__status"
 
-                               th:field="*{status}" value="DRAFTED" required type="text">
+                               th:field="*{status}" required type="text">
                     </div>
                     <div class="mb-3"><label class="form-label" for="form-addClaim__staff-id">Staff Id</label>
                         <input class="form-control shadow-none reset w70" disabled id="form-addClaim__staff-id"
@@ -49,7 +49,6 @@
                                id="form-addClaim__staff-department" th:value="${currentUser.departmentName}"
                                required type="text">
                     </div>
-                    <!--    mô phỏng-->
 
                     <div class="mb-3 w70">
                         <label class="form-label" for="form-addClaim__project-name">Project Name</label>
@@ -61,34 +60,12 @@
 
                         </select>
                     </div>
-                    <div class="container">
-                        <div class="mb-3"><label class="form-label" for="form-addClaim__roleInProject">Role In Project</label>
-                            <input class="form-control shadow-none reset w70" disabled id="form-addClaim__roleInProject"
-                                   type="text"/>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-3">
-                                <label class="form-label" for="form-addClaimDetail__startDate">Start
-                                    Date Project</label>
-                                <input class="form-control shadow-none w-100 reset"
-                                       id="form-addClaimDetail__startDate" name="startDate"
-                                       onchange="calculateDuration()" type="date">
-                            </div>
-                            <div class="col mb-3 "><label class="form-label" for="form-addClaimDetail__endDate">End
-                                Date Project</label>
-                                <input class="form-control shadow-none w-100 reset"
-                                       id="form-addClaimDetail__endDate" name="endDate"
-                                       onchange="calculateDuration()" type="date">
-                            </div>
-                            <div class="col mb-3 p-3"><label class="form-label" for="form-addClaim__project-duration">Project
-                                Duration</label>
-                                <input class="form-control shadow-none reset" disabled
-                                       id="form-addClaim__project-duration" name="projectDuration"
-                                       placeholder="Enter the title" required
-                                       type="text">
-                            </div>
-                        </div>
-                    </div> <!--BẢNG date và day -->
+<!--                    Show the detail of working-->
+                    <div class="container" id="workingDetail">
+
+                    </div>
+
+                    <!--Input claim date -->
                     <div class="container">
                         <div class="row">
                             <div class="col-6 mb-3"><label class="form-label" for="form-addClaimDetail__date">Chose
@@ -102,12 +79,13 @@
                             <div class="col-6 mb-3"><label class="form-label" for="form-addClaimDetail__day">Day</label>
                                 <input class="form-control shadow-none reset"
                                        id="form-addClaimDetail__day"
-                                       placeholder="Enter the day" required
-                                       type="text">
+                                       required
+                                       type="text" disabled>
                             </div>
                         </div>
                     </div>
 
+<!--                    Input claim time-->
                     <div class="container">
                         <div class="row">
                             <div class="col-4 mb-3"><label class="form-label"
@@ -130,7 +108,7 @@
                                 Hours</label>
                                 <input class="form-control shadow-none reset"
                                        id="form-addClaimDetail__totalHours" name="totalHours"
-                                       placeholder="Enter the title" readonly required type="number">
+                                       disabled required type="number">
                             </div>
 
                         </div>
@@ -163,25 +141,48 @@
 <script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.js}"></script>
 <script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>
 <script th:src="@{/javascript/main.js}"></script>
-<script th:src="@{/javascript/claim/create-claim.js}"></script>
-<script>
-    var workingList = /*[[${workingList}]]*/[];
-</script>
-<script>
-    $(document).ready(function () {
-        // Function to show working information
-        function showWorkingInfo(working) {
-            let startDateProject = $("#form-addClaimDetail__startDate");
-            let endDateProject = $("#form-addClaimDetail__endDate");
-            let roleInProject = $("form-addClaim__roleInProject");
+<script th:src="@{/javascript/claim/myClaim/create-claim.js}"></script>
 
+<!--<script>-->
+<!--    $(document).ready(function () {-->
+<!--        const selectedProject = $("#form-addClaim__project-name");-->
 
-        }
-        $("#form-addClaim__project-name").change(function () {
+<!--        // load the detail in firstTime-->
+<!--        loadDetail(selectedProject.val(),calculateDuration);-->
 
-        })
-    })
+<!--        //     add event change in name-->
+<!--        selectedProject.change(function () {-->
+<!--            let workingId = this.value;-->
+<!--            loadDetail(workingId,calculateDuration);-->
+<!--        });-->
 
-</script>
+<!--        function loadDetail(workingId,callback) {-->
+<!--            $.ajax({-->
+<!--                    url:"/claim/myClaim/workingDetail?workingId="+workingId,-->
+<!--                    success:function (result) {-->
+<!--                        $("#workingDetail").html(result);-->
+<!--                        callback();-->
+<!--                    }-->
+<!--                }-->
+
+<!--            );-->
+<!--        }-->
+<!--        function calculateDuration() {-->
+<!--            let startDateInput = $('#form-addClaimDetail__startDate');-->
+<!--            let endDateInput = $('#form-addClaimDetail__endDate');-->
+<!--            let durationInput = $('#form-addClaim__project-duration');-->
+
+<!--            let startDate = new Date(startDateInput.val());-->
+<!--            let endDate = new Date(endDateInput.val());-->
+
+<!--            let duration = Math.abs(endDate - startDate);-->
+<!--            let days = Math.ceil(duration / (1000 * 60 * 60 * 24));-->
+
+<!--            durationInput.val(days + ' days');-->
+<!--            // durationInput.text(days+ ' days');-->
+<!--        }-->
+<!--    });-->
+
+<!--</script>-->
 </body>
 </html>
