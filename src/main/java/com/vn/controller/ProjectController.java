@@ -2,15 +2,14 @@ package com.vn.controller;
 
 import com.vn.dto.form.AddProjectFormDTO;
 import com.vn.services.ProjectService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -26,7 +25,25 @@ public class ProjectController {
     }
 
     @GetMapping("/view")
-    public String viewProjectGet() {
+    public String viewProjectGet(
+            @RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(defaultValue = "10") int pageSize,
+            HttpSession session,
+            Model model) {
+        if (model.containsAttribute("message")) {
+            String message = (String) model.asMap().get("message");
+            model.addAttribute("message", message);
+        }
+
+        Page<AddProjectFormDTO> addProjectFormDTO = projectService.getContentPaginated(pageNo, pageSize);
+        Integer countRecords = projectService.countRecords();
+        Integer totalPages = (countRecords % pageSize != 0) ? (countRecords / pageSize) + 1 : countRecords / pageSize;
+
+        model.addAttribute("projectList", addProjectFormDTO);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("pageNo", pageNo);
+        model.addAttribute("pageSize", 10);
+
         return "view/project/view";
     }
 

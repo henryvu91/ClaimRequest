@@ -10,6 +10,8 @@ import com.vn.repositories.ProjectRepository;
 import com.vn.repositories.WorkingRepository;
 import com.vn.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,5 +60,17 @@ public class ProjectServiceImpl implements ProjectService {
             // logger.error("Error saving project: ", e);
             return "Adding new Project failed due to an error!";
         }
+    }
+
+    @Override
+    public Page<AddProjectFormDTO> getContentPaginated(int pageNo, int pageSize) {
+        Pageable pageable = Pageable.ofSize(pageSize).withPage(pageNo);
+        Page<Project> projectPage = projectRepository.findAll(pageable);
+        return projectPage.map(addProjectFormMapper::toDto);
+    }
+
+    @Override
+    public Integer countRecords() {
+        return Math.toIntExact(projectRepository.count());
     }
 }

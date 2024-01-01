@@ -18,7 +18,55 @@
 </head>
 <body>
 <main>
-    Hello View Project
+    <div>
+        <form id="form-viewProject">
+            <div class="mb-3" th:if="${not #strings.isEmpty(message)}">
+                <div class="alert alert-success py-2 px-3" role="alert"
+                     th:text="${message}">
+                </div>
+            </div>
+            <div class="border-bottom border-1 mb-5 p-2">
+                <h1>View Project</h1>
+            </div>
+            <div class="border border-1 rounded-3 mb-5">
+                <div class="border-bottom border-1 bg-body-secondary">
+                    <p class="p-2 m-0">View Project List</p>
+                </div>
+                <div class="p-3">
+                    <table class="table table-bordered table-rounded">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Code</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">End Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="project, iterStat : ${projectList}">
+                            <td th:text="${(pageNo) * pageSize + iterStat.count}"></td>
+                            <td th:text="${project.projectCode}"></td>
+                            <td th:text="${project.projectName}"></td>
+                            <td th:text="${project.projectStartDate}"></td>
+                            <td th:text="${project.projectEndDate}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+                <ul class="pagination__project" id="pagination__project"></ul>
+                <div class="d-flex justify-content-center" id="page-project"></div>
+            </div>
+            <div class="d-none" id="view-project__totalPages" th:data-totalPages="${totalPages}"></div>
+            <div class="d-none" id="view-project__pageNo" th:data-pageNo="${pageNo}"></div>
+            <div class="d-none" id="view-project__pageSize" th:data-pageNo="${pageSize}"></div>
+            <input id="set__pageNo" name="pageNo" type="hidden" value="">
+        </form>
+    </div>
 </main>
+<script th:src="@{/javascript/project/view.js}"></script>
+<script th:src="@{/javascript/main.js}"></script>
 </body>
 </html>
