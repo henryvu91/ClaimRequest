@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/view")
-public class ViewClaimController {
+@RequestMapping("/claim")
+public class ClaimController {
 
     @Autowired
     private ClaimService claimService;
@@ -25,39 +25,29 @@ public class ViewClaimController {
     ){
         Page<Claim> claims = claimService.findClaimByStatus(Status.DRAFT, pageNo);
 
-//        if (claims != null) {
-//            for (Claim claim : claims) {
-//                LocalDate startDate = claim.getWorkingByWorkingId().getProjectByProjectId().getStartDate();
-//                LocalDate endDate = claim.getWorkingByWorkingId().getProjectByProjectId().getEndDate();
-//                if (startDate.isBefore(endDate)) {
-//                    long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
-//                    model.addAttribute("duration", daysBetween);
-//                }
-//            }
-//        }
         model.addAttribute("totalPage", claims.getTotalPages());
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("claims", claims);
-        return "/view/view_claim";
+        return "view/claim/draft";
     }
 
-    @GetMapping("/pending")
-    public String viewPendingApprove(){
-        return "/view/view_claim";
+    @GetMapping("/pendingApproval")
+    public String viewPendingApproval(){
+        return "view/claim/pending_approval";
     }
 
     @GetMapping("/paid")
     public String viewPaid(){
-        return "/view/view_claim";
+        return "view/claim/paid";
     }
 
-    @GetMapping("/rejectOrCancel")
+    @GetMapping("/rejectedOrCanceled")
     public String viewRejectOrCancel(){
-        return "/view/view_claim";
+        return "view/claim/reject_cancel";
     }
 
     @GetMapping("/detail")
     public String detail() {
-        return "/view/detail";
+        return "";
     }
 }

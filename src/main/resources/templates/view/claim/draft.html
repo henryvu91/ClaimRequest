@@ -62,8 +62,6 @@
     <div class="d-none" id="view-content__totalPages" th:data-totalPages="${totalPages}"></div>
     <div class="d-none" id="view-content__pageNo" th:data-pageNo="${currentPage}"></div>
     <input id="set__pageNo" name="pageNo" type="hidden" value="">
-
-
     <nav class="m-3">
         <ul class="pagination justify-content-end">
             <li th:if="${currentPage > 1}" class="page-item"><a class="page-link" th:href="@{'?pageNo='+${currentPage - 1}}">Previous</a></li>
@@ -73,6 +71,7 @@
             <li th:if="${currentPage < totalPage}" class="page-item"><a class="page-link" th:href="@{'?pageNo='+${currentPage + 1}}">Next</a></li>
         </ul>
     </nav>
+
    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
