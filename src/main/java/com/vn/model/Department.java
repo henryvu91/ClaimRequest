@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -22,7 +23,7 @@ public class Department {
     @Basic
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "departmentByDepartmentId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "departmentByDepartmentId")
     private List<Staff> staffById = new ArrayList<>();
 
     @Override
@@ -33,9 +34,7 @@ public class Department {
         Department that = (Department) o;
 
         if (id != that.id) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-
-        return true;
+        return Objects.equals(name, that.name);
     }
 
     @Override

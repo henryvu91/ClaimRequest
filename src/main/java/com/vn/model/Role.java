@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -22,7 +23,7 @@ public class Role {
     @Basic
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "roleByRoleId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "roleByRoleId")
     private List<Staff> staffById = new ArrayList<>();
 
     @Override
@@ -33,9 +34,7 @@ public class Role {
         Role role = (Role) o;
 
         if (id != role.id) return false;
-        if (name != null ? !name.equals(role.name) : role.name != null) return false;
-
-        return true;
+        return Objects.equals(name, role.name);
     }
 
     @Override

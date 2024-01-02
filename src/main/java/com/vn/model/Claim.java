@@ -46,7 +46,7 @@ public class Claim {
     @Basic
     @Column(name = "audit_trail")
     private String auditTrail;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "working_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Working workingByWorkingId;
 
