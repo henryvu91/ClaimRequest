@@ -54,6 +54,16 @@
             </th:block>
         </tbody>
     </table>
+
+    <div>
+        <ul class="pagination__content" id="pagination__content"></ul>
+        <div class="d-flex justify-content-center" id="page-content"></div>
+    </div>
+    <div class="d-none" id="view-content__totalPages" th:data-totalPages="${totalPages}"></div>
+    <div class="d-none" id="view-content__pageNo" th:data-pageNo="${currentPage}"></div>
+    <input id="set__pageNo" name="pageNo" type="hidden" value="">
+
+
     <nav class="m-3">
         <ul class="pagination justify-content-end">
             <li th:if="${currentPage > 1}" class="page-item"><a class="page-link" th:href="@{'?pageNo='+${currentPage - 1}}">Previous</a></li>
@@ -81,5 +91,7 @@
 <script th:src="@{/javascript/view_claim.js}"></script>
 <script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>
 <script th:src="@{/javascript/main.js}"></script>
+<script th:src="@{/javascript/paging.js}"></script>
+
 </body>
 </html>

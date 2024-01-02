@@ -35,7 +35,6 @@ public class Claim {
     @Column(name = "total_hours")
     private Integer totalHours;
     @Basic
-    @Enumerated(EnumType.STRING)
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private Status status;

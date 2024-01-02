@@ -51,6 +51,42 @@ $(document).ready(function () {
     $contentMain.load("project/view");
   });
 
+  $("#btn-draft")
+      .off("click")
+      .on("click", function (e) {
+        e.preventDefault();
+        //include profile.html file into index.html
+        $contentMain.children().remove();
+        $contentMain.load("view/draft");
+      });
+
+  $("#btn-pendingApproval")
+      .off("click")
+      .on("click", function (e) {
+        e.preventDefault();
+        //include profile.html file into index.html
+        $contentMain.children().remove();
+        $contentMain.load("view/pending");
+      });
+
+  $("#btn-paid")
+      .off("click")
+      .on("click", function (e) {
+        e.preventDefault();
+        //include profile.html file into index.html
+        $contentMain.children().remove();
+        $contentMain.load("view/paid");
+      });
+
+  $("#btn-rejectedOrCancelled")
+      .off("click")
+      .on("click", function (e) {
+        e.preventDefault();
+        //include profile.html file into index.html
+        $contentMain.children().remove();
+        $contentMain.load("view/rejectOrCancel");
+      });
+
   $("#btn-logout").click(function (e) {
     e.preventDefault();
     window.location.href = "login";
