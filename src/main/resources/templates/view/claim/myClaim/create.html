@@ -1,21 +1,13 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{template::areas(~{::title},~{::main})}">
 <head>
-    <meta charset="UTF-8">
-    <title>Create Claim</title>
-    <link rel="stylesheet" th:href="@{/node_modules/normalize.css/normalize.css}">
-    <link rel="stylesheet" th:href="@{/node_modules/bootstrap/dist/css/bootstrap.css}">
-    <link rel="stylesheet" th:href="@{/node_modules/bootstrap-icons/font/bootstrap-icons.css}">
-    <link rel="stylesheet" th:href="@{stylesheet/css/style.css}">
-    <!--    <link href="../../../static/node_modules/normalize.css/normalize.css" rel="stylesheet">-->
-    <!--    <link href="../../../static/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">-->
-    <!--    <link href="../../../static/node_modules/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">-->
-    <!--    <link href="../../../static/stylesheet/css/style.css" rel="stylesheet">-->
-    <!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> &lt;!&ndash; Thêm thư viện jQuery &ndash;&gt;-->
+    <title>Create New Claim</title>
+
 </head>
 <body>
 
-<div>
+<main>
     <div>
         <div class="border-bottom border-1 mb-5 p-2 ">
             <h1>Add Claim</h1>
@@ -35,7 +27,7 @@
                     </div>
                     <div class="mb-3"><label class="form-label" for="form-addClaim__staff-id">Staff Id</label>
                         <input class="form-control shadow-none reset w70" disabled id="form-addClaim__staff-id"
-                                th:value="${currentUser.id}" required
+                               th:value="${currentUser.id}" required
                                type="text">
                     </div>
                     <div class="mb-3"><label class="form-label" for="form-addClaim__staff-name">Staff Name</label>
@@ -60,7 +52,7 @@
 
                         </select>
                     </div>
-<!--                    Show the detail of working-->
+                    <!--                    Show the detail of working-->
                     <div class="container" id="workingDetail">
 
                     </div>
@@ -71,8 +63,8 @@
                             <div class="col-6 mb-3"><label class="form-label" for="form-addClaimDetail__date">Chose
                                 Date Project</label>
                                 <input class="form-control shadow-none reset"
-                                       id="form-addClaimDetail__date" name="date"
-                                       onchange="validateDate()" type="date"
+                                       id="form-addClaimDetail__date" th:field="*{date}"
+                                       type="date"
                                        required>
                                 <div class="text-danger" id="dateValidationMessage"></div>
                             </div>
@@ -85,29 +77,29 @@
                         </div>
                     </div>
 
-<!--                    Input claim time-->
+                    <!--                    Input claim time-->
                     <div class="container">
                         <div class="row">
                             <div class="col-4 mb-3"><label class="form-label"
                                                            for="form-addClaimDetail__fromTime">
                                 From</label>
                                 <input class="form-control shadow-none reset"
-                                       id="form-addClaimDetail__fromTime" name="fromTime"
-                                       onchange="calculateTotalHours()" type="time"
+                                       id="form-addClaimDetail__fromTime" th:field="*{fromTime}"
+                                       type="time"
                                        required>
                             </div>
                             <div class="col-4 mb-3"><label class="form-label"
                                                            for="form-addClaimDetail__toTime"> To</label>
                                 <input class="form-control shadow-none reset"
-                                       id="form-addClaimDetail__toTime" name="toTime"
-                                       onchange="calculateTotalHours()" type="time"
+                                       id="form-addClaimDetail__toTime" th:field="*{toTime}"
+                                       type="time"
                                        required>
                             </div>
                             <div class="col-4 mb-3"><label class="form-label"
                                                            for="form-addClaimDetail__totalHours">Total
                                 Hours</label>
                                 <input class="form-control shadow-none reset"
-                                       id="form-addClaimDetail__totalHours" name="totalHours"
+                                       id="form-addClaimDetail__totalHours" th:field="*{totalHours}"
                                        disabled required type="number">
                             </div>
 
@@ -115,74 +107,34 @@
                     </div>
                     <div class="mb-3"><label class="form-label" for="form-addClaimDetail__remarks">Remarks</label>
                         <textarea
-                                class="form-control shadow-none reset" id="form-addClaimDetail__remarks" name="remarks"
+                                class="form-control shadow-none reset" id="form-addClaimDetail__remarks"
+                                th:field="*{remarks}"
                                 required
                                 style="resize: vertical; overflow: auto;"></textarea>
                     </div>
                     <div class="mb-3"><label class="form-label" for="form-addClaimDetail__audit-trail">Audit
                         trail </label>
                         <input class="form-control shadow-none reset" disabled
-                               id="form-addClaimDetail__audit-trail" name="auditTrail" placeholder="Enter the title"
+                               id="form-addClaimDetail__audit-trail" name="auditTrail"
                                required type="text">
                     </div>
                     <div class="data-card" id="dataCard" style="display: none;">
                         <p>Created by <span id="creatorName"></span> on <span id="creationTime"></span></p>
                     </div>
-                    <button class="btn btn-success" id="createBtn" type="submit"> create button</button>
-                    <button class="btn btn-warning" id="saveBtn" type="button"> save button</button>
-                    <button class="btn btn-danger" type="button"> cancel</button>
-                    <button class="btn btn-primary" type="button"> update</button>
+                    <button class="btn btn-success" id="createBtn" type="submit">Create</button>
+                    <button class="btn btn-warning" id="saveBtn" type="button">Save</button>
+                    <button class="btn btn-danger" type="button">Cancel</button>
+                    <button class="btn btn-primary" type="button">Update</button>
                 </form>
             </div>
         </div>
     </div> <!-- logic sử lí tính thứ theo ngày-->
-</div>
-<script th:src="@{/node_modules/jquery/dist/jquery.js}"></script>
-<script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.js}"></script>
-<script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>
-<script th:src="@{/javascript/main.js}"></script>
-<script th:src="@{/javascript/claim/myClaim/create-claim.js}"></script>
 
-<!--<script>-->
-<!--    $(document).ready(function () {-->
-<!--        const selectedProject = $("#form-addClaim__project-name");-->
-
-<!--        // load the detail in firstTime-->
-<!--        loadDetail(selectedProject.val(),calculateDuration);-->
-
-<!--        //     add event change in name-->
-<!--        selectedProject.change(function () {-->
-<!--            let workingId = this.value;-->
-<!--            loadDetail(workingId,calculateDuration);-->
-<!--        });-->
-
-<!--        function loadDetail(workingId,callback) {-->
-<!--            $.ajax({-->
-<!--                    url:"/claim/myClaim/workingDetail?workingId="+workingId,-->
-<!--                    success:function (result) {-->
-<!--                        $("#workingDetail").html(result);-->
-<!--                        callback();-->
-<!--                    }-->
-<!--                }-->
-
-<!--            );-->
-<!--        }-->
-<!--        function calculateDuration() {-->
-<!--            let startDateInput = $('#form-addClaimDetail__startDate');-->
-<!--            let endDateInput = $('#form-addClaimDetail__endDate');-->
-<!--            let durationInput = $('#form-addClaim__project-duration');-->
-
-<!--            let startDate = new Date(startDateInput.val());-->
-<!--            let endDate = new Date(endDateInput.val());-->
-
-<!--            let duration = Math.abs(endDate - startDate);-->
-<!--            let days = Math.ceil(duration / (1000 * 60 * 60 * 24));-->
-
-<!--            durationInput.val(days + ' days');-->
-<!--            // durationInput.text(days+ ' days');-->
-<!--        }-->
-<!--    });-->
-
-<!--</script>-->
+    <script th:src="@{/node_modules/jquery/dist/jquery.js}"></script>
+    <script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.js}"></script>
+    <script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>
+    <script th:src="@{/javascript/main.js}"></script>
+    <script th:src="@{/javascript/claim/myClaim/create-claim.js}"></script>
+</main>
 </body>
 </html>
