@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{template::areas(~{::title},~{::main})}">
 <head>
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="" name="description">
     <meta content="width=device-width, initial-scale=1" name="viewport">
-    <title>Login Page</title>
+    <title>View Staff</title>
     <link href="./favicon.ico" rel="icon" type="image/x-icon">
     <link rel="stylesheet" th:href="@{/node_modules/normalize.css/normalize.css}">
     <link rel="stylesheet" th:href="@{/node_modules/bootstrap/dist/css/bootstrap.css}">
@@ -15,93 +16,94 @@
 
 </head>
 <body>
-<div class="container-fluid bg-grey min-vh-100 d-flex">
-    <div
-            class="container w-75 bg-white border border-grey border-round align-self-center main-form px-0"
-    >
-        <h2
-                class="title text-grey bg-grey m-0 py-2 pl-3 border-bottom border-grey"
+<main>
+    <div class="container-fluid bg-grey min-vh-100 d-flex">
+        <div
+                class="container w-75 bg-white border border-grey border-round align-self-center main-form px-0"
         >
-            Staff Information
-        </h2>
+            <h2
+                    class="title text-grey bg-grey m-0 py-2 pl-3 border-bottom border-grey"
+            >
+                Staff Information
+            </h2>
 
-        <div class="p-4" id="viewStaffForm" >
-            <div class="mb-3 row">
-                <label
-                        class="form-label font-weight-bold mr-2 col-2"
-                        for="form-viewStaff__name"
-                >Staff Name:
-                </label>
+            <div class="p-4" id="viewStaffForm">
+                <div class="mb-3 row">
+                    <label
+                            class="form-label font-weight-bold mr-2 col-2"
+                            for="form-viewStaff__name"
+                    >Staff Name:
+                    </label>
 
-                <select
-                        class="shadow-none reset col-6"
-                        name="name"
-                        id="form-viewStaff__name"
-                        required
-                >
-                    <option th:each="item: ${nameList}" th:value="${item.id}" th:text="${item.name}"></option>
-                </select>
+                    <select
+                            class="shadow-none reset col-6"
+                            name="name"
+                            id="form-viewStaff__name"
+                            required
+                    >
+                        <option th:each="item: ${nameList}" th:value="${item.id}" th:text="${item.name}"></option>
+                    </select>
+                </div>
+                <div id="viewDetail">
+                    <!--                <div class="mb-3">-->
+                    <!--                    <span-->
+                    <!--                            class="form-label font-weight-bold mr-2"-->
+                    <!--                    >Department:-->
+                    <!--                    </span>-->
+                    <!--                    <span th:text="*{departmentName}">Accounting</span>-->
+                    <!--                </div>-->
+
+                    <!--                <div class="mb-3">-->
+                    <!--                    <span-->
+                    <!--                            class="form-label font-weight-bold mr-2"-->
+                    <!--                    >Role:-->
+                    <!--                    </span>-->
+                    <!--                    <span th:text="*{roleName}">BM</span>-->
+                    <!--                </div>-->
+
+                    <!--                <div class="mb-3">-->
+                    <!--                    <span-->
+                    <!--                            class="form-label font-weight-bold mr-2"-->
+                    <!--                    >Salary:-->
+                    <!--                    </span>-->
+                    <!--                    <span th:text="*{salary}">$1000</span>-->
+                    <!--                </div>-->
+                </div>
+
+
             </div>
-            <div id="viewDetail">
-<!--                <div class="mb-3">-->
-<!--                    <span-->
-<!--                            class="form-label font-weight-bold mr-2"-->
-<!--                    >Department:-->
-<!--                    </span>-->
-<!--                    <span th:text="*{departmentName}">Accounting</span>-->
-<!--                </div>-->
-
-<!--                <div class="mb-3">-->
-<!--                    <span-->
-<!--                            class="form-label font-weight-bold mr-2"-->
-<!--                    >Role:-->
-<!--                    </span>-->
-<!--                    <span th:text="*{roleName}">BM</span>-->
-<!--                </div>-->
-
-<!--                <div class="mb-3">-->
-<!--                    <span-->
-<!--                            class="form-label font-weight-bold mr-2"-->
-<!--                    >Salary:-->
-<!--                    </span>-->
-<!--                    <span th:text="*{salary}">$1000</span>-->
-<!--                </div>-->
-            </div>
-
-
         </div>
     </div>
-</div>
-<script th:src="@{/node_modules/jquery/dist/jquery.js}"></script>
-<script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.js}"></script>
-<script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>
-<script th:src="@{/javascript/main.js}">
-</script>
+    <script th:src="@{/node_modules/jquery/dist/jquery.js}"></script>
+    <script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.js}"></script>
+    <script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>
+    <script th:src="@{/javascript/main.js}">
+    </script>
 
-<script>
-    $(document).ready(function () {
-        const nameStaffField = $("#form-viewStaff__name");
+    <script>
+        $(document).ready(function () {
+            const nameStaffField = $("#form-viewStaff__name");
 
-    // load the detail in firstTime
-    loadDetail(nameStaffField.val());
+            // load the detail in firstTime
+            loadDetail(nameStaffField.val());
 
-    //     add event change in name
-        nameStaffField.change(function () {
-           let idStaff = this.value;
-           loadDetail(idStaff);
-        });
+            //     add event change in name
+            nameStaffField.change(function () {
+                let idStaff = this.value;
+                loadDetail(idStaff);
+            });
 
-    function loadDetail(staffId) {
-        $.ajax({
-                url:"/staff/viewDetail?id="+staffId,
-                success:function (result) {
-                    $("#viewDetail").html(result)
-                }
+            function loadDetail(staffId) {
+                $.ajax({
+                        url: "/staff/viewDetail?id=" + staffId,
+                        success: function (result) {
+                            $("#viewDetail").html(result)
+                        }
+                    }
+                )
             }
-
-        )
-    }
-    });
-</script>
+        });
+    </script>
+</main>
 </body>
 </html>

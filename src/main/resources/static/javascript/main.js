@@ -56,6 +56,8 @@ $(document).ready(function () {
       $contentMain.load("project/view");
     });
 
+
+
   $("#btn-logout").click(function (e) {
     e.preventDefault();
     window.location.href = "login";

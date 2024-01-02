@@ -1,0 +1,55 @@
+<!--
+  Created by IHau - IntelliJ IDEA.
+  User: Wkog
+  Date: 23/12/2023
+  Time: 10:55 AM
+  To change this template use File | Settings | File Templates.
+-->
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+th:fragment="areas(title,body)">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+<!--    <title th:text="${pageTitle}">Default Page Title</title>-->
+    <link href="./favicon.ico" rel="icon" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/node_modules/normalize.css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/node_modules/bootstrap/dist/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/node_modules/bootstrap-icons/font/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{stylesheet/css/style.css}">
+</head>
+<!--<head th:replace="~{layout/head :: headFragment}">-->
+<!--    <title th:replace="${title}">-->
+
+<!--    </title>-->
+<!--</head>-->
+<body class="vh-100 d-flex flex-column">
+<header th:replace="~{layout/header :: headerFragment}"></header>
+
+<main class="w-100 flex-grow-1 h-75">
+    <div class="d-flex flex-row h-100">
+        <div th:replace="~{layout/left_bar :: leftBarFragment}"></div>
+        <div class="w-100 p-4 overflow-auto" id="content-main">
+            <div class="mb-3" th:if="${not #strings.isEmpty(message)}">
+                <div class="alert alert-success py-2 px-3" role="alert"
+                     th:text="${message}">
+                </div>
+            </div>
+
+            <div th:replace="${body}">
+
+            </div>
+        </div>
+
+    </div>
+
+</main>
+<script th:src="@{/node_modules/jquery/dist/jquery.js}"></script>
+<script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.js}"></script>
+<script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>
+<script th:src="@{/node_modules/twbs-pagination/jquery.twbsPagination.js}"></script>
+<script th:src="@{/javascript/main.js}"></script>
+</body>
+</html>
