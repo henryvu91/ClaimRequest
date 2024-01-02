@@ -56,7 +56,7 @@ public class Staff {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Department departmentByDepartmentId;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Role roleByRoleId;
     @OneToMany(mappedBy = "staffByStaffId")
