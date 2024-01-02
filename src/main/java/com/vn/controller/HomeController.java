@@ -3,6 +3,7 @@ package com.vn.controller;
 import com.vn.services.impl.StaffServiceImpl;
 import com.vn.utils.session.UserInfoSession;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ public class HomeController {
 
     private final StaffServiceImpl staffService;
 
+    @Autowired
     public HomeController(StaffServiceImpl staffService) {
         this.staffService = staffService;
     }
