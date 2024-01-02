@@ -11,6 +11,12 @@
     <link rel="stylesheet" th:href="@{/node_modules/bootstrap/dist/css/bootstrap.css}">
     <link rel="stylesheet" th:href="@{/node_modules/bootstrap-icons/font/bootstrap-icons.css}">
     <link rel="stylesheet" th:href="@{stylesheet/css/style.css}">
+
+    <style>
+        .error {
+            color:red;
+        }
+    </style>
 </head>
 <body>
 <div class="container-fluid bg-grey min-vh-100 d-flex">
@@ -23,7 +29,7 @@
             Create New Staff
         </h2>
 
-        <form th:action="@{/staff/createStaff}" method="post" class="p-4" id="createStaffForm" th:object="${newStaff}">
+        <form th:action="@{/staff/create}" method="post" class="p-4" id="createStaffForm" th:object="${newStaff}">
             <div class="mb-3">
                 <label class="form-label" for="form-createStaff__name"
                 >Staff Name</label
@@ -111,9 +117,9 @@
                         class="form-control shadow-none reset"
                         id="form-createStaff__role"
                         required
-                        th:field="*{roleId}"
+                        name="roleId"
                 >
-                    <option th:each="role: ${roles}" th:value="${role.id}" th:text="${#strings.substring(role.name,5)}"></option>
+                    <option th:each="role: ${roles}" th:value="${role.id}" th:text="${role.name}" th:selected="${role.name=='ROLE_USER'}"></option>
                 </select>
             </div>
 
@@ -125,7 +131,6 @@
                         class="form-control shadow-none reset"
                         id="form-createStaff__salary"
                         th:field="*{salary}"
-                        required
                         type="number"
                 />
                 <div
@@ -140,16 +145,105 @@
             <button type="submit" class="btn btn-success my-2 py-2 btn-font-size">
                 Save
             </button>
-
             <button type="reset" class="btn btn-success my-2 py-2 btn-font-size">
-                Cancel
+                Reset
             </button>
+            <a th:href="@{/staff/view}" class="btn btn-success my-2 py-2 btn-font-size">
+                Cancel
+            </a>
         </form>
     </div>
 </div>
 <script th:src="@{/node_modules/jquery/dist/jquery.js}"></script>
 <script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.js}"></script>
 <script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>
-<script th:src="@{/javascript/main.js}"></script>
+<script th:src="@{/javascript/main.js}">
+</script>
+<script>
+    $(document).ready(function () {
+
+        $("#createStaffForm").validate({
+            errorPlacement: function (error, element) {
+                error.insertBefore(element);
+            },
+
+            rules: {
+                name: {
+                    required: true,
+                },
+
+                email: {
+                    required: true,
+                    email: true,
+                },
+
+                password:{
+                    required: true,
+                    password:true,
+                },
+                departmentId:{
+                  required:true
+                },
+
+                roleId:{
+                    required:true
+                },
+
+                salary:{
+                    required:true,
+                    isNumber:true,
+                    isPositive:true
+                }
+            },
+            messages: {
+                name: {
+                    required: "Name must be filled",
+
+                },
+
+                email: {
+                    required: "Email must be filled",
+                    email: "Email is invalid"
+                },
+
+                password: {
+                    required: "Password must be filled",
+                    password: "Password does not accept space",
+                },
+
+                departmentId:{
+                    required: "Department must be filled"
+                },
+
+                roleId:{
+                    required:"Role must be filled"
+                },
+
+                salary:{
+                    required:"Salary must be filled",
+                    isNumber:"Salary must be number",
+                    isPositive:"Salary must be positive"
+                }
+            },
+
+            submitHandler: function (form) {
+                form.submit();
+            },
+        });
+
+        $.validator.methods.password = function (value, element) {
+            let passwordReg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+            return passwordReg.test(value);
+        };
+
+        $.validator.methods.isNumber = function (value,element){
+            return !isNaN(value);
+        }
+
+        $.validator.methods.isPositive = function (value,element){
+            return value > 0;
+        }
+    });
+</script>
 </body>
 </html>

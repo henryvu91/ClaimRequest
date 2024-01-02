@@ -5,3 +5,7 @@
 .error {
     color: red;
 }
+
+.autocomplete-results {
+    max-height: 150px;
+}
