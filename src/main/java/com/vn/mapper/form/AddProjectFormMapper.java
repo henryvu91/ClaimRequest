@@ -12,7 +12,6 @@ public interface AddProjectFormMapper {
     @Mapping(source = "projectName", target = "name")
     @Mapping(source = "projectStartDate", target = "startDate")
     @Mapping(source = "projectEndDate", target = "endDate")
-    @Mapping(source = "projectWorkingsById", target = "workingsById")
     Project toEntity(AddProjectFormDTO addProjectFormDTO);
 
     @AfterMapping

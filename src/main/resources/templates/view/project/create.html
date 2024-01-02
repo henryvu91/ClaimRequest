@@ -105,16 +105,14 @@
                                 <th scope="row">1</th>
                                 <td>
                                     <div class="autocomplete-dropdown position-relative">
-                                        <input class="autocomplete-staff-id" name="workingStaffId" type="hidden">
+                                        <input class="autocomplete-staff-id"
+                                               name="projectWorkingsById[0].workingStaffId"
+                                               type="hidden">
                                         <input class="form-control shadow-none reset autocomplete-input"
                                                id="form-addProject__workingStaffId-01" name="workingStaffName"
                                                placeholder="Enter The Staff Name"
                                                type="text">
                                         <div class="dropdown-menu overflow-auto w-100 autocomplete-results position-absolute mt-2"></div>
-                                        <!--                                        <div class="text-danger" th:errors="*{projectWorkingsById.workingStaffId}"-->
-                                        <!--                                             th:if="${#fields.hasErrors('projectWorkingsById.workingStaffId')}">-->
-                                        <!--                                            Error Message-->
-                                        <!--                                        </div>-->
                                     </div>
                                 </td>
                                 <td>
@@ -123,7 +121,8 @@
                                                 disabled id="form-addWorking__jobRank-01">
                                             <option selected value="1">PM</option>
                                         </select>
-                                        <input name="workingJobRankId" type="hidden" value="1">
+                                        <input name="projectWorkingsById[0].workingJobRankId"
+                                               type="hidden" value="1">
                                     </div>
 
                                 </td>
@@ -133,12 +132,8 @@
                                                hidden="hidden"></label>
                                         <input class="form-control shadow-none reset startDateRecord"
                                                id="form-addWorking__startDate-01"
-                                               name="workingStartDate"
+                                               name="projectWorkingsById[0].workingStartDate"
                                                type="date">
-                                        <!--                    <div class="text-danger" th:errors="*{title}"-->
-                                        <!--                         th:if="${#fields.hasErrors('title')}">-->
-                                        <!--                        Title Error-->
-                                        <!--                    </div>-->
                                     </div>
                                 </td>
                                 <td>
@@ -148,17 +143,14 @@
                                 <th scope="row">2</th>
                                 <td>
                                     <div class="autocomplete-dropdown position-relative">
-                                        <input class="autocomplete-staff-id" name="workingStaffId" type="hidden">
+                                        <input class="autocomplete-staff-id"
+                                               name="projectWorkingsById[1].workingStaffId"
+                                               type="hidden">
                                         <input class="form-control shadow-none reset autocomplete-input"
                                                id="form-addProject__workingStaffId-02" name="workingStaffName"
                                                placeholder="Enter The Staff Name"
                                                type="text">
-
                                         <div class="dropdown-menu overflow-auto w-100 autocomplete-results position-absolute mt-2"></div>
-                                        <!--                                        <div class="text-danger" th:errors="*{projectWorkingsById.workingStaffId}"-->
-                                        <!--                                             th:if="${#fields.hasErrors('projectWorkingsById.workingStaffId')}">-->
-                                        <!--                                            Error Message-->
-                                        <!--                                        </div>-->
                                     </div>
                                 </td>
                                 <td>
@@ -167,7 +159,8 @@
                                                 disabled id="form-addWorking__jobRank-02">
                                             <option selected value="2">QA</option>
                                         </select>
-                                        <input name="workingJobRankId" type="hidden" value="2">
+                                        <input name="projectWorkingsById[1].workingJobRankId"
+                                               type="hidden" value="2">
                                     </div>
                                 </td>
                                 <td>
@@ -176,12 +169,8 @@
                                                hidden="hidden"></label>
                                         <input class="form-control shadow-none reset startDateRecord"
                                                id="form-addWorking__startDate-02"
-                                               name="workingStartDate"
+                                               name="projectWorkingsById[1].workingStartDate"
                                                type="date">
-                                        <!--                    <div class="text-danger" th:errors="*{title}"-->
-                                        <!--                         th:if="${#fields.hasErrors('title')}">-->
-                                        <!--                        Title Error-->
-                                        <!--                    </div>-->
                                     </div>
                                 </td>
                                 <td>
@@ -192,23 +181,21 @@
                                 <th scope="row">3</th>
                                 <td>
                                     <div class="autocomplete-dropdown position-relative">
-                                        <input class="autocomplete-staff-id" name="workingStaffId" type="hidden">
+                                        <input class="autocomplete-staff-id"
+                                               name="projectWorkingsById[2].workingStaffId"
+                                               type="hidden">
                                         <input class="form-control shadow-none reset autocomplete-input"
                                                id="form-addProject__workingStaffId-03" name="workingStaffName"
                                                placeholder="Enter The Staff Name"
                                                type="text">
 
                                         <div class="dropdown-menu overflow-auto w-100 autocomplete-results position-absolute mt-2"></div>
-                                        <!--                                        <div class="text-danger" th:errors="*{projectWorkingsById.workingStaffId}"-->
-                                        <!--                                             th:if="${#fields.hasErrors('projectWorkingsById.workingStaffId')}">-->
-                                        <!--                                            Error Message-->
-                                        <!--                                        </div>-->
                                     </div>
                                 </td>
                                 <td>
                                     <div>
                                         <select aria-label="Select Job Rank" class="form-select jobRankSelect"
-                                                name="workingJobRankId">
+                                                name="projectWorkingsById[2].workingJobRankId">
                                         </select>
                                     </div>
                                 </td>
@@ -218,12 +205,8 @@
                                                hidden="hidden"></label>
                                         <input class="form-control shadow-none reset startDateRecord"
                                                id="form-addWorking__startDate-03"
-                                               name="workingStartDate"
+                                               name="projectWorkingsById[2].workingStartDate"
                                                type="date">
-                                        <!--                    <div class="text-danger" th:errors="*{title}"-->
-                                        <!--                         th:if="${#fields.hasErrors('title')}">-->
-                                        <!--                        Title Error-->
-                                        <!--                    </div>-->
                                     </div>
                                 </td>
                                 <td>

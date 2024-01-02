@@ -48,7 +48,8 @@ public class StaffController {
     //    Show the UI to create new staff
     @GetMapping("/staff/create")
     public String createStaffUI(ModelMap modelMap) {
-        com.vn.model.Staff staff = new com.vn.model.Staff();
+        Staff staff = new com.vn.model.Staff();
+
         List<Department> departments = departmentService.findAll();
         List<Role> roles = roleService.findAll();
         modelMap.addAttribute("newStaff", staff);
@@ -101,12 +102,32 @@ public class StaffController {
 //        check the list is empty
         if (!nameList.isEmpty()) {
             modelMap.addAttribute("nameList", nameList);
-//            Check the id from param not null
-            if (id == null) {
-                id = nameList.get(0).getId();
-            }
-//            get staff information
-//            StaffViewDetailDto viewStaff = staffViewMapper.toDto(staffService.findById(id));
+
+            modelMap.addAttribute("firstStaffId", nameList.get(0).getId());
+//
+////            Check the id from param not null
+//            if(id==null){
+//                id = nameList.get(0).getId();
+//            }
+//
+////            get staff information
+////            StaffViewDetailDto viewStaff = staffViewMapper.toDto(staffService.findById(id));
+//            StaffViewDetailDto viewStaff = staffService.findStaffViewDetailById(id);
+//            if(viewStaff==null){
+////                TODO: error message
+//            }else {
+//                modelMap.addAttribute("viewStaff",viewStaff);
+//            }
+        }
+        return "view/staff/view";
+    }
+
+    @GetMapping("/staff/viewDetail")
+    public String viewStaffDetailUI(
+            @RequestParam(name = "id", required = false) Integer id
+            , ModelMap modelMap) {
+
+        if (id != null) {
             StaffViewDetailDto viewStaff = staffService.findStaffViewDetailById(id);
             if (viewStaff == null) {
 //                TODO: error message
@@ -114,8 +135,10 @@ public class StaffController {
                 modelMap.addAttribute("viewStaff", viewStaff);
             }
         }
-        return "view/staff/view";
+
+        return "view/staff/viewDetail";
     }
+
 
     //    Show the UI to create new staff
     @GetMapping("/staff/update")
