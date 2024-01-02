@@ -9,6 +9,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -35,15 +36,15 @@ public class Working {
     @Basic
     @Column(name = "end_date")
     private LocalDate endDate;
-    @OneToMany(mappedBy = "workingByWorkingId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "workingByWorkingId")
     private List<Claim> claimsById = new ArrayList<>();
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "staff_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Staff staffByStaffId;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Project projectByProjectId;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_rank_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private JobRank jobRankByJobRankId;
 
@@ -58,10 +59,8 @@ public class Working {
         if (staffId != working.staffId) return false;
         if (projectId != working.projectId) return false;
         if (jobRankId != working.jobRankId) return false;
-        if (startDate != null ? !startDate.equals(working.startDate) : working.startDate != null) return false;
-        if (endDate != null ? !endDate.equals(working.endDate) : working.endDate != null) return false;
-
-        return true;
+        if (!Objects.equals(startDate, working.startDate)) return false;
+        return Objects.equals(endDate, working.endDate);
     }
 
     @Override
