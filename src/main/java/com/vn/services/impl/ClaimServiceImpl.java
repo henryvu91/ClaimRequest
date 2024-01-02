@@ -20,8 +20,8 @@ public class ClaimServiceImpl implements ClaimService {
     ClaimRepository claimRepository;
 
     @Override
-    public Page<Claim> findClaimByStatus(Status status, Integer pageNo) {
-        Pageable pageable = PageRequest.of(pageNo - 1, 3);
+    public Page<Claim> findClaimByStatus(Status status, Integer pageNo, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         return claimRepository.findClaimByStatus(status, pageable);
     }
 }

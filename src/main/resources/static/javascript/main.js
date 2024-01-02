@@ -56,6 +56,15 @@ $(document).ready(function () {
       $contentMain.load("project/view");
     });
 
+  $("#btn-createClaim")
+      .off("click")
+      .on("click", function (e) {
+        e.preventDefault();
+        //include profile.html file into index.html
+        $contentMain.children().remove();
+        $contentMain.load("claim/create");
+      });
+
   $("#btn-draft")
       .off("click")
       .on("click", function (e) {

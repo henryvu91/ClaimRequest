@@ -1,8 +1,10 @@
 package com.vn.controller;
 
 import com.vn.model.Claim;
+import com.vn.model.Working;
 import com.vn.services.ClaimService;
 import com.vn.utils.Status;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -21,10 +23,10 @@ public class ClaimController {
     @GetMapping("/draft")
     public String viewDraft(
             Model model,
-            @RequestParam(defaultValue = "1") Integer pageNo
+            @RequestParam(defaultValue = "1") Integer pageNo,
+            @RequestParam(defaultValue = "5") Integer pageSize
     ){
-        Page<Claim> claims = claimService.findClaimByStatus(Status.DRAFT, pageNo);
-
+        Page<Claim> claims = claimService.findClaimByStatus(Status.DRAFT, pageNo, pageSize);
         model.addAttribute("totalPage", claims.getTotalPages());
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("claims", claims);
@@ -48,6 +50,6 @@ public class ClaimController {
 
     @GetMapping("/detail")
     public String detail() {
-        return "";
+        return "view/claim/detail";
     }
 }

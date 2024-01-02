@@ -8,5 +8,5 @@ import org.springframework.data.domain.Sort;
 import java.util.List;
 
 public interface ClaimService {
-    Page<Claim> findClaimByStatus(Status status, Integer pageNo);
+    Page<Claim> findClaimByStatus(Status status, Integer pageNo, Integer pageSize);
 }
