@@ -24,7 +24,6 @@ public interface AddProjectFormMapper {
     @Mapping(source = "name", target = "projectName")
     @Mapping(source = "startDate", target = "projectStartDate")
     @Mapping(source = "endDate", target = "projectEndDate")
-    @Mapping(source = "workingsById", target = "projectWorkingsById")
     AddProjectFormDTO toDto(Project project);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
