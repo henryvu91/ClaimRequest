@@ -9,6 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ClaimService {
-    Page<Claim> findClaimByStatus(Status status, Integer pageNo, Integer pageSize);
-    Optional<Claim> deatil(Integer id);
+    Page<Claim> findClaimByStatus(Status status, Status status2, Integer pageNo, Integer pageSize);
+    //Optional<Claim> deatil(Integer id);
 }

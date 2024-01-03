@@ -15,5 +15,7 @@ import java.util.List;
 @Repository
 public interface ClaimRepository extends JpaRepository<Claim, Integer> {
 
-    Page<Claim> findClaimByStatus(Status status, Pageable pageable);
+    @Query("SELECT c FROM Claim c WHERE c.status IN (:status, :status2)")
+    Page<Claim> findClaimByStatus(Status status, Status status2, Pageable pageable);
+
 }

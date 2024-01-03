@@ -65,41 +65,7 @@ $(document).ready(function () {
         $contentMain.load("claim/create");
       });
 
-  $("#btn-draft")
-      .off("click")
-      .on("click", function (e) {
-        e.preventDefault();
-        //include profile.html file into index.html
-        $contentMain.children().remove();
-        $contentMain.load("claim/draft");
-      });
 
-  $("#btn-pendingApproval")
-      .off("click")
-      .on("click", function (e) {
-        e.preventDefault();
-        //include profile.html file into index.html
-        $contentMain.children().remove();
-        $contentMain.load("claim/pendingApproval");
-      });
-
-  $("#btn-paid ")
-      .off("click")
-      .on("click", function (e) {
-        e.preventDefault();
-        //include profile.html file into index.html
-        $contentMain.children().remove();
-        $contentMain.load("claim/paid");
-      });
-
-  $("#btn-rejectedOrCancelled")
-      .off("click")
-      .on("click", function (e) {
-        e.preventDefault();
-        //include profile.html file into index.html
-        $contentMain.children().remove();
-        $contentMain.load("claim/rejectedOrCanceled");
-      });
 
   $("#btn-logout").click(function (e) {
     e.preventDefault();

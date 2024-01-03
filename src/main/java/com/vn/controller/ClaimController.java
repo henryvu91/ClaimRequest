@@ -1,7 +1,9 @@
 package com.vn.controller;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.vn.model.Claim;
 import com.vn.model.Working;
+import com.vn.repositories.ClaimRepository;
 import com.vn.services.ClaimService;
 import com.vn.utils.Status;
 import jakarta.servlet.http.HttpSession;
@@ -22,40 +24,80 @@ public class ClaimController {
     @Autowired
     private ClaimService claimService;
 
+    @Autowired
+    private ClaimRepository claimRepository;
+
+
+
+    @GetMapping("/pendingApproval")
+    public String viewPendingApproval(
+            Model model,
+            @RequestParam(defaultValue = "1") Integer pageNo,
+            @RequestParam(defaultValue = "5") Integer pageSize
+    ){
+        viewClaim(model, Status.PENDING, Status.PENDING, pageNo, pageSize);
+        return "view/claim/pending_approval";
+    }
+
+    @GetMapping("/approvedOrPaid")
+    public String viewApprovedOrPaid(
+            Model model,
+            @RequestParam(defaultValue = "1") Integer pageNo,
+            @RequestParam(defaultValue = "5") Integer pageSize
+    ){
+        viewClaim(model, Status.APPROVED, Status.PAID, pageNo, pageSize);
+        return "view/claim/approved_paid";
+    }
+
+    @GetMapping("/approved")
+    public String viewApproved(
+            Model model,
+            @RequestParam(defaultValue = "1") Integer pageNo,
+            @RequestParam(defaultValue = "5") Integer pageSize
+    ){
+        viewClaim(model, Status.APPROVED, Status.APPROVED, pageNo, pageSize);
+        return "view/claim/approved";
+    }
+
+    @GetMapping("/paid")
+    public String viewPaid(
+            Model model,
+            @RequestParam(defaultValue = "1") Integer pageNo,
+            @RequestParam(defaultValue = "5") Integer pageSize
+    ){
+        viewClaim(model, Status.PAID, Status.PAID, pageNo, pageSize);
+        return "view/claim/paid";
+    }
+
     @GetMapping("/draft")
     public String viewDraft(
             Model model,
             @RequestParam(defaultValue = "1") Integer pageNo,
             @RequestParam(defaultValue = "5") Integer pageSize
     ){
-        Page<Claim> claims = claimService.findClaimByStatus(Status.DRAFT, pageNo, pageSize);
-        model.addAttribute("totalPage", claims.getTotalPages());
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("claims", claims);
+        viewClaim(model, Status.DRAFT, Status.DRAFT, pageNo, pageSize);
         return "view/claim/draft";
-    }
-
-    @GetMapping("/pendingApproval")
-    public String viewPendingApproval(){
-        return "view/claim/pending_approval";
-    }
-
-    @GetMapping("/paid")
-    public String viewPaid(){
-        return "view/claim/paid";
-    }
-
-    @GetMapping("/rejectedOrCanceled")
-    public String viewRejectOrCancel(){
-        return "view/claim/reject_cancel";
     }
 
     @GetMapping("/detail")
     public String detail(Model model
     ) {
-        Optional<Claim> claim = claimService.deatil(1);
+        Optional<Claim> claimOptional = claimRepository.findById(1);
+        if (claimOptional.isPresent()){
+            Claim claim = claimOptional.get();
+            System.out.println(claim);
+            model.addAttribute("claim", claim);
+
+        }
+
         model.addAttribute("status", "DRAFT");
-        model.addAttribute("claim", claim);
         return "view/claim/detail";
+    }
+
+    private void viewClaim(Model model, Status status1, Status status2, Integer pageNo, Integer pageSize) {
+        Page<Claim> claims = claimService.findClaimByStatus(status1, status2, pageNo, pageSize);
+        model.addAttribute("totalPage", claims.getTotalPages());
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("claims", claims);
     }
 }

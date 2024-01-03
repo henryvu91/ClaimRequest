@@ -21,14 +21,14 @@ public class ClaimServiceImpl implements ClaimService {
     ClaimRepository claimRepository;
 
     @Override
-    public Page<Claim> findClaimByStatus(Status status, Integer pageNo, Integer pageSize) {
+    public Page<Claim> findClaimByStatus(Status status, Status status2, Integer pageNo, Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        return claimRepository.findClaimByStatus(status, pageable);
+        return claimRepository.findClaimByStatus(status, status2, pageable);
     }
 
-    @Override
-    public Optional<Claim> deatil(Integer id) {
-        return claimRepository.findById(id);
-    }
+//    @Override
+//    public Optional<Claim> deatil(Integer id) {
+//        return claimRepository.findById(id);
+//    }
 
 }
