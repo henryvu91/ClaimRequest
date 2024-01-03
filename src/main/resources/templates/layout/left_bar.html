@@ -8,13 +8,12 @@
 <div class="content-menu bg-body-secondary border-start border-end border-1 d-flex justify-content-start flex-column left-bar"
      th:fragment="leftBarFragment">
     <div aria-label="Menu" class="btn-group-vertical" role="group">
-        <a class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
-           id="btn-createClaim"
-           th:href="@{/claim/create}"
-           type="button">
+        <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
+                id="btn-createClaim"
+                type="button">
             <i class="bi bi-pencil-square"></i>
             <span>Create Claim</span>
-        </a>
+        </button>
         <div class="w-100">
             <button aria-expanded="false"
                     class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start dropdown-toggle d-flex justify-content-between align-items-center"
@@ -24,31 +23,30 @@
                 My Claims
             </button>
             <div class="collapse" id="myClaims">
-                <a class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
-                   id="btn-draft"
-                   th:href="@{#}"
-                   type="button">
+                <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
+                        id="btn-draft"
+                        type="button">
                     <i class="bi bi-table"></i>
                     <span>Draft</span>
-                </a>
-                <a class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
-                   id="btn-pendingApproval "
-                   th:href="@{#}" type="button">
+                </button>
+                <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
+                        id="btn-pendingApproval"
+                        type="button">
                     <i class="bi bi-table"></i>
                     <span>Pending Approval </span>
-                </a>
-                <a class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
-                   id="btn-paid"
-                   th:href="@{#}" type="button">
+                </button>
+                <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
+                        id="btn-paid "
+                        type="button">
                     <i class="bi bi-table"></i>
                     <span>Paid</span>
-                </a>
-                <a class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
-                   id="btn-rejectedOrCancelled"
-                   th:href="@{#}" type="button">
+                </button>
+                <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
+                        id="btn-rejectedOrCancelled"
+                        type="button">
                     <i class="bi bi-table"></i>
                     <span>Rejected or Cancelled</span>
-                </a>
+                </button>
             </div>
         </div>
         <div class="w-100">
@@ -60,18 +58,18 @@
                 Claims for Approval
             </button>
             <div class="collapse" id="claimsForApproval">
-                <a class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
-                   id="btn-forMyVetting"
-                   th:href="@{#}" type="button">
+                <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
+                        id="btn-forMyVetting"
+                        type="button">
                     <i class="bi bi-table"></i>
                     <span>For My Vetting</span>
-                </a>
-                <a class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
-                   id="btn-approvedOrPaid"
-                   th:href="@{#}" type="button">
+                </button>
+                <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
+                        id="btn-approvedOrPaid"
+                        type="button">
                     <i class="bi bi-table"></i>
                     <span>Approved or Paid</span>
-                </a>
+                </button>
             </div>
         </div>
         <div class="w-100">
@@ -83,18 +81,18 @@
                 Claims for Finance
             </button>
             <div class="collapse" id="claimsForFinance">
-                <a class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
-                   id="btn-approved"
-                   th:href="@{#}" type="button">
+                <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
+                        id="btn-approved"
+                        type="button">
                     <i class="bi bi-table"></i>
                     <span>Approved</span>
-                </a>
-                <a class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
-                   id="btn-paidFinance"
-                   th:href="@{#}" type="button">
+                </button>
+                <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
+                        id="btn-paid"
+                        type="button">
                     <i class="bi bi-table"></i>
                     <span>Paid</span>
-                </a>
+                </button>
             </div>
         </div>
         <div class="w-100">
@@ -107,9 +105,7 @@
             </button>
             <div class="collapse" id="configuration">
                 <div>
-                    <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start dropdown-toggle d-flex justify-content-between align-items-center px-3"
-                            data-bs-target="#staffInformation"
-                            data-bs-toggle="collapse"
+                    <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start px-3"
                             id="btn-staffInformation"
                             type="button">
                         <span>
@@ -117,22 +113,6 @@
                             <span class="mx-3">Staff Information</span>
                         </span>
                     </button>
-                    <div class="collapse" id="staffInformation">
-                        <a class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start px-5"
-                           id="btn-staffInformation-create"
-                           th:href="@{/staff/create}"
-                           type="button">
-                            <i class="bi bi-pencil-square"></i>
-                            <span>Create</span>
-                        </a>
-                        <a class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start px-5"
-                           id="btn-staffInformation-view"
-                           th:href="@{/staff/view}"
-                           type="button">
-                            <i class="bi bi-table"></i>
-                            <span>View</span>
-                        </a>
-                    </div>
                 </div>
                 <div>
                     <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start dropdown-toggle d-flex justify-content-between align-items-center px-3"
@@ -146,20 +126,18 @@
                         </span>
                     </button>
                     <div class="collapse" id="projectInformation">
-                        <a class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start px-5"
-                           id="btn-projectInformation-create"
-                           th:href="@{/project/create}"
-                           type="button">
+                        <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start px-5"
+                                id="btn-projectInformation-create"
+                                type="button">
                             <i class="bi bi-pencil-square"></i>
                             <span>Create</span>
-                        </a>
-                        <a class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start px-5"
-                           id="btn-projectInformation-view"
-                           th:href="@{/project/view}"
-                           type="button">
+                        </button>
+                        <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start px-5"
+                                id="btn-projectInformation-view"
+                                type="button">
                             <i class="bi bi-table"></i>
                             <span>View</span>
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>

@@ -1,13 +1,8 @@
 package com.vn.model;
 
 import com.vn.utils.Status;
-import com.vn.utils.validateGroup.ValidateCreateClaimGroup;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -18,6 +13,7 @@ import java.util.Objects;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Claim {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -25,37 +21,30 @@ public class Claim {
     private Integer id;
     @Basic
     @Column(name = "working_id")
-    @NotNull(groups = {ValidateCreateClaimGroup.class},message = "{MSG8}")
     private Integer workingId;
     @Basic
     @Column(name = "date")
-    @NotNull(groups = {ValidateCreateClaimGroup.class},message = "{MSG8}")
     private LocalDate date;
     @Basic
     @Column(name = "from_time")
-    @NotNull(groups = {ValidateCreateClaimGroup.class},message = "{MSG8}")
     private LocalTime fromTime;
     @Basic
     @Column(name = "to_time")
-    @NotNull(groups = {ValidateCreateClaimGroup.class},message = "{MSG8}")
     private LocalTime toTime;
     @Basic
     @Column(name = "total_hours")
-    @NotNull(groups = {ValidateCreateClaimGroup.class},message = "{MSG8}")
     private Integer totalHours;
     @Basic
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    @NotNull(groups = {ValidateCreateClaimGroup.class},message = "{MSG8}")
     private Status status;
     @Basic
     @Column(name = "remarks")
-    @NotNull(groups = {ValidateCreateClaimGroup.class},message = "{MSG8}")
     private String remarks;
     @Basic
     @Column(name = "audit_trail")
     private String auditTrail;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "working_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Working workingByWorkingId;
 
