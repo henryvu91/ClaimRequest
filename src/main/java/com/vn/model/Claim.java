@@ -3,6 +3,8 @@ package com.vn.model;
 import com.vn.utils.Status;
 import com.vn.utils.validateGroup.ValidateCreateClaimGroup;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,6 +32,7 @@ public class Claim {
     @Basic
     @Column(name = "date")
     @NotNull(groups = {ValidateCreateClaimGroup.class},message = "{MSG8}")
+    @Future(groups = {ValidateCreateClaimGroup.class},message = "{Claim.Create.MSG1}")
     private LocalDate date;
     @Basic
     @Column(name = "from_time")
