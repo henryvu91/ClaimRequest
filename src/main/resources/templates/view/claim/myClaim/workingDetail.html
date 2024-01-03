@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+
+<div class="container" th:object="${working}">
+    <div class="row">
+
+
+    <div class="col mb-3">
+        <label class="form-label" for="form-addClaim__roleInProject">Role In Project</label>
+        <input class="form-control shadow-none reset w70" disabled id="form-addClaim__roleInProject"
+               type="text" th:value="*{jobRankByJobRankId.name}"/>
+    </div>
+
+        <div class="col mb-3">
+            <label class="form-label" for="form-addClaim__joinedDate">Joined Project Date</label>
+            <input class="form-control shadow-none reset w70" disabled id="form-addClaim__joinedDate"
+                   type="date" th:value="*{startDate}"/>
+        </div>
+        <div class="col mb-3">
+            <label class="form-label" for="form-addClaim__leftDate">Left Project Date</label>
+            <input class="form-control shadow-none reset w70" disabled id="form-addClaim__leftDate"
+                   type="date" th:value="*{endDate}"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col mb-3">
+            <label class="form-label" for="form-addClaimDetail__startDate">Start
+                Date Project</label>
+            <input class="form-control shadow-none w-100 reset"
+                   id="form-addClaimDetail__startDate" name="startDate"
+                   type="date" th:value="*{projectByProjectId.startDate}" disabled>
+        </div>
+        <div class="col mb-3 "><label class="form-label" for="form-addClaimDetail__endDate">End
+            Date Project</label>
+            <input class="form-control shadow-none w-100 reset"
+                   id="form-addClaimDetail__endDate" name="endDate"
+                   type="date" th:value="*{projectByProjectId.endDate}" disabled>
+        </div>
+        <div class="col mb-3"><label class="form-label" for="form-addClaim__project-duration">Project
+            Duration</label>
+            <input class="form-control shadow-none reset" disabled
+                   id="form-addClaim__project-duration" name="projectDuration"
+                   type="text">
+
+        </div>
+    </div>
+</div>
+
+</html>

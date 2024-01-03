@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -23,7 +24,7 @@ public class JobRank {
     @Basic
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "jobRankByJobRankId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "jobRankByJobRankId")
     private List<Working> workingsById = new ArrayList<>();
 
     @Override
@@ -34,9 +35,7 @@ public class JobRank {
         JobRank jobRank = (JobRank) o;
 
         if (id != jobRank.id) return false;
-        if (name != null ? !name.equals(jobRank.name) : jobRank.name != null) return false;
-
-        return true;
+        return Objects.equals(name, jobRank.name);
     }
 
     @Override
