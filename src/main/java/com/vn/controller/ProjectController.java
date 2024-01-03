@@ -35,14 +35,17 @@ public class ProjectController {
             model.addAttribute("message", message);
         }
 
-        Page<AddProjectFormDTO> addProjectFormDTO = projectService.getContentPaginated(pageNo, pageSize);
-        Integer countRecords = projectService.countRecords();
-        Integer totalPages = (countRecords % pageSize != 0) ? (countRecords / pageSize) + 1 : countRecords / pageSize;
+        Integer pageNoI = (pageNo <= 0) ? 0 : pageNo - 1;
+        System.out.println(pageNoI);
+
+        Page<AddProjectFormDTO> addProjectFormDTO = projectService.getContentPaginated(pageNoI, pageSize);
+
+        Integer totalPages = addProjectFormDTO.getTotalPages();
 
         model.addAttribute("projectList", addProjectFormDTO);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("pageNo", pageNo);
-        model.addAttribute("pageSize", 10);
+        model.addAttribute("pageSize", pageSize);
 
         return "view/project/view";
     }

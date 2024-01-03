@@ -6,74 +6,73 @@
   To change this template use File | Settings | File Templates.
 -->
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" th:replace="~{layout/template::areas(~{::title}, ~{::main})}" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta content="IE=edge" http-equiv="X-UA-Compatible">
-    <meta content="" name="description">
-    <meta content="width=device-width, initial-scale=1" name="viewport">
-    <title>Title</title>
-    <link href="./favicon.ico" rel="icon" type="image/x-icon">
-    <link href="" rel="stylesheet">
+    <title>View Project</title>
 </head>
 <body>
 <main>
     <div>
-        <form id="form-viewProject">
-            <div class="mb-3" th:if="${not #strings.isEmpty(message)}">
-                <div class="alert alert-success py-2 px-3" role="alert"
-                     th:text="${message}">
-                </div>
+        <div class="mb-3" th:if="${not #strings.isEmpty(message)}">
+            <div class="alert alert-success py-2 px-3" role="alert"
+                 th:text="${message}">
             </div>
-            <div class="border-bottom border-1 mb-5 p-2">
-                <h1>View Project</h1>
+        </div>
+        <div class="border-bottom border-1 mb-5 p-2">
+            <h1>View Project</h1>
+        </div>
+        <div class="border border-1 rounded-3 mb-5">
+            <div class="border-bottom border-1 bg-body-secondary">
+                <p class="p-2 m-0">View Project List</p>
             </div>
-            <div class="border border-1 rounded-3 mb-5">
-                <div class="border-bottom border-1 bg-body-secondary">
-                    <p class="p-2 m-0">View Project List</p>
-                </div>
-                <div class="p-3">
-                    <table class="table table-bordered table-rounded">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Code</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Start Date</th>
-                            <th scope="col">End Date</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="project, iterStat : ${projectList}">
-                            <td th:text="${(pageNo) * pageSize + iterStat.count}"></td>
-                            <td th:text="${project.projectCode}"></td>
-                            <td th:text="${project.projectName}"></td>
-                            <td th:text="${project.projectStartDate}"></td>
-                            <td th:text="${project.projectEndDate}"></td>
-                            <!--                            <td><a th:href="@{/project/edit/{id}(id=${project.projectId})}">Edit</a></td>-->
-                            <td>
-                                <a class="btn btn-outline-danger btn-delete-projectById"
-                                   th:data-id="${project.projectId}">Delete</a>
-                            </td>
-                            <!--                            <td><a th:href="@{/project/view/{id}(id=${project.projectId})}">View</a></td>-->
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="p-3">
+                <table class="table table-bordered table-rounded">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Code</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="project, iterStat : ${projectList}">
+                        <td th:text="${((pageNo) * pageSize + iterStat.count - 11) < 0 ? ((pageNo) * pageSize + iterStat.count) : ((pageNo) * pageSize + iterStat.count - 10) }"></td>
+                        <td th:text="${project.projectCode}"></td>
+                        <td th:text="${project.projectName}"></td>
+                        <td th:text="${project.projectStartDate}"></td>
+                        <td th:text="${project.projectEndDate}"></td>
+                        <!--                            <td><a th:href="@{/project/edit/{id}(id=${project.projectId})}">Edit</a></td>-->
+                        <td>
+                            <a class="btn btn-outline-danger btn-delete-projectById"
+                               th:data-id="${project.projectId}">Delete</a>
+                        </td>
+                        <!--                            <td><a th:href="@{/project/view/{id}(id=${project.projectId})}">View</a></td>-->
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-            <div>
-                <ul class="pagination__project" id="pagination__project"></ul>
-                <div class="d-flex justify-content-center" id="page-project"></div>
-            </div>
-            <div class="d-none" id="view-project__totalPages" th:data-totalPages="${totalPages}"></div>
-            <div class="d-none" id="view-project__pageNo" th:data-pageNo="${pageNo}"></div>
-            <div class="d-none" id="view-project__pageSize" th:data-pageNo="${pageSize}"></div>
-            <input id="set__pageNo" name="pageNo" type="hidden" value="">
-        </form>
+        </div>
+
     </div>
+    <nav class="m-3">
+        <ul class="pagination justify-content-end">
+            <li class="page-item" th:if="${pageNo > 1}">
+                <a class="page-link" th:href="@{'?pageNo='+${pageNo - 1}}">Previous</a>
+            </li>
+            <li class="page-item"
+                th:classappend="${pageNo == i || (pageNo == 0 && i == 1) ? 'active' : ''}"
+                th:each="i : ${#numbers.sequence(1, totalPages)}"
+                th:if="${i <= pageNo + 3 && i >= pageNo - 3}">
+                <a class="page-link" th:href="@{'?pageNo='+${i}}" th:text="${i}"></a>
+            </li>
+            <li class="page-item" th:if="${pageNo < totalPages}">
+                <a class="page-link" th:href="@{'?pageNo='+${pageNo == 0 ? 2 : pageNo + 1}}">Next</a>
+            </li>
+        </ul>
+    </nav>
 </main>
-<script th:src="@{/javascript/project/view.js}"></script>
-<script th:src="@{/javascript/main.js}"></script>
 </body>
 </html>

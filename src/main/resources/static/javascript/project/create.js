@@ -313,17 +313,7 @@ $(document).ready(function () {
       },
     },
     submitHandler: function (form) {
-      $.ajax({
-        type: "POST",
-        url: "/project/create",
-        data: $(form).serialize(),
-        success: function (data) {
-          $contentMain.html(data);
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-          console.error("Error loading page:", textStatus, errorThrown);
-        },
-      });
+      form.submit();
     },
   });
 });
