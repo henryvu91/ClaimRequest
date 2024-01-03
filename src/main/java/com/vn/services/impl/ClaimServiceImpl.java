@@ -4,23 +4,29 @@ import com.vn.model.Claim;
 import com.vn.model.Project;
 import com.vn.model.Staff;
 import com.vn.model.Working;
+import com.vn.repositories.ClaimRepository;
 import com.vn.repositories.ProjectRepository;
 import com.vn.repositories.WorkingRepository;
 import com.vn.services.ClaimService;
+import com.vn.utils.CurrentUserUtils;
 import org.hibernate.jdbc.Work;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.vendor.EclipseLinkJpaDialect;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 @Service
 public class ClaimServiceImpl implements ClaimService {
     @Autowired
-    ProjectRepository projectRepository;
-    @Autowired
     WorkingRepository workingRepository;
+
+    @Autowired
+    ClaimRepository claimRepository;
     @Override
     public Claim save(Claim claim, BindingResult result) {
 //        Get the working
@@ -55,22 +61,41 @@ public class ClaimServiceImpl implements ClaimService {
         LocalTime from = claim.getFromTime();
         LocalTime to = claim.getToTime();
         if(from.isAfter(to)){
-            result.rejectValue("date","Claim.Create.MSG4","Claim date must happen when claimer is in project");
+            result.rejectValue("fromTime","Claim.Create.MSG4","To time must be after From time");
             return null;
         }
 
 //        Check the claim is not in the same time with other claims
+        List<Claim> claims = claimRepository.findClaimByDateAndStaffIdAndTime(claimDate,working.getStaffId(),from,to);
+        if(!claims.isEmpty()){
+            result.rejectValue("fromTime","Claim.Create.MSG5","The claim is at the same time with another claim");
+            return null;
+        }
 
-
-
-        return null;
+//        Add the audit trail
+        createTrail("Created on",claim);
+        return claimRepository.save(claim);
     }
 
 //    Method to check date in a range
     private boolean isInRangeDate(LocalDate startDate,LocalDate endDate,LocalDate checkDate){
+        if(endDate == null){
+            return checkDate.isEqual(startDate) || checkDate.isAfter(startDate);
+        }
         return checkDate.isEqual(startDate) || checkDate.isEqual(endDate) ||
                 (checkDate.isAfter(startDate) && checkDate.isBefore(endDate));
     }
 
-//    Method to check
+//    Method to create new audit trail
+    private void createTrail(String prefixMessage,Claim claim){
+        String newLine = prefixMessage + " " + LocalDateTime.now().toString() + " by "+CurrentUserUtils.getCurrentUserInfo().getName();
+        String currentAuditTrail = claim.getAuditTrail();
+
+        if(currentAuditTrail == null){
+            claim.setAuditTrail(newLine);
+        }else {
+            currentAuditTrail = currentAuditTrail + "/n"+ newLine;
+            claim.setAuditTrail(currentAuditTrail);
+        }
+    }
 }

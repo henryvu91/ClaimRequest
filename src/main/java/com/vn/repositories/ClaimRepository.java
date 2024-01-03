@@ -16,6 +16,11 @@ public interface ClaimRepository extends JpaRepository<Claim, Integer> {
 
 //    Check any claims at the same time
 
-    @Query("SELECT c FROM Claim c WHERE c.workingByWorkingId.staffId = :staffId AND c.")
-    List<Claim> findClaimByDateAndStaffIdAndTime(Integer staffId, LocalDate claimDate, LocalTime fromTime,LocalTime toTime);
+    @Query("""
+            SELECT c 
+            FROM Claim c 
+            WHERE c.date = :claimDate 
+            AND c.workingByWorkingId.staffId = :staffId 
+            AND ((c.fromTime BETWEEN :fromTime AND :toTime) OR (c.toTime BETWEEN :fromTime AND :toTime))""")
+    List<Claim> findClaimByDateAndStaffIdAndTime(LocalDate claimDate,Integer staffId, LocalTime fromTime,LocalTime toTime);
 }
