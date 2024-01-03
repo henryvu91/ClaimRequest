@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -9,66 +9,46 @@
     <table class="table table-striped">
         <tbody>
             <tr>
-              <th>Status</th>
-              <td>${staffName}</td>
+                <th>Status</th>
+                <td th:text="${claim.id}"></td>
             </tr>
             <tr>
-              <th>Project Name</th>
-              <td>${projectName}</td>
+                <th>Date</th>
+                <td th:text="${status}"></td>
             </tr>
             <tr>
-              <th>Staff name</th>
-              <td>${staffName}</td>
+                <th>From time</th>
+                <td th:text="${status}"></td>
             </tr>
             <tr>
-              <th>Project Name</th>
-              <td>${projectName}</td>
+                <th>To time</th>
+                <td th:text="${status}"></td>
             </tr>
             <tr>
-              <th>Staff name</th>
-              <td>${staffName}</td>
+                <th>Staff name</th>
+                <td th:text="${status}"></td>
             </tr>
             <tr>
-              <th>Project Name</th>
-              <td>${projectName}</td>
+                <th>Email</th>
+                <td th:text="${status}"></td>
             </tr>
             <tr>
-              <th>Staff name</th>
-              <td>${staffName}</td>
+                <th>Salary</th>
+                <td th:text="${status}"></td>
             </tr>
             <tr>
-              <th>Project Name</th>
-              <td>${projectName}</td>
+                <th>Project Name</th>
+                <td th:text="${status}"></td>
             </tr>
             <tr>
-              <th>Staff name</th>
-              <td>${staffName}</td>
+                <th>Status date</th>
+                <td th:text="${status}"></td>
             </tr>
             <tr>
-              <th>Project Name</th>
-              <td>${projectName}</td>
+                <th>End date</th>
+                <td th:text="${status}"></td>
             </tr>
-            <tr>
-              <th>Staff name</th>
-              <td>${staffName}</td>
-            </tr>
-            <tr>
-              <th>Project Name</th>
-              <td>${projectName}</td>
-            </tr>
-            <tr>
-              <th>Project Name</th>
-              <td>${projectName}</td>
-            </tr>
-            <tr>
-              <th>Staff name</th>
-              <td>${staffName}</td>
-            </tr>
-            <tr>
-              <th>Project Name</th>
-              <td>${projectName}</td>
-            </tr>
-      </tbody>
+        </tbody>
     </table>
 </div>
 </body>

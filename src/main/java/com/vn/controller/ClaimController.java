@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/claim")
 public class ClaimController {
@@ -49,7 +51,11 @@ public class ClaimController {
     }
 
     @GetMapping("/detail")
-    public String detail() {
+    public String detail(Model model
+    ) {
+        Optional<Claim> claim = claimService.deatil(1);
+        model.addAttribute("status", "DRAFT");
+        model.addAttribute("claim", claim);
         return "view/claim/detail";
     }
 }

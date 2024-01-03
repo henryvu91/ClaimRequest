@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClaimServiceImpl implements ClaimService {
@@ -24,4 +25,10 @@ public class ClaimServiceImpl implements ClaimService {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         return claimRepository.findClaimByStatus(status, pageable);
     }
+
+    @Override
+    public Optional<Claim> deatil(Integer id) {
+        return claimRepository.findById(id);
+    }
+
 }
