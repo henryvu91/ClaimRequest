@@ -33,7 +33,7 @@ public class Project {
     @Basic
     @Column(name = "end_date")
     private LocalDate endDate;
-    @OneToMany(mappedBy = "projectByProjectId")
+    @OneToMany(mappedBy = "projectByProjectId", cascade = CascadeType.REMOVE)
     private List<Working> workingsById = new ArrayList<>();
 
     @Override
