@@ -53,7 +53,7 @@ public class Staff {
     @Range(min = 1L, groups = {ValidateCreateStaffGroup.class, ValidateUpdateStaffGroup.class}, message = "{MSG8}")
     @NotBlank(groups = {ValidateCreateStaffGroup.class, ValidateUpdateStaffGroup.class})
     private BigDecimal salary;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Department departmentByDepartmentId;
     @ManyToOne
