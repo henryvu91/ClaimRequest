@@ -1,52 +1,55 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{/layout/template::areas(~{::title},~{::main})}">
+<html lang="vi" th:replace="~{/layout/template::areas(~{::title},~{::main})}"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>View Staff</title>
 </head>
 <body>
 <!--<div class="container-fluid bg-grey min-vh-100 d-flex">-->
 <main>
-    <div
-            class="bg-white border border-grey border-round align-self-center main-form px-0"
-    >
-        <h2
-                class="title text-grey bg-grey m-0 py-2 pl-3 border-bottom border-grey"
-        >
-            Staff Information
-        </h2>
-
-        <div class="p-4" id="viewStaffForm">
-            <div class="mb-3 row">
-                <label
-                        class="form-label font-weight-bold mr-2 col-2"
-                        for="form-viewStaff__name"
-                >Staff Name:
-                </label>
-
-                <select
-                        class="shadow-none reset col-6"
-                        name="name"
-                        id="form-viewStaff__name"
-                        required
-                >
-                    <option th:each="item: ${nameList}" th:value="${item.id}" th:text="${item.name}"></option>
-                </select>
-            </div>
-            <div id="viewDetail">
-
+    <div>
+        <div class="border-bottom border-1 mb-5 p-2">
+            <h1>View Staff</h1>
+        </div>
+        <div class="border border-1 rounded-3 mb-5">
+            <!--        <div class="bg-white border border-grey border-round align-self-center main-form px-0">-->
+            <div class="border-bottom border-1 bg-body-secondary">
+                <p class="p-2 m-0">Staff Information</p>
             </div>
 
+            <div class="p-4" id="viewStaffForm">
+                <div class="infomationStaff">
+                    <table class="w-100">
+                        <tr>
+                            <td class="col-1">
+                                <label class="form-label font-weight-bold mr-2 col-2 w-100"
+                                       for="form-viewStaff__name">Staff Name:</label>
+                            </td>
+                            <td class="col-11">
+                                <select class="form-select d-inline shadow-none reset col-6"
+                                        id="form-viewStaff__name"
+                                        name="name"
+                                        required>
+                                    <option th:each="item: ${nameList}" th:text="${item.name}"
+                                            th:value="${item.id}"></option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
 
+                <div id="viewDetail">
+
+                </div>
+            </div>
         </div>
     </div>
-    <script th:src="@{/node_modules/jquery/dist/jquery.js}"></script>
-    <script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.js}"></script>
-    <script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>
-    <script th:src="@{/javascript/main.js}">
-    </script>
-    <script th:src="@{/javascript/staff/view.js}"></script>
-
+    <!--    <script th:src="@{/node_modules/jquery/dist/jquery.js}"></script>-->
+    <!--    <script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.js}"></script>-->
+    <!--    <script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>-->
+    <!--    <script th:src="@{/javascript/main.js}">-->
+    <!--    </script>-->
+    <!--    <script th:src="@{/javascript/staff/view.js}"></script>-->
 </main>
 
 </body>
