@@ -27,25 +27,31 @@
                         id="btn-draft"
                         type="button">
                     <i class="bi bi-table"></i>
-                    <span>Draft</span>
+                    <span><a class="viewClaim" th:href="@{/claim/myDraft}">Draft</a></span>
                 </button>
                 <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
                         id="btn-pendingApproval"
                         type="button">
                     <i class="bi bi-table"></i>
-                    <span>Pending Approval </span>
+                    <span><a class="viewClaim" th:href="@{/claim/myPending}">Pending Approval</a></span>
+                </button>
+                <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
+                        id="btn-approved "
+                        type="button">
+                    <i class="bi bi-table"></i>
+                    <span><a class="viewClaim" th:href="@{/claim/myApproved}">Approved</a></span>
                 </button>
                 <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
                         id="btn-paid "
                         type="button">
                     <i class="bi bi-table"></i>
-                    <span>Paid</span>
+                    <span><a class="viewClaim" th:href="@{/claim/myPaid}">Paid</a></span>
                 </button>
                 <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
                         id="btn-rejectedOrCancelled"
                         type="button">
                     <i class="bi bi-table"></i>
-                    <span>Rejected or Cancelled</span>
+                    <span><a class="viewClaim" th:href="@{/claim/myRejectOrCancel}">Rejected or Cancelled</a></span>
                 </button>
             </div>
         </div>
@@ -62,13 +68,13 @@
                         id="btn-forMyVetting"
                         type="button">
                     <i class="bi bi-table"></i>
-                    <span>For My Vetting</span>
+                    <span><a class="viewClaim" th:href="@{/claim/pendingApproval}">For My Vetting</a></span>
                 </button>
                 <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
                         id="btn-approvedOrPaid"
                         type="button">
                     <i class="bi bi-table"></i>
-                    <span>Approved or Paid</span>
+                    <span><a class="viewClaim" th:href="@{/claim/approvedOrPaid}">Approved or Paid</a></span>
                 </button>
             </div>
         </div>
@@ -85,13 +91,13 @@
                         id="btn-approved"
                         type="button">
                     <i class="bi bi-table"></i>
-                    <span>Approved</span>
+                    <span><a class="viewClaim" th:href="@{/claim/approved}">Approved</a></span>
                 </button>
                 <button class="btn text-primary rounded-0 border-bottom border-top border-1 py-3 w-100 text-start"
                         id="btn-paid"
                         type="button">
                     <i class="bi bi-table"></i>
-                    <span>Paid</span>
+                    <span><a class="viewClaim" th:href="@{/claim/paid}">Paid</a></span>
                 </button>
             </div>
         </div>

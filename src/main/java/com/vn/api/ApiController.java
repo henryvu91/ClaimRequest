@@ -2,15 +2,17 @@ package com.vn.api;
 
 import com.vn.dto.view.JobRankDTO;
 import com.vn.dto.view.StaffIdNameDto;
+import com.vn.model.Claim;
+import com.vn.repositories.ClaimRepository;
+import com.vn.services.ClaimService;
 import com.vn.services.JobRankService;
 import com.vn.services.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -34,4 +36,5 @@ public class ApiController {
     public List<JobRankDTO> getJobRank() {
         return jobRankService.findAll();
     }
+
 }

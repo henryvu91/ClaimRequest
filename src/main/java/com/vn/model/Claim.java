@@ -1,5 +1,6 @@
 package com.vn.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vn.utils.Status;
 import jakarta.persistence.*;
 import lombok.*;

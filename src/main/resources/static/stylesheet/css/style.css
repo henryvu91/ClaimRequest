@@ -9,3 +9,7 @@
 .autocomplete-results {
     max-height: 150px;
 }
+
+.viewClaim {
+    text-decoration: none;
+}

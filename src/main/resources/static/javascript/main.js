@@ -6,6 +6,9 @@ $(document).ready(function () {
   let $duration = $(".duration");
   let $startDateRecord = $(".startDateRecord");
 
+  let $projectStartDate = $(".start-date");
+  let $projectEndDate = $(".end-date");
+
   let today = new Date();
   let formattedDate = today.toISOString().substring(0, 10);
 
@@ -13,6 +16,9 @@ $(document).ready(function () {
   $startDateRecord.val(formattedDate);
   $endDate.attr("min", formattedDate);
   $startDateRecord.attr("min", $startDate.val());
+
+  projectDuration();
+
 
   function calculateDuration() {
     let startDateVal = new Date($startDate.val());
@@ -24,6 +30,19 @@ $(document).ready(function () {
       $duration.val(`${diffDays + 1} Days`);
     } else {
       $duration.val("");
+    }
+  }
+
+  function projectDuration() {
+    let startDateVal = new Date($projectStartDate.val());
+    let endDateVal = new Date($projectEndDate.val());
+
+    if (!isNaN(startDateVal.getTime()) && !isNaN(endDateVal.getTime())) {
+      let timeDiff = endDateVal - startDateVal;
+      let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      $duration.text(diffDays + 1);
+    } else {
+      $duration.text("");
     }
   }
 

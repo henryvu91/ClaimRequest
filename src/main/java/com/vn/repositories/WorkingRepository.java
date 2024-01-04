@@ -14,4 +14,6 @@ public interface WorkingRepository extends JpaRepository<Working, Integer> {
     //    Search working via staff id
     @Query("SELECT w FROM Working w WHERE w.staffId = :staffId")
     List<Working> findByStaffId(@Param("staffId") Integer staffId);
+
+
 }

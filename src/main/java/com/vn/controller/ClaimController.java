@@ -1,12 +1,10 @@
 package com.vn.controller;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
+import com.vn.dto.view.ClaimTotalDTO;
 import com.vn.model.Claim;
-import com.vn.model.Working;
-import com.vn.repositories.ClaimRepository;
 import com.vn.services.ClaimService;
+import com.vn.utils.CurrentUserUtils;
 import com.vn.utils.Status;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -24,11 +23,6 @@ public class ClaimController {
     @Autowired
     private ClaimService claimService;
 
-    @Autowired
-    private ClaimRepository claimRepository;
-
-
-
     @GetMapping("/pendingApproval")
     public String viewPendingApproval(
             Model model,
@@ -36,7 +30,7 @@ public class ClaimController {
             @RequestParam(defaultValue = "5") Integer pageSize
     ){
         viewClaim(model, Status.PENDING, Status.PENDING, pageNo, pageSize);
-        return "view/claim/pending_approval";
+        return "view/claim/for_approval";
     }
 
     @GetMapping("/approvedOrPaid")
@@ -46,7 +40,7 @@ public class ClaimController {
             @RequestParam(defaultValue = "5") Integer pageSize
     ){
         viewClaim(model, Status.APPROVED, Status.PAID, pageNo, pageSize);
-        return "view/claim/approved_paid";
+        return "view/claim/for_approval";
     }
 
     @GetMapping("/approved")
@@ -56,7 +50,7 @@ public class ClaimController {
             @RequestParam(defaultValue = "5") Integer pageSize
     ){
         viewClaim(model, Status.APPROVED, Status.APPROVED, pageNo, pageSize);
-        return "view/claim/approved";
+        return "view/claim/for_finance";
     }
 
     @GetMapping("/paid")
@@ -66,38 +60,96 @@ public class ClaimController {
             @RequestParam(defaultValue = "5") Integer pageSize
     ){
         viewClaim(model, Status.PAID, Status.PAID, pageNo, pageSize);
-        return "view/claim/paid";
+        return "view/claim/for_finance";
     }
 
-    @GetMapping("/draft")
-    public String viewDraft(
+//    @GetMapping("/draft")
+//    public String viewDraft(
+//            Model model
+////            @RequestParam(defaultValue = "1") Integer pageNo,
+////            @RequestParam(defaultValue = "5") Integer pageSize
+//    ){
+//        Integer id = CurrentUserUtils.getCurrentUserInfo().getId();
+//        List<ClaimTotalDTO> claimTotalDTOList = claimService.findByStaffIdAndStatus(id, Status.DRAFT, Status.DRAFT);
+////        model.addAttribute("totalPage", claimTotalDTOList.getTotalPages());
+////        model.addAttribute("currentPage", pageNo);
+//        model.addAttribute("claims", claimTotalDTOList);
+//        return "view/claim/myClaim";
+//    }
+
+    @GetMapping("/myDraft")
+    public String myDraft(
             Model model,
             @RequestParam(defaultValue = "1") Integer pageNo,
-            @RequestParam(defaultValue = "5") Integer pageSize
+            @RequestParam(defaultValue = "2") Integer pageSize
     ){
-        viewClaim(model, Status.DRAFT, Status.DRAFT, pageNo, pageSize);
-        return "view/claim/draft";
+        myClaim(model, Status.DRAFT, Status.DRAFT, pageNo, pageSize);
+        return "view/claim/myClaim";
+    }
+
+    @GetMapping("/myPending")
+    public String myPending(
+            Model model,
+            @RequestParam(defaultValue = "1") Integer pageNo,
+            @RequestParam(defaultValue = "2") Integer pageSize
+    ){
+        myClaim(model, Status.PENDING, Status.PENDING, pageNo, pageSize);
+        return "view/claim/myClaim";
+    }
+
+    @GetMapping("/myApproved")
+    public String myApproved(
+            Model model,
+            @RequestParam(defaultValue = "1") Integer pageNo,
+            @RequestParam(defaultValue = "2") Integer pageSize
+    ){
+        myClaim(model, Status.APPROVED, Status.APPROVED, pageNo, pageSize);
+        return "view/claim/myClaim";
+    }
+
+    @GetMapping("/myPaid")
+    public String myPaid(
+            Model model,
+            @RequestParam(defaultValue = "1") Integer pageNo,
+            @RequestParam(defaultValue = "2") Integer pageSize
+    ){
+        myClaim(model, Status.PAID, Status.PAID, pageNo, pageSize);
+        return "view/claim/myClaim";
+    }
+
+    @GetMapping("/myRejectOrCancel")
+    public String myRejectOrCancel(
+            Model model,
+            @RequestParam(defaultValue = "1") Integer pageNo,
+            @RequestParam(defaultValue = "2") Integer pageSize
+    ){
+        myClaim(model, Status.REJECTED, Status.CANCELLED, pageNo, pageSize);
+        return "view/claim/myClaim";
     }
 
     @GetMapping("/detail")
-    public String detail(Model model
+    public String detail(Model model, @RequestParam Integer id
     ) {
-        Optional<Claim> claimOptional = claimRepository.findById(1);
+        Optional<Claim> claimOptional = claimService.deatil(id);
         if (claimOptional.isPresent()){
             Claim claim = claimOptional.get();
-            System.out.println(claim);
             model.addAttribute("claim", claim);
-
         }
-
-        model.addAttribute("status", "DRAFT");
         return "view/claim/detail";
     }
 
     private void viewClaim(Model model, Status status1, Status status2, Integer pageNo, Integer pageSize) {
-        Page<Claim> claims = claimService.findClaimByStatus(status1, status2, pageNo, pageSize);
+        Page<ClaimTotalDTO> claims = claimService.findClaimByStatus(status1, status2, pageNo, pageSize);
         model.addAttribute("totalPage", claims.getTotalPages());
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("claims", claims);
+    }
+
+    private void myClaim(Model model, Status status1, Status status2, Integer pageNo, Integer pageSize) {
+        Integer id = CurrentUserUtils.getCurrentUserInfo().getId();
+        Page<ClaimTotalDTO> claimTotalDTOList = claimService.findClaimByStatusAndStaffId(id, status1, status2, pageNo, pageSize);
+        model.addAttribute("totalPage", claimTotalDTOList.getTotalPages());
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("claims", claimTotalDTOList);
     }
 }

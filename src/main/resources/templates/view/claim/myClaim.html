@@ -7,23 +7,12 @@
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>My Claim</title>
     <link href="./favicon.ico" rel="icon" type="image/x-icon">
-    <link rel="stylesheet" th:href="@{/node_modules/normalize.css/normalize.css}">
-    <link rel="stylesheet" th:href="@{/node_modules/bootstrap/dist/css/bootstrap.css}">
-    <link rel="stylesheet" th:href="@{/node_modules/bootstrap-icons/font/bootstrap-icons.css}">
-    <link rel="stylesheet" th:href="@{stylesheet/css/style.css}">
-    <style>
-        input {
-            border: none;
-        }
-
-        .modal-body {
-            max-height: 70vh;
-            overflow-y: auto;
-        }
-    </style>
 </head>
 <body>
 <main>
+    <div class="border-bottom border-1 mb-5 p-2">
+        <h1>My Claim</h1>
+    </div>
     <table class="table table-bordered">
         <thead>
             <tr class="bg-secondary">
@@ -38,15 +27,17 @@
         <tbody>
             <th:block th:each="c : ${claims}">
                 <tr data-toggle="modal" data-target="#exampleModalCenter" data-rowid="1">
-                    <td th:text="${c.id}"></td>
-                    <td th:text="${c.workingByWorkingId.staffByStaffId.name}"></td>
-                    <td th:text="${c.workingByWorkingId.projectByProjectId.name}"></td>
+                    <td th:text="${c.claimId}"></td>
+                    <td th:text="${c.claimStaffName}"></td>
+                    <td th:text="${c.claimProjectName}"></td>
                     <td>
-                        <span th:text="${T(java.time.temporal.ChronoUnit).DAYS.between(c.workingByWorkingId.projectByProjectId.startDate, c.workingByWorkingId.projectByProjectId.endDate)}"></span>
+                        <input type="date" hidden="hidden" th:value="${c.claimProjectStartDate}" class="start-date">
+                        <input type="date" hidden="hidden" th:value="${c.claimProjectEndDate}" class="end-date">
+                        <span class="duration"></span>
                     </td>
-                    <td th:text="${c.totalHours}"></td>
+                    <td th:text="${c.claimTotalHours}"></td>
                     <td>
-                        <button type="button" id="detail" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <button th:data-id="${c.claimId}" type="button" class="btn btn-success detail " data-bs-toggle="modal" data-bs-target="#exampleModal">
                            Detail
                         </button>
                     </td>
@@ -84,12 +75,6 @@
         </div>
     </div>
 </main>
-
-<script th:src="@{/node_modules/jquery/dist/jquery.js}"></script>
-<script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.js}"></script>
-<script th:src="@{/javascript/claim/detail.js}"></script>
-<script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>
-<script th:src="@{/javascript/main.js}"></script>
 
 </body>
 </html>
