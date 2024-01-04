@@ -25,7 +25,6 @@
             <th>Project Name</th>
             <th>Project Duration</th>
             <th>Total Working Hour</th>
-            <th>Total Claim Amount</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -41,7 +40,6 @@
                     <span class="duration"></span>
                 </td>
                 <td th:text="${c.claimTotalHours}"></td>
-                <td>xxx</td>
                 <td>
                     <button th:data-id="${c.claimId}" type="button" class="btn btn-primary detail" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Detail

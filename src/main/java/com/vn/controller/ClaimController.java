@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -29,7 +28,7 @@ public class ClaimController {
             @RequestParam(defaultValue = "1") Integer pageNo,
             @RequestParam(defaultValue = "5") Integer pageSize
     ){
-        viewClaim(model, Status.PENDING, Status.PENDING, pageNo, pageSize);
+        claimPM(model, Status.APPROVED, Status.APPROVED, pageNo, pageSize);
         return "view/claim/for_approval";
     }
 
@@ -39,7 +38,7 @@ public class ClaimController {
             @RequestParam(defaultValue = "1") Integer pageNo,
             @RequestParam(defaultValue = "5") Integer pageSize
     ){
-        viewClaim(model, Status.APPROVED, Status.PAID, pageNo, pageSize);
+        claimPM(model, Status.APPROVED, Status.PAID, pageNo, pageSize);
         return "view/claim/for_approval";
     }
 
@@ -62,20 +61,6 @@ public class ClaimController {
         viewClaim(model, Status.PAID, Status.PAID, pageNo, pageSize);
         return "view/claim/for_finance";
     }
-
-//    @GetMapping("/draft")
-//    public String viewDraft(
-//            Model model
-////            @RequestParam(defaultValue = "1") Integer pageNo,
-////            @RequestParam(defaultValue = "5") Integer pageSize
-//    ){
-//        Integer id = CurrentUserUtils.getCurrentUserInfo().getId();
-//        List<ClaimTotalDTO> claimTotalDTOList = claimService.findByStaffIdAndStatus(id, Status.DRAFT, Status.DRAFT);
-////        model.addAttribute("totalPage", claimTotalDTOList.getTotalPages());
-////        model.addAttribute("currentPage", pageNo);
-//        model.addAttribute("claims", claimTotalDTOList);
-//        return "view/claim/myClaim";
-//    }
 
     @GetMapping("/myDraft")
     public String myDraft(
@@ -130,7 +115,7 @@ public class ClaimController {
     @GetMapping("/detail")
     public String detail(Model model, @RequestParam Integer id
     ) {
-        Optional<Claim> claimOptional = claimService.deatil(id);
+        Optional<Claim> claimOptional = claimService.detail(id);
         if (claimOptional.isPresent()){
             Claim claim = claimOptional.get();
             model.addAttribute("claim", claim);
@@ -140,6 +125,14 @@ public class ClaimController {
 
     private void viewClaim(Model model, Status status1, Status status2, Integer pageNo, Integer pageSize) {
         Page<ClaimTotalDTO> claims = claimService.findClaimByStatus(status1, status2, pageNo, pageSize);
+        model.addAttribute("totalPage", claims.getTotalPages());
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("claims", claims);
+    }
+
+    private void claimPM(Model model, Status status1, Status status2, Integer pageNo, Integer pageSize) {
+        Integer staffId = CurrentUserUtils.getCurrentUserInfo().getId();
+        Page<ClaimTotalDTO> claims = claimService.findClaimByPMAndStatus(status1, status2, staffId, pageNo, pageSize);
         model.addAttribute("totalPage", claims.getTotalPages());
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("claims", claims);
