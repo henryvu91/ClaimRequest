@@ -77,7 +77,13 @@ public class ClaimServiceImpl implements ClaimService {
         return claimRepository.save(claim);
     }
 
-//    Method to check date in a range
+//    Method to find Claim based on staffId and claimId
+    @Override
+    public Claim findClaimByIdAndStaffId(Integer claimId, Integer staffId) {
+        return claimRepository.findClaimByIdAndStaffId(claimId,staffId);
+    }
+
+    //    Method to check date in a range
     private boolean isInRangeDate(LocalDate startDate,LocalDate endDate,LocalDate checkDate){
         if(endDate == null){
             return checkDate.isEqual(startDate) || checkDate.isAfter(startDate);

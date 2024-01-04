@@ -13,4 +13,6 @@ public interface ClaimService {
     Page<Claim> findClaimByStatus(Status status, Status status2, Integer pageNo, Integer pageSize);
     Claim save(Claim claim, BindingResult result);
     //Optional<Claim> deatil(Integer id);
+
+    Claim findClaimByIdAndStaffId(Integer claimId,Integer staffId);
 }

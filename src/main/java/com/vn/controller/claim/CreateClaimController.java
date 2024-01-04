@@ -1,6 +1,7 @@
 package com.vn.controller.claim;
 
 import com.vn.dto.form.ClaimCreateDto;
+import com.vn.dto.form.ClaimUpdateDTO;
 import com.vn.dto.view.StaffViewDetailDto;
 import com.vn.model.Claim;
 import com.vn.model.Working;
@@ -90,6 +91,18 @@ public class CreateClaimController {
         Working working = workingService.findById(workingId);
         modelMap.addAttribute("working", working);
         return "/view/claim/myClaim/workingDetail";
+    }
+
+    @GetMapping("/claim/myClaim/update")
+    public String updateClaimUI(
+            @RequestParam(name="claimId") Integer claimId,
+            ModelMap modelMap) {
+        if(claimId == null){
+            modelMap.addAttribute("updateClaim", new ClaimUpdateDTO());
+            return "/view/claim/myClaim/update";
+        }
+
+        return "/view/claim/myClaim/update";
     }
 
     private void addCurrentUserAndProjectList(ModelMap modelMap) {

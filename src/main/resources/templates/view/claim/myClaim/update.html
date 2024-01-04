@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="vi" th:replace="~{/layout/template::areas(~{::title},~{::main})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update Claim</title>
+
+</head>
+<body>
+
+<main>
+    <div>
+        <div class="border-bottom border-1 mb-5 p-2 ">
+            <h1>Add Claim</h1>
+
+        </div>
+        <div class="border border-1 rounded-3 mb-5 ">
+            <div class="border-bottom border-1 bg-body-secondary">
+                <p class="p-2 m-0">Content Form Elements</p>
+            </div>
+            <div class="p-3 w70">
+                <form id="form-addClaim" method="post" novalidate th:action="@{/claim/myClaim/update}"
+                      th:object="${updateClaim}">
+                    <div class="mb-3"><label class="form-label" for="form-addClaim__status">Status</label>
+                        <input class="form-control shadow-none reset " readonly id="form-addClaim__status"
+
+                               required th:field="*{status}" type="text">
+                        <div class="text-danger"
+                             th:errors="*{status}"
+                             th:if="${#fields.hasErrors('status')}">
+                            Status Error
+                        </div>
+                    </div>
+                    <div class="mb-3"><label class="form-label" for="form-addClaim__staff-id">Staff Id</label>
+                        <input class="form-control shadow-none reset w70" readonly id="form-addClaim__staff-id"
+                               required th:value="${currentUser.id}"
+                               type="text">
+                    </div>
+                    <div class="mb-3"><label class="form-label" for="form-addClaim__staff-name">Staff Name</label>
+                        <input class="form-control shadow-none reset w70" readonly id="form-addClaim__staff-name"
+                               required th:value="${currentUser.name}"
+                               type="text">
+                    </div>
+                    <div class="mb-3 w70"><label class="form-label" for="form-addClaim__staff-department">Staff
+                        Department </label>
+                        <input class="form-control shadow-none reset" readonly
+                               id="form-addClaim__staff-department" required
+                               th:value="${currentUser.departmentName}" type="text">
+                    </div>
+
+                    <div class="mb-3 w70">
+                        <label class="form-label" for="form-addClaim__project-name">Project Name</label>
+                        <select class="form-control shadow-none reset" id="form-addClaim__project-name"
+
+                                required th:field="*{workingId}">
+                            <option th:each="working: ${workingList}" th:text="${working.projectByProjectId.name}"
+                            th:value="${working.id}"></option>
+
+                        </select>
+                    </div>
+                    <!--                    Show the detail of working-->
+                    <div class="container" id="workingDetail">
+
+                    </div>
+
+                    <!--Input claim date -->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6 mb-3"><label class="form-label" for="form-addClaimDetail__date">Chose
+                               Claim Date</label>
+                                <input class="form-control shadow-none reset"
+                                       id="form-addClaimDetail__date" required
+                                       th:field="*{date}"
+                                       type="date">
+                                <div class="text-danger"
+                                     th:errors="*{date}"
+                                     th:if="${#fields.hasErrors('date')}">
+                                    Claim Date Error
+                                </div>
+                            </div>
+                            <div class="col-6 mb-3"><label class="form-label" for="form-addClaimDetail__day">Day</label>
+                                <input class="form-control shadow-none reset"
+                                       disabled
+                                       id="form-addClaimDetail__day"
+                                       required type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--                    Input claim time-->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-4 mb-3"><label class="form-label"
+                                                           for="form-addClaimDetail__fromTime">
+                                From</label>
+                                <input class="form-control shadow-none reset"
+                                       id="form-addClaimDetail__fromTime" required
+                                       th:field="*{fromTime}"
+                                       type="time">
+                                <div class="text-danger"
+                                     th:errors="*{fromTime}"
+                                     th:if="${#fields.hasErrors('fromTime')}">
+                                    From Time Error
+                                </div>
+                            </div>
+                            <div class="col-4 mb-3"><label class="form-label"
+                                                           for="form-addClaimDetail__toTime"> To</label>
+                                <input class="form-control shadow-none reset"
+                                       id="form-addClaimDetail__toTime" required
+                                       th:field="*{toTime}"
+                                       type="time">
+                                <div class="text-danger"
+                                     th:errors="*{toTime}"
+                                     th:if="${#fields.hasErrors('toTime')}">
+                                    To Time Error
+                                </div>
+                            </div>
+                            <div class="col-4 mb-3"><label class="form-label"
+                                                           for="form-addClaimDetail__totalHours">Total
+                                Hours</label>
+                                <input class="form-control shadow-none reset"
+                                       readonly id="form-addClaimDetail__totalHours"
+                                       required th:field="*{totalHours}" type="number">
+                                <div class="text-danger"
+                                     th:errors="*{totalHours}"
+                                     th:if="${#fields.hasErrors('totalHours')}">
+                                    Total Hours Error
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="mb-3"><label class="form-label" for="form-addClaimDetail__remarks">Remarks</label>
+                        <textarea
+                                class="form-control shadow-none reset" id="form-addClaimDetail__remarks"
+                                required
+                                style="resize: vertical; overflow: auto;"
+                                th:field="*{remarks}"></textarea>
+                        <div class="text-danger"
+                             th:errors="*{remarks}"
+                             th:if="${#fields.hasErrors('remarks')}">
+                            Remarks Error
+                        </div>
+                    </div>
+                    <div class="mb-3"><label class="form-label" for="form-addClaimDetail__audit-trail">Audit
+                        trail </label>
+                        <input class="form-control shadow-none reset" disabled
+                               id="form-addClaimDetail__audit-trail" name="auditTrail"
+                               required type="text">
+                    </div>
+                    <div class="data-card" id="dataCard" style="display: none;">
+                        <p>Created by <span id="creatorName"></span> on <span id="creationTime"></span></p>
+                    </div>
+                    <button class="btn btn-success" id="createBtn" type="submit">Create</button>
+                    <button class="btn btn-warning" id="saveBtn" type="button">Save</button>
+                    <button class="btn btn-danger" type="button">Cancel</button>
+                    <button class="btn btn-primary" type="button">Update</button>
+                </form>
+            </div>
+        </div>
+    </div> <!-- logic sử lí tính thứ theo ngày-->
+
+    <!--    <script th:src="@{/node_modules/jquery/dist/jquery.js}"></script>-->
+    <!--    <script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.js}"></script>-->
+    <!--    <script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>-->
+    <!--    <script th:src="@{/javascript/main.js}"></script>-->
+    <!--    <script th:src="@{/javascript/claim/myClaim/create-claim.js}"></script>-->
+    <!--    <script th:src="@{/javascript/claim/myClaim/create-claim.js}"></script>-->
+</main>
+</body>
+</html>
