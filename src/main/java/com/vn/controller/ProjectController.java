@@ -35,8 +35,7 @@ public class ProjectController {
             model.addAttribute("message", message);
         }
 
-        Integer pageNoI = (pageNo <= 0) ? 0 : pageNo - 1;
-        System.out.println(pageNoI);
+        int pageNoI = (pageNo <= 0) ? 0 : pageNo - 1;
 
         Page<AddProjectFormDTO> addProjectFormDTO = projectService.getContentPaginated(pageNoI, pageSize);
 
@@ -79,7 +78,6 @@ public class ProjectController {
 
     @PostMapping("/delete")
     public String deleteProjectPost(@RequestParam("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
-        System.out.println(id);
         String message = projectService.deleteProject(id);
         redirectAttributes.addFlashAttribute("message", message);
         return "redirect:/project/view";
