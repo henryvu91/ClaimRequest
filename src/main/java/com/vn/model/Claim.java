@@ -4,7 +4,6 @@ import com.vn.utils.Status;
 import com.vn.utils.validateGroup.ValidateCreateClaimGroup;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -58,7 +57,7 @@ public class Claim {
     @Basic
     @Column(name = "audit_trail")
     private String auditTrail;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "working_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Working workingByWorkingId;
 

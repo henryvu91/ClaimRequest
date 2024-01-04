@@ -2,18 +2,18 @@ package com.vn.services.impl;
 
 import com.vn.model.Claim;
 import com.vn.model.Project;
-import com.vn.model.Staff;
 import com.vn.model.Working;
 import com.vn.repositories.ClaimRepository;
-import com.vn.repositories.ProjectRepository;
 import com.vn.repositories.WorkingRepository;
 import com.vn.services.ClaimService;
 import com.vn.utils.CurrentUserUtils;
-import org.hibernate.jdbc.Work;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.jpa.vendor.EclipseLinkJpaDialect;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
+import com.vn.utils.Status;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -98,4 +98,14 @@ public class ClaimServiceImpl implements ClaimService {
             claim.setAuditTrail(currentAuditTrail);
         }
     }
+    public Page<Claim> findClaimByStatus(Status status, Status status2, Integer pageNo, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return claimRepository.findClaimByStatus(status, status2, pageable);
+    }
+
+//    @Override
+//    public Optional<Claim> deatil(Integer id) {
+//        return claimRepository.findById(id);
+//    }
+
 }
