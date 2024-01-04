@@ -1,5 +1,6 @@
 package com.vn.services;
 
+import com.vn.dto.form.ClaimUpdateDTO;
 import com.vn.model.Claim;
 import com.vn.utils.Status;
 import org.springframework.data.domain.Page;
@@ -14,5 +15,5 @@ public interface ClaimService {
     Claim save(Claim claim, BindingResult result);
     //Optional<Claim> deatil(Integer id);
 
-    Claim findClaimByIdAndStaffId(Integer claimId,Integer staffId);
+    ClaimUpdateDTO findClaimByIdAndStaffId(Integer claimId, Integer staffId);
 }

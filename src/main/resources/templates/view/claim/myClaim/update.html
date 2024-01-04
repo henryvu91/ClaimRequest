@@ -10,16 +10,18 @@
 <main>
     <div>
         <div class="border-bottom border-1 mb-5 p-2 ">
-            <h1>Add Claim</h1>
+            <h1>Update Claim</h1>
 
         </div>
         <div class="border border-1 rounded-3 mb-5 ">
             <div class="border-bottom border-1 bg-body-secondary">
-                <p class="p-2 m-0">Content Form Elements</p>
+                <p class="p-2 m-0">Form to update claim</p>
             </div>
             <div class="p-3 w70">
                 <form id="form-addClaim" method="post" novalidate th:action="@{/claim/myClaim/update}"
                       th:object="${updateClaim}">
+                    <input type="hidden" th:field="*{id}">
+                    <input type="hidden" th:field="*{workingId}">
                     <div class="mb-3"><label class="form-label" for="form-addClaim__status">Status</label>
                         <input class="form-control shadow-none reset " readonly id="form-addClaim__status"
 
@@ -47,19 +49,62 @@
                                th:value="${currentUser.departmentName}" type="text">
                     </div>
 
+
                     <div class="mb-3 w70">
                         <label class="form-label" for="form-addClaim__project-name">Project Name</label>
-                        <select class="form-control shadow-none reset" id="form-addClaim__project-name"
-
-                                required th:field="*{workingId}">
-                            <option th:each="working: ${workingList}" th:text="${working.projectByProjectId.name}"
-                            th:value="${working.id}"></option>
-
-                        </select>
+                        <input type="text" class="form-control shadow-none reset" id="form-addClaim__project-name" th:field="*{projectName}">
+                        <div class="text-danger"
+                             th:errors="*{projectName}"
+                             th:if="${#fields.hasErrors('projectName')}">
+                            Project Name Error
+                        </div>
                     </div>
                     <!--                    Show the detail of working-->
                     <div class="container" id="workingDetail">
+                        <div class="container">
+                            <div class="row">
 
+
+                                <div class="col mb-3">
+                                    <label class="form-label" for="form-addClaim__roleInProject">Role In Project</label>
+                                    <input class="form-control shadow-none reset w70" disabled id="form-addClaim__roleInProject"
+                                           type="text" th:value="*{jobRankName}"/>
+                                </div>
+
+                                <div class="col mb-3">
+                                    <label class="form-label" for="form-addClaim__joinedDate">Joined Project Date</label>
+                                    <input class="form-control shadow-none reset w70" disabled id="form-addClaim__joinedDate"
+                                           type="date" th:value="*{joinedProjectDate}"/>
+                                </div>
+                                <div class="col mb-3">
+                                    <label class="form-label" for="form-addClaim__leftDate">Left Project Date</label>
+                                    <input class="form-control shadow-none reset w70" disabled id="form-addClaim__leftDate"
+                                           type="date" th:value="*{leftProjectDate}"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label class="form-label" for="form-addClaimDetail__startDate">Start
+                                        Date Project</label>
+                                    <input class="form-control shadow-none w-100 reset"
+                                           id="form-addClaimDetail__startDate" name="projectStartDate"
+                                           type="date" th:value="*{projectStartDate}" disabled>
+                                </div>
+                                <div class="col mb-3 "><label class="form-label" for="form-addClaimDetail__endDate">End
+                                    Date Project</label>
+                                    <input class="form-control shadow-none w-100 reset"
+                                           id="form-addClaimDetail__endDate" name="projectEndDate"
+                                           type="date" th:value="*{projectEndDate}" disabled>
+                                </div>
+                                <div class="col mb-3"><label class="form-label" for="form-addClaim__project-duration">Project
+                                    Duration</label>
+                                    <input class="form-control shadow-none reset" disabled
+                                           id="form-addClaim__project-duration" name="projectDuration"
+                                           type="text">
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!--Input claim date -->
@@ -69,7 +114,7 @@
                                Claim Date</label>
                                 <input class="form-control shadow-none reset"
                                        id="form-addClaimDetail__date" required
-                                       th:field="*{date}"
+                                       name="date" th:value="*{date}"
                                        type="date">
                                 <div class="text-danger"
                                      th:errors="*{date}"
@@ -93,8 +138,8 @@
                                                            for="form-addClaimDetail__fromTime">
                                 From</label>
                                 <input class="form-control shadow-none reset"
-                                       id="form-addClaimDetail__fromTime" required
-                                       th:field="*{fromTime}"
+                                       id="form-addClaimDetail__fromTime" required name="fromTime"
+                                       th:value="*{fromTime}"
                                        type="time">
                                 <div class="text-danger"
                                      th:errors="*{fromTime}"
@@ -105,8 +150,8 @@
                             <div class="col-4 mb-3"><label class="form-label"
                                                            for="form-addClaimDetail__toTime"> To</label>
                                 <input class="form-control shadow-none reset"
-                                       id="form-addClaimDetail__toTime" required
-                                       th:field="*{toTime}"
+                                       id="form-addClaimDetail__toTime" required name="toTime"
+                                       th:value="*{toTime}"
                                        type="time">
                                 <div class="text-danger"
                                      th:errors="*{toTime}"
@@ -141,19 +186,10 @@
                             Remarks Error
                         </div>
                     </div>
-                    <div class="mb-3"><label class="form-label" for="form-addClaimDetail__audit-trail">Audit
-                        trail </label>
-                        <input class="form-control shadow-none reset" disabled
-                               id="form-addClaimDetail__audit-trail" name="auditTrail"
-                               required type="text">
-                    </div>
-                    <div class="data-card" id="dataCard" style="display: none;">
-                        <p>Created by <span id="creatorName"></span> on <span id="creationTime"></span></p>
-                    </div>
-                    <button class="btn btn-success" id="createBtn" type="submit">Create</button>
-                    <button class="btn btn-warning" id="saveBtn" type="button">Save</button>
-                    <button class="btn btn-danger" type="button">Cancel</button>
-                    <button class="btn btn-primary" type="button">Update</button>
+
+                    <button class="btn btn-success" id="createBtn" type="submit">Save</button>
+                    <button class="btn btn-danger" type="reset">Reset</button>
+                    <a class="btn btn-danger" type="button">Cancel</a>
                 </form>
             </div>
         </div>

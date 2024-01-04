@@ -1,5 +1,7 @@
 package com.vn.services.impl;
 
+import com.vn.dto.form.ClaimUpdateDTO;
+import com.vn.mapper.form.ClaimUpdateMapper;
 import com.vn.model.Claim;
 import com.vn.model.Project;
 import com.vn.model.Working;
@@ -27,6 +29,8 @@ public class ClaimServiceImpl implements ClaimService {
 
     @Autowired
     ClaimRepository claimRepository;
+    @Autowired
+    ClaimUpdateMapper claimUpdateMapper;
     @Override
     public Claim save(Claim claim, BindingResult result) {
 //        Get the working
@@ -79,8 +83,13 @@ public class ClaimServiceImpl implements ClaimService {
 
 //    Method to find Claim based on staffId and claimId
     @Override
-    public Claim findClaimByIdAndStaffId(Integer claimId, Integer staffId) {
-        return claimRepository.findClaimByIdAndStaffId(claimId,staffId);
+    public ClaimUpdateDTO findClaimByIdAndStaffId(Integer claimId, Integer staffId) {
+        Claim claim = claimRepository.findClaimByIdAndStaffId(claimId,staffId);
+        if(claim == null){
+            return null;
+        }
+
+        return claimUpdateMapper.toDto(claim);
     }
 
     //    Method to check date in a range
