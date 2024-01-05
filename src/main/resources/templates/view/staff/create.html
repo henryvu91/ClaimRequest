@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{/layout/template::areas(~{::title},~{::main})}"
+<html lang="vi" th:replace="~{layout/template::areas(~{::title}, ~{::main}, ~{::script})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Create New Staff</title>
@@ -114,14 +114,7 @@
             </a>
         </form>
     </div>
-    <!--    </div>-->
-    <!--    <script th:src="@{/node_modules/jquery/dist/jquery.js}"></script>-->
-    <!--    <script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.js}"></script>-->
-    <!--    <script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>-->
-    <!--    <script th:src="@{/javascript/main.js}">-->
-    <!--    </script>-->
-    <!--    <script th:src="@{/javascript/staff/create.js}"></script>-->
-
 </main>
+<script th:src="@{/javascript/staff/create.js}"></script>
 </body>
 </html>

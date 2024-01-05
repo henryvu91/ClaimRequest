@@ -36,7 +36,7 @@ public class Working {
     @Basic
     @Column(name = "end_date")
     private LocalDate endDate;
-    @OneToMany(mappedBy = "workingByWorkingId")
+    @OneToMany(mappedBy = "workingByWorkingId", cascade = CascadeType.REMOVE)
     private List<Claim> claimsById = new ArrayList<>();
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "staff_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
