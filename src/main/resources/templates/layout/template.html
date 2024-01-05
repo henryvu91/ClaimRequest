@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 -->
 <!DOCTYPE html>
-<html lang="vi" th:fragment="areas(title, body)" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" th:fragment="areas(title, body, script)" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <!--    <meta content="IE=edge" http-equiv="X-UA-Compatible">-->
@@ -36,11 +36,12 @@
 <script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.js}"></script>
 <script th:src="@{/node_modules/twbs-pagination/jquery.twbsPagination.js}"></script>
 <script th:src="@{/javascript/main.js}"></script>
-<script th:src="@{/javascript/project/view.js}"></script>
-<script th:src="@{/javascript/project/create.js}"></script>
-<script th:src="@{/javascript/staff/create.js}"></script>
-<script th:src="@{/javascript/staff/update.js}"></script>
-<script th:src="@{/javascript/staff/view.js}"></script>
-<script th:src="@{/javascript/claim/myClaim/create-claim.js}"></script>
+<script th:replace="${script}"></script>
+<!--<script th:src="@{/javascript/project/view.js}"></script>-->
+<!--<script th:src="@{/javascript/project/create.js}"></script>-->
+<!--<script th:src="@{/javascript/staff/create.js}"></script>-->
+<!--<script th:src="@{/javascript/staff/update.js}"></script>-->
+<!--<script th:src="@{/javascript/staff/view.js}"></script>-->
+<!--<script th:src="@{/javascript/claim/myClaim/create-claim.js}"></script>-->
 </body>
 </html>
