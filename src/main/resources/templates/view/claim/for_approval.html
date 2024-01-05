@@ -17,7 +17,7 @@
     <div class="border-bottom border-1 mb-5 p-2">
         <h1>Claims for Approval</h1>
     </div>
-    <table class="table table-bordered">
+    <table th:if="${totalPage > 0}" class="table table-bordered">
         <thead>
         <tr class="bg-secondary">
             <th>Claim Id</th>
@@ -53,22 +53,25 @@
         </tbody>
     </table>
 
-    <div>
+    <div th:if="${totalPage > 0}">
         <ul class="pagination__content" id="pagination__content"></ul>
         <div class="d-flex justify-content-center" id="page-content"></div>
+        <div class="d-none" id="view-content__totalPages" th:data-totalPages="${totalPages}"></div>
+        <div class="d-none" id="view-content__pageNo" th:data-pageNo="${currentPage}"></div>
+        <input id="set__pageNo" name="pageNo" type="hidden" value="">
+        <nav class="m-3">
+            <ul class="pagination justify-content-end">
+                <li th:if="${currentPage > 1}" class="page-item"><a class="page-link" th:href="@{'?pageNo='+${currentPage - 1}}">Previous</a></li>
+                <li th:each="i : ${#numbers.sequence(1, totalPage)}" th:classappend="${currentPage == i ? 'active' : ''}" class="page-item">
+                    <a th:text="${i}" class="page-link" th:href="@{'?pageNo='+${i}}"></a>
+                </li>
+                <li th:if="${currentPage < totalPage}" class="page-item"><a class="page-link" th:href="@{'?pageNo='+${currentPage + 1}}">Next</a></li>
+            </ul>
+        </nav>
     </div>
-    <div class="d-none" id="view-content__totalPages" th:data-totalPages="${totalPages}"></div>
-    <div class="d-none" id="view-content__pageNo" th:data-pageNo="${currentPage}"></div>
-    <input id="set__pageNo" name="pageNo" type="hidden" value="">
-    <nav class="m-3">
-        <ul class="pagination justify-content-end">
-            <li th:if="${currentPage > 1}" class="page-item"><a class="page-link" th:href="@{'?pageNo='+${currentPage - 1}}">Previous</a></li>
-            <li th:each="i : ${#numbers.sequence(1, totalPage)}" th:classappend="${currentPage == i ? 'active' : ''}" class="page-item">
-                <a th:text="${i}" class="page-link" th:href="@{'?pageNo='+${i}}"></a>
-            </li>
-            <li th:if="${currentPage < totalPage}" class="page-item"><a class="page-link" th:href="@{'?pageNo='+${currentPage + 1}}">Next</a></li>
-        </ul>
-    </nav>
+    <div th:if="${totalPage <= 0}">
+        <p>No data available</p>
+    </div>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
