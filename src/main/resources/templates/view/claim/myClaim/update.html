@@ -2,7 +2,7 @@
 <html lang="vi" th:replace="~{/layout/template::areas(~{::title},~{::main})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Create New Claim</title>
+    <title>Update Claim</title>
 
 </head>
 <body>
@@ -18,8 +18,8 @@
                 <p class="p-2 m-0">Content Form Elements</p>
             </div>
             <div class="p-3 w70">
-                <form id="form-addClaim" method="post" novalidate th:action="@{/claim/create}"
-                      th:object="${newClaim}">
+                <form id="form-addClaim" method="post" novalidate th:action="@{/claim/myClaim/update}"
+                      th:object="${updateClaim}">
                     <div class="mb-3"><label class="form-label" for="form-addClaim__status">Status</label>
                         <input class="form-control shadow-none reset " readonly id="form-addClaim__status"
 

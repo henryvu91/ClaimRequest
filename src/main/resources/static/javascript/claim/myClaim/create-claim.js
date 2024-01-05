@@ -166,7 +166,7 @@ $.validator.methods.isClaimDateInDuration = function (value, element) {
 $.validator.methods.isClaimDateAfterJoinBeforeLeftProjectDate = function (value, element) {
     let startDate = $("#form-addClaim__joinedDate").val();
     let endDate = $("#form-addClaim__leftDate").val();
-    return value >= startDate && value <= endDate;
+    return value >= startDate && (endDate === "" || value <= endDate);
 }
 
 $.validator.methods.isClaimDateAfterNow = function (value, element) {
