@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi" th:replace="~{/layout/template::areas(~{::title},~{::main})}"
+<html lang="vi" th:replace="~{layout/template::areas(~{::title}, ~{::main}, ~{::script})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Update Claim</title>
@@ -21,7 +21,7 @@
                 <form id="form-addClaim" method="post" novalidate th:action="@{/claim/myClaim/update}"
                       th:object="${updateClaim}">
                     <div class="mb-3"><label class="form-label" for="form-addClaim__status">Status</label>
-                        <input class="form-control shadow-none reset " readonly id="form-addClaim__status"
+                        <input class="form-control shadow-none reset " id="form-addClaim__status" readonly
 
                                required th:field="*{status}" type="text">
                         <div class="text-danger"
@@ -31,19 +31,19 @@
                         </div>
                     </div>
                     <div class="mb-3"><label class="form-label" for="form-addClaim__staff-id">Staff Id</label>
-                        <input class="form-control shadow-none reset w70" readonly id="form-addClaim__staff-id"
+                        <input class="form-control shadow-none reset w70" id="form-addClaim__staff-id" readonly
                                required th:value="${currentUser.id}"
                                type="text">
                     </div>
                     <div class="mb-3"><label class="form-label" for="form-addClaim__staff-name">Staff Name</label>
-                        <input class="form-control shadow-none reset w70" readonly id="form-addClaim__staff-name"
+                        <input class="form-control shadow-none reset w70" id="form-addClaim__staff-name" readonly
                                required th:value="${currentUser.name}"
                                type="text">
                     </div>
                     <div class="mb-3 w70"><label class="form-label" for="form-addClaim__staff-department">Staff
                         Department </label>
-                        <input class="form-control shadow-none reset" readonly
-                               id="form-addClaim__staff-department" required
+                        <input class="form-control shadow-none reset" id="form-addClaim__staff-department"
+                               readonly required
                                th:value="${currentUser.departmentName}" type="text">
                     </div>
 
@@ -53,7 +53,7 @@
 
                                 required th:field="*{workingId}">
                             <option th:each="working: ${workingList}" th:text="${working.projectByProjectId.name}"
-                            th:value="${working.id}"></option>
+                                    th:value="${working.id}"></option>
 
                         </select>
                     </div>
@@ -66,7 +66,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-6 mb-3"><label class="form-label" for="form-addClaimDetail__date">Chose
-                               Claim Date</label>
+                                Claim Date</label>
                                 <input class="form-control shadow-none reset"
                                        id="form-addClaimDetail__date" required
                                        th:field="*{date}"
@@ -118,7 +118,7 @@
                                                            for="form-addClaimDetail__totalHours">Total
                                 Hours</label>
                                 <input class="form-control shadow-none reset"
-                                       readonly id="form-addClaimDetail__totalHours"
+                                       id="form-addClaimDetail__totalHours" readonly
                                        required th:field="*{totalHours}" type="number">
                                 <div class="text-danger"
                                      th:errors="*{totalHours}"
@@ -159,12 +159,7 @@
         </div>
     </div> <!-- logic sử lí tính thứ theo ngày-->
 
-    <!--    <script th:src="@{/node_modules/jquery/dist/jquery.js}"></script>-->
-    <!--    <script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.js}"></script>-->
-    <!--    <script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>-->
-    <!--    <script th:src="@{/javascript/main.js}"></script>-->
-    <!--    <script th:src="@{/javascript/claim/myClaim/create-claim.js}"></script>-->
-    <!--    <script th:src="@{/javascript/claim/myClaim/create-claim.js}"></script>-->
 </main>
+<script></script>
 </body>
 </html>
