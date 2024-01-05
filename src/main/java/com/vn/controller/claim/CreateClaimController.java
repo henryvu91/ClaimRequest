@@ -97,11 +97,23 @@ public class CreateClaimController {
     public String updateClaimUI(
             @RequestParam(name="claimId") Integer claimId,
             ModelMap modelMap) {
+        //        Add information of user
+        StaffViewDetailDto currentUser = CurrentUserUtils.getCurrentUserInfo();
+        modelMap.addAttribute("currentUser", currentUser);
         if(claimId == null){
             modelMap.addAttribute("updateClaim", new ClaimUpdateDTO());
             return "/view/claim/myClaim/update";
         }
 
+        Integer staffId = currentUser.getId();
+        ClaimUpdateDTO updateDTO = claimService.findClaimByIdAndStaffId(claimId,staffId);
+
+        if(updateDTO == null){
+            modelMap.addAttribute("updateClaim", new ClaimUpdateDTO());
+            return "/view/claim/myClaim/update";
+        }
+
+        modelMap.addAttribute("updateClaim", updateDTO);
         return "/view/claim/myClaim/update";
     }
 
