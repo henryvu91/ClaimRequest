@@ -61,11 +61,18 @@
         <input id="set__pageNo" name="pageNo" type="hidden" value="">
         <nav class="m-3">
             <ul class="pagination justify-content-end">
-                <li th:if="${currentPage > 1}" class="page-item"><a class="page-link" th:href="@{'?pageNo='+${currentPage - 1}}">Previous</a></li>
-                <li th:each="i : ${#numbers.sequence(1, totalPage)}" th:classappend="${currentPage == i ? 'active' : ''}" class="page-item">
-                    <a th:text="${i}" class="page-link" th:href="@{'?pageNo='+${i}}"></a>
+                <li class="page-item" th:if="${currentPage > 1}">
+                    <a class="page-link" th:href="@{'?pageNo='+${currentPage - 1}}">Previous</a>
                 </li>
-                <li th:if="${currentPage < totalPage}" class="page-item"><a class="page-link" th:href="@{'?pageNo='+${currentPage + 1}}">Next</a></li>
+                <li class="page-item"
+                    th:classappend="${currentPage == i || (currentPage == 0 && i == 1) ? 'active' : ''}"
+                    th:each="i : ${#numbers.sequence(1, totalPage)}"
+                    th:if="${i <= currentPage + 2 && i >= currentPage - 2}">
+                    <a class="page-link" th:href="@{'?pageNo='+${i}}" th:text="${i}"></a>
+                </li>
+                <li class="page-item" th:if="${currentPage < totalPage}">
+                    <a class="page-link" th:href="@{'?pageNo='+${currentPage == 0 ? 2 : currentPage + 1}}">Next</a>
+                </li>
             </ul>
         </nav>
     </div>
