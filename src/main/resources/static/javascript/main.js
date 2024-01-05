@@ -59,37 +59,26 @@ $(document).ready(function () {
     calculateDuration();
   });
 
-  $("#btn-projectInformation-create")
-    .off("click")
-    .on("click", function (e) {
-      // e.preventDefault();
-      $contentMain.children().remove();
-      $contentMain.load("project/create");
-    });
+  // $("#btn-projectInformation-create")
+  //   .off("click")
+  //   .on("click", function (e) {
+  //     // e.preventDefault();
+  //     $contentMain.children().remove();
+  //     $contentMain.load("project/create");
+  //   });
+  //
+  // $("#btn-projectInformation-view")
+  //   .off("click")
+  //   .click(function (e) {
+  //     // e.preventDefault();
+  //     $contentMain.children().remove();
+  //     $contentMain.load("project/view");
+  //   });
 
-  $("#btn-projectInformation-view")
-    .off("click")
-    .click(function (e) {
-      // e.preventDefault();
-      $contentMain.children().remove();
-      $contentMain.load("project/view");
-    });
-
-  $("#btn-createClaim")
-      .off("click")
-      .on("click", function (e) {
-        e.preventDefault();
-        //include profile.html file into index.html
-        $contentMain.children().remove();
-        $contentMain.load("claim/create");
-      });
-
-
-
-  $("#btn-logout").click(function (e) {
-    e.preventDefault();
-    window.location.href = "login";
-  });
+  // $("#btn-logout").click(function (e) {
+  //   e.preventDefault();
+  //   window.location.href = "login";
+  // });
 
   $("#form-login__username").change(function () {
     $("#form-login__message").children().remove();

@@ -55,7 +55,7 @@ public class StaffServiceImpl implements StaffService {
         String email = staff.getEmail();
         if (staffRepository.existsByEmail(email)) {
 //            Add the error message
-            result.rejectValue("email", "MSG21");
+            result.rejectValue("email", "Staff.Create.MSG1");
             return null;
         }
 // Encode the password
