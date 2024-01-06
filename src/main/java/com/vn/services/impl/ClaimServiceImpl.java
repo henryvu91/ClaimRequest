@@ -2,6 +2,7 @@ package com.vn.services.impl;
 
 import com.vn.dto.form.ClaimUpdateDTO;
 import com.vn.dto.view.ClaimTotalDTO;
+import com.vn.dto.view.StaffViewDetailDto;
 import com.vn.mapper.form.ClaimUpdateMapper;
 import com.vn.mapper.view.ClaimTotalMapper;
 import com.vn.model.Claim;
@@ -112,6 +113,8 @@ public Claim save(Claim claim, BindingResult result) {
         return null;
     }
 
+
+
 //        Add the audit trail
     createTrail("Created on",claim);
     return claimRepository.save(claim);
@@ -179,6 +182,16 @@ public Claim save(Claim claim, BindingResult result) {
         createTrail("Cancelled on",claim);
         claimRepository.save(claim);
         return true;
+    }
+
+    @Override
+    public Claim review(Integer claimId) {
+
+        StaffViewDetailDto staffViewDetailDto = CurrentUserUtils.getCurrentUserInfo();
+        Integer currentStaffId = staffViewDetailDto.getId();
+
+        return claimRepository.findClaimByIdAndPMAndStatus(claimId,Status.PENDING,currentStaffId);
+
     }
 
 //    Method to cancel a claim
