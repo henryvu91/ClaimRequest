@@ -1,10 +1,12 @@
 package com.vn.services;
 
 import com.vn.dto.view.ClaimTotalDTO;
+import com.vn.dto.form.ClaimUpdateDTO;
 import com.vn.model.Claim;
 import com.vn.utils.Status;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.validation.BindingResult;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,4 +20,7 @@ public interface ClaimService {
 
     Optional<Claim> detail(Integer id);
 
+    ClaimUpdateDTO findClaimByIdAndStaffId(Integer claimId, Integer staffId);
+
+    Claim save(Claim claim, BindingResult result);
 }
