@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi" th:replace="~{layout/template::areas(~{::title}, ~{::main})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Claim for Finance</title>
+    <link href="./favicon.ico" rel="icon" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/node_modules/normalize.css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/node_modules/bootstrap/dist/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/node_modules/bootstrap-icons/font/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{stylesheet/css/style.css}">
+</head>
+<body>
+<main>
+    <div class="border-bottom border-1 mb-5 p-2">
+        <h1>Claims for Finance</h1>
+    </div>
+    <table th:if="${totalPage > 0}" class="table table-bordered">
+        <thead>
+        <tr class="bg-secondary">
+            <th>Claim Id</th>
+            <th>Staff Name</th>
+            <th>Project Name</th>
+            <th>Project Duration</th>
+            <th>Total Working Hour</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="c : ${claims}">
+            <tr data-toggle="modal" data-target="#exampleModalCenter" data-rowid="1">
+                <td th:text="${c.claimId}"></td>
+                <td th:text="${c.claimStaffName}"></td>
+                <td th:text="${c.claimProjectName}"></td>
+                <td>
+                    <input type="date" hidden="hidden" th:value="${c.claimProjectStartDate}" class="start-date">
+                    <input type="date" hidden="hidden" th:value="${c.claimProjectEndDate}" class="end-date">
+                    <span class="duration"></span>
+                </td>
+                <td th:text="${c.claimTotalHours}"></td>
+                <td>
+                    <button th:data-id="${c.claimId}" type="button" class="btn btn-primary detail" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Detail
+                    </button>
+                    <button class="btn btn-success">Paid</button>
+                </td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+
+    <div th:if="${totalPage > 0}">
+        <ul class="pagination__content" id="pagination__content"></ul>
+        <div class="d-flex justify-content-center" id="page-content"></div>
+        <div class="d-none" id="view-content__totalPages" th:data-totalPages="${totalPages}"></div>
+        <div class="d-none" id="view-content__pageNo" th:data-pageNo="${currentPage}"></div>
+        <input id="set__pageNo" name="pageNo" type="hidden" value="">
+        <nav class="m-3">
+            <ul class="pagination justify-content-end">
+                <li class="page-item" th:if="${currentPage > 1}">
+                    <a class="page-link" th:href="@{'?pageNo='+${currentPage - 1}}">Previous</a>
+                </li>
+                <li class="page-item"
+                    th:classappend="${currentPage == i || (currentPage == 0 && i == 1) ? 'active' : ''}"
+                    th:each="i : ${#numbers.sequence(1, totalPage)}"
+                    th:if="${i <= currentPage + 2 && i >= currentPage - 2}">
+                    <a class="page-link" th:href="@{'?pageNo='+${i}}" th:text="${i}"></a>
+                </li>
+                <li class="page-item" th:if="${currentPage < totalPage}">
+                    <a class="page-link" th:href="@{'?pageNo='+${currentPage == 0 ? 2 : currentPage + 1}}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div th:if="${totalPage <= 0}">
+        <p>No data available</p>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Claim Detail</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal-body-content"></div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script th:src="@{/node_modules/jquery/dist/jquery.js}"></script>
+<script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.js}"></script>
+<script th:src="@{/javascript/claim/detail.js}"></script>
+<script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>
+<script th:src="@{/javascript/main.js}"></script>
+
+</body>
+</html>

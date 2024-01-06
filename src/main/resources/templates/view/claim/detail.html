@@ -14,39 +14,39 @@
             </tr>
             <tr>
                 <th>Date</th>
-                <td th:text="${status}"></td>
+                <td th:text="${claim.date}"></td>
             </tr>
             <tr>
                 <th>From time</th>
-                <td th:text="${status}"></td>
+                <td th:text="${claim.fromTime}"></td>
             </tr>
             <tr>
                 <th>To time</th>
-                <td th:text="${status}"></td>
+                <td th:text="${claim.toTime}"></td>
             </tr>
             <tr>
                 <th>Staff name</th>
-                <td th:text="${status}"></td>
+                <td th:text="${claim.workingByWorkingId.staffByStaffId.name}"></td>
             </tr>
             <tr>
                 <th>Email</th>
-                <td th:text="${status}"></td>
+                <td th:text="${claim.workingByWorkingId.staffByStaffId.email}"></td>
             </tr>
             <tr>
                 <th>Salary</th>
-                <td th:text="${status}"></td>
+                <td th:text="${claim.workingByWorkingId.staffByStaffId.salary}"></td>
             </tr>
             <tr>
                 <th>Project Name</th>
-                <td th:text="${status}"></td>
+                <td th:text="${claim.workingByWorkingId.projectByProjectId.name}"></td>
             </tr>
             <tr>
-                <th>Status date</th>
-                <td th:text="${status}"></td>
+                <th>Start date</th>
+                <td th:text="${claim.workingByWorkingId.projectByProjectId.startDate}"></td>
             </tr>
             <tr>
                 <th>End date</th>
-                <td th:text="${status}"></td>
+                <td th:text="${claim.workingByWorkingId.projectByProjectId.endDate}"></td>
             </tr>
         </tbody>
     </table>
