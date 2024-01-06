@@ -1,16 +1,11 @@
 <!DOCTYPE html>
-<html lang="vi" th:replace="~{layout/template::areas(~{::title}, ~{::main})}" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" th:replace="~{layout/template::areas(~{::title}, ~{::main}, ~{::script})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="" name="description">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>Claim for Finance</title>
-    <link href="./favicon.ico" rel="icon" type="image/x-icon">
-    <link rel="stylesheet" th:href="@{/node_modules/normalize.css/normalize.css}">
-    <link rel="stylesheet" th:href="@{/node_modules/bootstrap/dist/css/bootstrap.css}">
-    <link rel="stylesheet" th:href="@{/node_modules/bootstrap-icons/font/bootstrap-icons.css}">
-    <link rel="stylesheet" th:href="@{stylesheet/css/style.css}">
 </head>
 <body>
 <main>
@@ -90,12 +85,6 @@
         </div>
     </div>
 </main>
-
-<script th:src="@{/node_modules/jquery/dist/jquery.js}"></script>
-<script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.js}"></script>
 <script th:src="@{/javascript/claim/detail.js}"></script>
-<script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>
-<script th:src="@{/javascript/main.js}"></script>
-
 </body>
 </html>
