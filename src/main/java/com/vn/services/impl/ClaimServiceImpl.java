@@ -2,6 +2,7 @@ package com.vn.services.impl;
 
 import com.vn.dto.form.ClaimUpdateDTO;
 import com.vn.dto.view.ClaimTotalDTO;
+import com.vn.dto.view.StaffViewDetailDto;
 import com.vn.mapper.form.ClaimUpdateMapper;
 import com.vn.mapper.view.ClaimTotalMapper;
 import com.vn.model.Claim;
@@ -104,28 +105,110 @@ public Claim save(Claim claim, BindingResult result) {
         return null;
     }
 
-//        Check the claim is not in the same time with other claims
-    List<Claim> claims = claimRepository.findClaimByDateAndStaffIdAndTime(claimDate,working.getStaffId(),from,to);
+//        Check the claim is not in the same time with other claims, unless the claim status is CANCELLED or REJECTED
+    List<Status> statusList = List.of(Status.CANCELLED,Status.REJECTED);
+    List<Claim> claims = claimRepository.findClaimByDateAndStaffIdAndTime(claimDate,working.getStaffId(),from,to,statusList);
     if(!claims.isEmpty()){
         result.rejectValue("fromTime","Claim.Create.MSG5","The claim is at the same time with another claim");
         return null;
     }
+
+
 
 //        Add the audit trail
     createTrail("Created on",claim);
     return claimRepository.save(claim);
 }
 
+    @Override
+    public Claim update(ClaimUpdateDTO claim, BindingResult result) {
+        //        Get the duration of staff in the project
+        //            Get project date
+        //        Old claim
+        Claim old = claimRepository.findById(claim.getId()).orElse(null);
+        if(old == null){
+            return  null;
+        }
+
+        Project project = old.getWorkingByWorkingId().getProjectByProjectId();
+
+        LocalDate projectStartDate = project.getStartDate();
+        LocalDate projectEndDate = project.getEndDate();
+        LocalDate claimDate = claim.getDate();
+//        Claim date must be within the duration
+        if(!isInRangeDate(projectStartDate,projectEndDate,claimDate)){
+            result.rejectValue("date","Claim.Create.MSG2","Claim date must be within duration of project");
+            return null;
+        }
+
+        //      Validate the time of the claim
+        LocalTime from = claim.getFromTime();
+        LocalTime to = claim.getToTime();
+        if(from.isAfter(to)){
+            result.rejectValue("fromTime","Claim.Create.MSG4","To time must be after From time");
+            return null;
+        }
+//        Check the claim is not in the same time with other claims, unless the claim status is CANCELLED or REJECTED
+        List<Status> statusList = List.of(Status.CANCELLED,Status.REJECTED);
+        List<Claim> claims = claimRepository.findOtherClaimByDateAndStaffIdAndTime(claimDate,CurrentUserUtils.getCurrentUserInfo().getId(),from,to,claim.getId(),statusList);
+        if(!claims.isEmpty()){
+                result.rejectValue("fromTime","Claim.Create.MSG5","The claim is at the same time with another claim");
+                return null;
+        }
+
+
+        claimUpdateMapper.partialUpdate(claim,old);
+        //        Add the audit trail
+        createTrail("Updated on",old);
+        return claimRepository.save(old);
+
+    }
+
+    @Override
+    public boolean cancel(Integer claimId, Integer staffId) {
+//        Find the claim
+        Claim claim = claimRepository.findClaimByIdAndStaffId(claimId,staffId);
+        if(claim == null){
+            return false;
+        }
+
+//        Check the status of claim. Can only cancel claim with status: DRAFT, PENDING
+        Status status = claim.getStatus();
+        if(status != Status.DRAFT && status != Status.PENDING){
+            return false;
+        }
+
+        claim.setStatus(Status.CANCELLED);
+        createTrail("Cancelled on",claim);
+        claimRepository.save(claim);
+        return true;
+    }
+
+    @Override
+    public Claim review(Integer claimId) {
+
+        StaffViewDetailDto staffViewDetailDto = CurrentUserUtils.getCurrentUserInfo();
+        Integer currentStaffId = staffViewDetailDto.getId();
+
+        return claimRepository.findClaimByIdAndPMAndStatus(claimId,Status.PENDING,currentStaffId);
+
+    }
+
+//    Method to cancel a claim
+
+
     //    Method to find Claim based on staffId and claimId
     @Override
-    public ClaimUpdateDTO findClaimByIdAndStaffId(Integer claimId, Integer staffId) {
+    public Claim findClaimByIdAndStaffId(Integer claimId, Integer staffId) {
         Claim claim = claimRepository.findClaimByIdAndStaffId(claimId,staffId);
         if(claim == null){
             return null;
         }
 
-        return claimUpdateMapper.toDto(claim);
+        return claim;
     }
+
+
 
     //    Method to check date in a range
     private boolean isInRangeDate(LocalDate startDate,LocalDate endDate,LocalDate checkDate){
@@ -144,7 +227,7 @@ public Claim save(Claim claim, BindingResult result) {
         if(currentAuditTrail == null){
             claim.setAuditTrail(newLine);
         }else {
-            currentAuditTrail = currentAuditTrail + "/n"+ newLine;
+            currentAuditTrail = currentAuditTrail + "\n"+ newLine;
             claim.setAuditTrail(currentAuditTrail);
         }
     }
