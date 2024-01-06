@@ -20,7 +20,7 @@ public interface ClaimService {
 
     Optional<Claim> detail(Integer id);
 
-    ClaimUpdateDTO findClaimByIdAndStaffId(Integer claimId, Integer staffId);
+    Claim findClaimByIdAndStaffId(Integer claimId, Integer staffId);
 
     Claim save(Claim claim, BindingResult result);
 

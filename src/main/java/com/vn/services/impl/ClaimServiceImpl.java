@@ -104,8 +104,9 @@ public Claim save(Claim claim, BindingResult result) {
         return null;
     }
 
-//        Check the claim is not in the same time with other claims
-    List<Claim> claims = claimRepository.findClaimByDateAndStaffIdAndTime(claimDate,working.getStaffId(),from,to);
+//        Check the claim is not in the same time with other claims, unless the claim status is CANCELLED or REJECTED
+    List<Status> statusList = List.of(Status.CANCELLED,Status.REJECTED);
+    List<Claim> claims = claimRepository.findClaimByDateAndStaffIdAndTime(claimDate,working.getStaffId(),from,to,statusList);
     if(!claims.isEmpty()){
         result.rejectValue("fromTime","Claim.Create.MSG5","The claim is at the same time with another claim");
         return null;
@@ -120,8 +121,16 @@ public Claim save(Claim claim, BindingResult result) {
     public Claim update(ClaimUpdateDTO claim, BindingResult result) {
         //        Get the duration of staff in the project
         //            Get project date
-        LocalDate projectStartDate = claim.getProjectStartDate();
-        LocalDate projectEndDate = claim.getProjectEndDate();
+        //        Old claim
+        Claim old = claimRepository.findById(claim.getId()).orElse(null);
+        if(old == null){
+            return  null;
+        }
+
+        Project project = old.getWorkingByWorkingId().getProjectByProjectId();
+
+        LocalDate projectStartDate = project.getStartDate();
+        LocalDate projectEndDate = project.getEndDate();
         LocalDate claimDate = claim.getDate();
 //        Claim date must be within the duration
         if(!isInRangeDate(projectStartDate,projectEndDate,claimDate)){
@@ -136,19 +145,15 @@ public Claim save(Claim claim, BindingResult result) {
             result.rejectValue("fromTime","Claim.Create.MSG4","To time must be after From time");
             return null;
         }
-
-//        Check the claim is not in the same time with other claims
-        List<Claim> claims = claimRepository.findOtherClaimByDateAndStaffIdAndTime(claimDate,CurrentUserUtils.getCurrentUserInfo().getId(),from,to,claim.getId());
+//        Check the claim is not in the same time with other claims, unless the claim status is CANCELLED or REJECTED
+        List<Status> statusList = List.of(Status.CANCELLED,Status.REJECTED);
+        List<Claim> claims = claimRepository.findOtherClaimByDateAndStaffIdAndTime(claimDate,CurrentUserUtils.getCurrentUserInfo().getId(),from,to,claim.getId(),statusList);
         if(!claims.isEmpty()){
                 result.rejectValue("fromTime","Claim.Create.MSG5","The claim is at the same time with another claim");
                 return null;
         }
 
-//        Old claim
-        Claim old = claimRepository.findById(claim.getId()).orElse(null);
-        if(old == null){
-            return  null;
-        }
+
         claimUpdateMapper.partialUpdate(claim,old);
         //        Add the audit trail
         createTrail("Updated on",old);
@@ -181,13 +186,13 @@ public Claim save(Claim claim, BindingResult result) {
 
     //    Method to find Claim based on staffId and claimId
     @Override
-    public ClaimUpdateDTO findClaimByIdAndStaffId(Integer claimId, Integer staffId) {
+    public Claim findClaimByIdAndStaffId(Integer claimId, Integer staffId) {
         Claim claim = claimRepository.findClaimByIdAndStaffId(claimId,staffId);
         if(claim == null){
             return null;
         }
 
-        return claimUpdateMapper.toDto(claim);
+        return claim;
     }
 
 

@@ -2,7 +2,10 @@ package com.vn.controller.claim;
 
 import com.vn.dto.form.ClaimCreateDto;
 import com.vn.dto.form.ClaimUpdateDTO;
+import com.vn.dto.view.ClaimViewUpdateDTO;
 import com.vn.dto.view.StaffViewDetailDto;
+import com.vn.mapper.form.ClaimUpdateMapper;
+import com.vn.mapper.view.ClaimViewUpdateMapper;
 import com.vn.model.Claim;
 import com.vn.model.Working;
 import com.vn.repositories.ClaimRepository;
@@ -37,6 +40,10 @@ public class CreateClaimController {
     WorkingService workingService;
     @Autowired
     ClaimService claimService;
+    @Autowired
+    ClaimViewUpdateMapper claimViewUpdateMapper;
+    @Autowired
+    ClaimUpdateMapper claimUpdateMapper;
 
     @GetMapping("/claim/create")
     public String createClaimUI(ModelMap modelMap) {
@@ -96,12 +103,18 @@ public class CreateClaimController {
             message = "Cannot find the claim";
         }else {
             Integer staffId = currentUser.getId();
-            ClaimUpdateDTO updateDTO = claimService.findClaimByIdAndStaffId(claimId,staffId);
+            Claim updateClaim = claimService.findClaimByIdAndStaffId(claimId,staffId);
 //        Check claim is existed in the database
-            if(updateDTO != null){
-                if(!updateDTO.getStatus().equals(Status.DRAFT)){
+            if(updateClaim != null){
+                if(!updateClaim.getStatus().equals(Status.DRAFT)){
                     message = "Can only update draft claim";
                 }else {
+
+//                    Create view update dto and form update dto
+                    ClaimViewUpdateDTO viewUpdateDTO = claimViewUpdateMapper.toDto(updateClaim);
+                    ClaimUpdateDTO updateDTO = claimUpdateMapper.toDto(updateClaim);
+
+                    modelMap.addAttribute("viewUpdateClaim", viewUpdateDTO);
                     modelMap.addAttribute("updateClaim", updateDTO);
                     return "/view/claim/myClaim/update";
                 }
@@ -112,6 +125,7 @@ public class CreateClaimController {
         }
 
         modelMap.addAttribute("updateClaim", new ClaimUpdateDTO());
+        modelMap.addAttribute("viewUpdateClaim", new ClaimViewUpdateDTO());
         modelMap.addAttribute("message",message);
         return "/view/claim/myClaim/update";
     }
@@ -131,7 +145,19 @@ public class CreateClaimController {
             }
         }
         modelMap.addAttribute("message", "Update claim failed");
-        addCurrentUserAndProjectList(modelMap);
+
+//        User info
+        StaffViewDetailDto currentUser = CurrentUserUtils.getCurrentUserInfo();
+        modelMap.addAttribute("currentUser", currentUser);
+
+//        Info of claim to update
+        Claim oldClaim = claimService.findClaimByIdAndStaffId(claim.getId(),currentUser.getId());
+        if(oldClaim != null){
+            ClaimViewUpdateDTO viewUpdateDTO = claimViewUpdateMapper.toDto(oldClaim);
+            modelMap.addAttribute("viewUpdateClaim", viewUpdateDTO);
+        }else {
+            modelMap.addAttribute("viewUpdateClaim", new ClaimViewUpdateDTO());
+        }
 
         modelMap.addAttribute("updateClaim", claim);
 

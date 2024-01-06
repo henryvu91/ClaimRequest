@@ -54,20 +54,21 @@
                                th:value="${currentUser.departmentName}" type="text">
                     </div>
 
+<!--                    Project info-->
+                    <div th:object="${viewUpdateClaim}">
                     <div class="mb-3 w70">
                         <label class="form-label" for="form-updateClaim__project-name">Project Name</label>
                         <input type="text" class="form-control shadow-none reset" id="form-updateClaim__project-name"
                                readonly th:field="*{projectName}">
-                        <div class="text-danger"
-                             th:errors="*{projectName}"
-                             th:if="${#fields.hasErrors('projectName')}">
-                            Project Name Error
-                        </div>
+<!--                        <div class="text-danger"-->
+<!--                             th:errors="*{projectName}"-->
+<!--                             th:if="${#fields.hasErrors('projectName')}">-->
+<!--                            Project Name Error-->
+<!--                        </div>-->
                     </div>
                     <!--                    Show the detail of working-->
                     <div class="container" id="workingDetail">
                         <div class="row">
-
 
                             <div class="col mb-3">
                                 <label class="form-label" for="form-updateClaim__roleInProject">Role In Project</label>
@@ -112,7 +113,7 @@
                             </div>
                         </div>
                     </div>
-
+                    </div>
                     <!--Input claim date -->
                     <div class="container">
                         <div class="row">
