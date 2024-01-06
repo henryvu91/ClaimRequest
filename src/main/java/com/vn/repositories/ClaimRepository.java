@@ -37,12 +37,23 @@ public interface ClaimRepository extends JpaRepository<Claim, Integer> {
     //    Check any claims at the same time
 
     @Query("""
-            SELECT c 
-            FROM Claim c 
-            WHERE c.date = :claimDate 
-            AND c.workingByWorkingId.staffId = :staffId 
+            SELECT c
+            FROM Claim c
+            WHERE c.date = :claimDate
+            AND c.status NOT IN :statusList
+            AND c.workingByWorkingId.staffId = :staffId
             AND ((c.fromTime BETWEEN :fromTime AND :toTime) OR (c.toTime BETWEEN :fromTime AND :toTime))""")
-    List<Claim> findClaimByDateAndStaffIdAndTime(LocalDate claimDate, Integer staffId, LocalTime fromTime, LocalTime toTime);
+    List<Claim> findClaimByDateAndStaffIdAndTime(LocalDate claimDate, Integer staffId, LocalTime fromTime, LocalTime toTime,List<Status> statusList);
+
+    @Query("""
+            SELECT c
+            FROM Claim c
+            WHERE c.id != :claimId
+            AND c.status NOT IN :statusList
+            AND c.date = :claimDate
+            AND c.workingByWorkingId.staffId = :staffId
+            AND ((c.fromTime BETWEEN :fromTime AND :toTime) OR (c.toTime BETWEEN :fromTime AND :toTime))""")
+    List<Claim> findOtherClaimByDateAndStaffIdAndTime(LocalDate claimDate, Integer staffId, LocalTime fromTime, LocalTime toTime,Integer claimId,List<Status> statusList);
 
     //    Find claim based on staffId and claimId
     @Query("SELECT c FROM Claim c WHERE c.id = :claimId AND c.workingByWorkingId.staffId = :staffId")

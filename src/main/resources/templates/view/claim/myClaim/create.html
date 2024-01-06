@@ -20,6 +20,11 @@
             <div class="p-3 w70">
                 <form id="form-addClaim" method="post" novalidate th:action="@{/claim/create}"
                       th:object="${newClaim}">
+                    <div class="mb-3" th:if="${not #strings.isEmpty(message)}">
+                        <div class="alert alert-danger py-2 px-3" role="alert"
+                             th:text="${message}">
+                        </div>
+                    </div>
                     <div class="mb-3"><label class="form-label" for="form-addClaim__status">Status</label>
                         <input class="form-control shadow-none reset " readonly id="form-addClaim__status"
 
@@ -65,11 +70,10 @@
                     <!--Input claim date -->
                     <div class="container">
                         <div class="row">
-                            <div class="col-6 mb-3"><label class="form-label" for="form-addClaimDetail__date">Chose
+                            <div class="col-6 mb-3"><label class="form-label" for="form-addClaimDetail__date">Choose
                                Claim Date</label>
                                 <input class="form-control shadow-none reset"
-                                       id="form-addClaimDetail__date" required
-                                       th:field="*{date}"
+                                       id="form-addClaimDetail__date" required name="date" th:value="*{date}"
                                        type="date">
                                 <div class="text-danger"
                                      th:errors="*{date}"
@@ -93,8 +97,7 @@
                                                            for="form-addClaimDetail__fromTime">
                                 From</label>
                                 <input class="form-control shadow-none reset"
-                                       id="form-addClaimDetail__fromTime" required
-                                       th:field="*{fromTime}"
+                                       id="form-addClaimDetail__fromTime" required name="fromTime" th:value="*{fromTime}"
                                        type="time">
                                 <div class="text-danger"
                                      th:errors="*{fromTime}"
@@ -105,8 +108,7 @@
                             <div class="col-4 mb-3"><label class="form-label"
                                                            for="form-addClaimDetail__toTime"> To</label>
                                 <input class="form-control shadow-none reset"
-                                       id="form-addClaimDetail__toTime" required
-                                       th:field="*{toTime}"
+                                       id="form-addClaimDetail__toTime" required name="toTime" th:value="*{toTime}"
                                        type="time">
                                 <div class="text-danger"
                                      th:errors="*{toTime}"
@@ -141,19 +143,18 @@
                             Remarks Error
                         </div>
                     </div>
-                    <div class="mb-3"><label class="form-label" for="form-addClaimDetail__audit-trail">Audit
-                        trail </label>
-                        <input class="form-control shadow-none reset" disabled
-                               id="form-addClaimDetail__audit-trail" name="auditTrail"
-                               required type="text">
-                    </div>
-                    <div class="data-card" id="dataCard" style="display: none;">
-                        <p>Created by <span id="creatorName"></span> on <span id="creationTime"></span></p>
-                    </div>
+<!--                    <div class="mb-3"><label class="form-label" for="form-addClaimDetail__audit-trail">Audit-->
+<!--                        trail </label>-->
+<!--                        <input class="form-control shadow-none reset" disabled-->
+<!--                               id="form-addClaimDetail__audit-trail" name="auditTrail"-->
+<!--                               required type="text">-->
+<!--                    </div>-->
+<!--                    <div class="data-card" id="dataCard" style="display: none;">-->
+<!--                        <p>Created by <span id="creatorName"></span> on <span id="creationTime"></span></p>-->
+<!--                    </div>-->
                     <button class="btn btn-success" id="createBtn" type="submit">Create</button>
-                    <button class="btn btn-warning" id="saveBtn" type="button">Save</button>
-                    <button class="btn btn-danger" type="button">Cancel</button>
-                    <button class="btn btn-primary" type="button">Update</button>
+                    <button class="btn btn-success" type="reset">Reset</button>
+                    <a class="btn btn-success" th:href="@{/claim/myDraft}">Cancel</a>
                 </form>
             </div>
         </div>

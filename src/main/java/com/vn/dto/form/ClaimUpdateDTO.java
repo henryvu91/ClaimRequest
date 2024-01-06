@@ -36,10 +36,10 @@ public class ClaimUpdateDTO implements Serializable {
     private Status status;
     @NotNull(message = "{MSG8}", groups = {ValidateCreateClaimGroup.class})
     private String remarks;
-    private LocalDate joinedProjectDate;
-    private LocalDate leftProjectDate;
-    private String projectName;
-    private LocalDate projectStartDate;
-    private LocalDate projectEndDate;
-    private String jobRankName;
+//    private LocalDate joinedProjectDate;
+//    private LocalDate leftProjectDate;
+//    private String projectName;
+//    private LocalDate projectStartDate;
+//    private LocalDate projectEndDate;
+//    private String jobRankName;
 }
