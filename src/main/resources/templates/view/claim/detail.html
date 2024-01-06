@@ -9,44 +9,52 @@
     <table class="table table-striped">
         <tbody>
             <tr>
-                <th>Status</th>
-                <td th:text="${claim.id}"></td>
-            </tr>
-            <tr>
-                <th>Date</th>
-                <td th:text="${claim.date}"></td>
-            </tr>
-            <tr>
-                <th>From time</th>
-                <td th:text="${claim.fromTime}"></td>
-            </tr>
-            <tr>
-                <th>To time</th>
-                <td th:text="${claim.toTime}"></td>
+                <th>Staff id</th>
+                <td th:text="${claim.workingByWorkingId.staffByStaffId.id}"></td>
             </tr>
             <tr>
                 <th>Staff name</th>
                 <td th:text="${claim.workingByWorkingId.staffByStaffId.name}"></td>
             </tr>
             <tr>
-                <th>Email</th>
+                <th>Staff email</th>
                 <td th:text="${claim.workingByWorkingId.staffByStaffId.email}"></td>
             </tr>
             <tr>
-                <th>Salary</th>
-                <td th:text="${claim.workingByWorkingId.staffByStaffId.salary}"></td>
+                <th>Staff department</th>
+                <td th:text="${claim.workingByWorkingId.staffByStaffId.departmentByDepartmentId.name}"></td>
             </tr>
             <tr>
                 <th>Project Name</th>
                 <td th:text="${claim.workingByWorkingId.projectByProjectId.name}"></td>
             </tr>
             <tr>
-                <th>Start date</th>
+                <th>Project start date</th>
                 <td th:text="${claim.workingByWorkingId.projectByProjectId.startDate}"></td>
             </tr>
             <tr>
-                <th>End date</th>
+                <th>Project end date</th>
                 <td th:text="${claim.workingByWorkingId.projectByProjectId.endDate}"></td>
+            </tr>
+            <tr>
+                <th>Claim status</th>
+                <td th:text="${claim.status}"></td>
+            </tr>
+            <tr>
+                <th>Claim date</th>
+                <td th:text="${claim.date}"></td>
+            </tr>
+            <tr>
+                <th>Claim from time</th>
+                <td th:text="${claim.fromTime}"></td>
+            </tr>
+            <tr>
+                <th>Claim to time</th>
+                <td th:text="${claim.toTime}"></td>
+            </tr>
+            <tr>
+                <th th:if="${claim.remarks != null}">Note</th>
+                <td th:text="${claim.remarks}"></td>
             </tr>
         </tbody>
     </table>
