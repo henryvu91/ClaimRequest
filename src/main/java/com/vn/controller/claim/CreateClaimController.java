@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -54,33 +55,22 @@ public class CreateClaimController {
     public String createClaim(
             @Validated @ModelAttribute("newClaim") Claim claim,
             BindingResult result,
-            ModelMap modelMap
+            ModelMap modelMap,
+            RedirectAttributes redirectAttributes
     ) {
-        if (result.hasErrors()) {
-            modelMap.addAttribute("message", "Create new claim failed");
-            addCurrentUserAndProjectList(modelMap);
-            modelMap.addAttribute("newClaim", claim);
-            return "view/claim/myClaim/create";
-        } else {
+        if (!result.hasErrors()) {
             Claim addedClaim = claimService.save(claim, result);
-            if (addedClaim == null) {
-                modelMap.addAttribute("message", "Create new claim failed");
-                addCurrentUserAndProjectList(modelMap);
-                LocalDate claimDate = claim.getDate();
-                LocalTime from = claim.getFromTime();
-                LocalTime to = claim.getToTime();
-
-                claim.setDate(claimDate);
-                claim.setFromTime(from);
-                claim.setToTime(to);
-                modelMap.addAttribute("newClaim", claim);
-
-                return "view/claim/myClaim/create";
-            } else {
-                modelMap.addAttribute("message", "Create new claim successfully");
-                return "redirect:/claim/create";
+            if (addedClaim != null) {
+                redirectAttributes.addFlashAttribute("message", "Create new claim successfully");
+                return "redirect:/claim/myDraft";
             }
         }
+        modelMap.addAttribute("message", "Create new claim failed");
+        addCurrentUserAndProjectList(modelMap);
+
+        modelMap.addAttribute("newClaim", claim);
+
+        return "view/claim/myClaim/create";
 
     }
 
@@ -93,28 +83,84 @@ public class CreateClaimController {
         return "/view/claim/myClaim/workingDetail";
     }
 
-    @GetMapping("/claim/myClaim/update")
+    @GetMapping("/claim/update")
     public String updateClaimUI(
-            @RequestParam(name="claimId") Integer claimId,
+            @RequestParam(name="claimId", required = false) Integer claimId,
             ModelMap modelMap) {
         //        Add information of user
         StaffViewDetailDto currentUser = CurrentUserUtils.getCurrentUserInfo();
         modelMap.addAttribute("currentUser", currentUser);
+        String message;
+//        Check claim id not null
         if(claimId == null){
-            modelMap.addAttribute("updateClaim", new ClaimUpdateDTO());
-            return "/view/claim/myClaim/update";
+            message = "Cannot find the claim";
+        }else {
+            Integer staffId = currentUser.getId();
+            ClaimUpdateDTO updateDTO = claimService.findClaimByIdAndStaffId(claimId,staffId);
+//        Check claim is existed in the database
+            if(updateDTO != null){
+                if(!updateDTO.getStatus().equals(Status.DRAFT)){
+                    message = "Can only update draft claim";
+                }else {
+                    modelMap.addAttribute("updateClaim", updateDTO);
+                    return "/view/claim/myClaim/update";
+                }
+
+            }else {
+                message = "Cannot find the claim";
+            }
         }
 
-        Integer staffId = currentUser.getId();
-        ClaimUpdateDTO updateDTO = claimService.findClaimByIdAndStaffId(claimId,staffId);
-
-        if(updateDTO == null){
-            modelMap.addAttribute("updateClaim", new ClaimUpdateDTO());
-            return "/view/claim/myClaim/update";
-        }
-
-        modelMap.addAttribute("updateClaim", updateDTO);
+        modelMap.addAttribute("updateClaim", new ClaimUpdateDTO());
+        modelMap.addAttribute("message",message);
         return "/view/claim/myClaim/update";
+    }
+
+    @PostMapping("/claim/update")
+    public String updateClaim(
+            @Validated @ModelAttribute("updateClaim") ClaimUpdateDTO claim,
+            BindingResult result,
+            ModelMap modelMap,
+            RedirectAttributes redirectAttributes
+    ) {
+        if (!result.hasErrors()) {
+            Claim updateClaim = claimService.update(claim, result);
+            if (updateClaim != null) {
+                redirectAttributes.addFlashAttribute("message", "Update claim successfully");
+                return "redirect:/claim/myDraft";
+            }
+        }
+        modelMap.addAttribute("message", "Update claim failed");
+        addCurrentUserAndProjectList(modelMap);
+
+        modelMap.addAttribute("updateClaim", claim);
+
+        return "view/claim/myClaim/update";
+
+    }
+
+    @GetMapping("/claim/cancel")
+    public String cancelClaim(
+            @RequestParam(name="claimId", required = false) Integer claimId,
+            ModelMap modelMap,
+            RedirectAttributes redirectAttributes) {
+        //        Add information of user
+        StaffViewDetailDto currentUser = CurrentUserUtils.getCurrentUserInfo();
+//        Check claim id not null
+        if(claimId != null){
+            Integer staffId = currentUser.getId();
+
+            boolean isCancelled = claimService.cancel(claimId,staffId);
+
+//        Check claim is cancelled
+            if(isCancelled){
+                redirectAttributes.addFlashAttribute("message", "Canceled the claim successfully");
+                return "redirect:/claim/myDraft";
+            }
+        }
+
+        modelMap.addAttribute("message","Canceled the claim failed");
+        return "/view/claim/myClaim";
     }
 
     private void addCurrentUserAndProjectList(ModelMap modelMap) {

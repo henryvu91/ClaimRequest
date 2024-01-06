@@ -23,4 +23,8 @@ public interface ClaimService {
     ClaimUpdateDTO findClaimByIdAndStaffId(Integer claimId, Integer staffId);
 
     Claim save(Claim claim, BindingResult result);
+
+    Claim update(ClaimUpdateDTO claim, BindingResult result);
+
+    boolean cancel(Integer claimId, Integer staffId);
 }
