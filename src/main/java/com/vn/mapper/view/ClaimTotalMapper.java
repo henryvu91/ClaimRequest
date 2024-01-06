@@ -7,6 +7,7 @@ import org.mapstruct.*;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public interface ClaimTotalMapper {
     @Mapping(source = "claimId", target = "id")
+    @Mapping(source = "claimStatus", target = "status")
     @Mapping(source = "claimProjectStartDate", target = "workingByWorkingId.projectByProjectId.startDate")
     @Mapping(source = "claimProjectEndDate", target = "workingByWorkingId.projectByProjectId.endDate")
     @Mapping(source = "claimTotalHours", target = "totalHours")
@@ -15,6 +16,7 @@ public interface ClaimTotalMapper {
     Claim toEntity(ClaimTotalDTO totalClaimDTO);
 
     @Mapping(target = "claimId", source = "id")
+    @Mapping(target = "claimStatus", source = "status")
     @Mapping(target = "claimProjectStartDate", source = "workingByWorkingId.projectByProjectId.startDate")
     @Mapping(target = "claimProjectEndDate", source = "workingByWorkingId.projectByProjectId.endDate")
     @Mapping(target = "claimTotalHours", source = "totalHours")

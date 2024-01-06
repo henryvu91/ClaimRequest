@@ -37,8 +37,17 @@
                     </td>
                     <td th:text="${c.claimTotalHours}"></td>
                     <td>
-                        <button th:data-id="${c.claimId}" type="button" class="btn btn-success detail " data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <button th:data-id="${c.claimId}" type="button" class="btn btn-primary detail " data-bs-toggle="modal" data-bs-target="#exampleModal">
                            Detail
+                        </button>
+                        <button th:if="${#strings.equals(c.claimStatus, 'DRAFT')}" class="btn btn-success" type="button">
+                            Submit
+                        </button>
+                        <button th:if="${#strings.equals(c.claimStatus, 'DRAFT')}" class="btn btn-warning" type="button">
+                            Update
+                        </button>
+                        <button th:data-id="${c.claimId}" th:if="${#strings.equals(c.claimStatus, 'DRAFT')}" class="btn btn-danger" type="button">
+                            Cancel
                         </button>
                     </td>
                 </tr>

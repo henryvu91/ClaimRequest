@@ -28,7 +28,7 @@ public class ClaimController {
             @RequestParam(defaultValue = "1") Integer pageNo,
             @RequestParam(defaultValue = "5") Integer pageSize
     ){
-        claimPM(model, Status.APPROVED, Status.APPROVED, pageNo, pageSize);
+        claimPM(model, Status.PENDING, Status.PENDING, pageNo, pageSize);
         return "view/claim/for_approval";
     }
 

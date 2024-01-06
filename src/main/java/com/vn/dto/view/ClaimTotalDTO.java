@@ -1,5 +1,6 @@
 package com.vn.dto.view;
 
+import com.vn.utils.Status;
 import lombok.Value;
 
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import java.time.LocalTime;
 @Value
 public class ClaimTotalDTO implements Serializable {
     Integer claimId;
+    Status claimStatus;
     String claimStaffName;
     String claimProjectName;
     Integer claimTotalHours;
