@@ -1,5 +1,6 @@
 package com.vn.services;
 
+import com.vn.dto.form.ClaimApprovalDTO;
 import com.vn.dto.view.ClaimTotalDTO;
 import com.vn.dto.form.ClaimUpdateDTO;
 import com.vn.model.Claim;
@@ -27,5 +28,9 @@ public interface ClaimService {
 
     boolean cancel(Integer claimId, Integer staffId);
 
-    Claim review(Integer claimId);
+    Claim review(Integer claimId,Status status,boolean isFinance);
+
+    boolean approveReturnReject(ClaimApprovalDTO claimApprovalDTO, Status statusAfter);
+
+    boolean paidRejectFinance(ClaimApprovalDTO claimApprovalDTO, Status statusAfter);
 }
