@@ -232,7 +232,6 @@ public class ClaimServiceImpl implements ClaimService {
     @Override
     public boolean paidRejectFinance(ClaimApprovalDTO claimApprovalDTO, Status statusAfter) {
         StaffViewDetailDto staffViewDetailDto = CurrentUserUtils.getCurrentUserInfo();
-        Integer currentStaffId = staffViewDetailDto.getId();
         if(!staffViewDetailDto.getRoleName().equals("ROLE_FINANCE")){
             return false;
         }
