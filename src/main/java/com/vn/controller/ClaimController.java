@@ -10,8 +10,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -26,7 +28,7 @@ public class ClaimController {
     public String viewPendingApproval(
             Model model,
             @RequestParam(defaultValue = "1") Integer pageNo,
-            @RequestParam(defaultValue = "5") Integer pageSize
+            @RequestParam(defaultValue = "10") Integer pageSize
     ){
         claimPM(model, Status.PENDING, Status.PENDING, pageNo, pageSize);
         return "view/claim/for_approval";
@@ -36,7 +38,7 @@ public class ClaimController {
     public String viewApprovedOrPaid(
             Model model,
             @RequestParam(defaultValue = "1") Integer pageNo,
-            @RequestParam(defaultValue = "5") Integer pageSize
+            @RequestParam(defaultValue = "10") Integer pageSize
     ){
         claimPM(model, Status.APPROVED, Status.PAID, pageNo, pageSize);
         return "view/claim/for_approval";
@@ -46,7 +48,7 @@ public class ClaimController {
     public String viewApproved(
             Model model,
             @RequestParam(defaultValue = "1") Integer pageNo,
-            @RequestParam(defaultValue = "5") Integer pageSize
+            @RequestParam(defaultValue = "10") Integer pageSize
     ){
         viewClaim(model, Status.APPROVED, Status.APPROVED, pageNo, pageSize);
         return "view/claim/for_finance";
@@ -56,7 +58,7 @@ public class ClaimController {
     public String viewPaid(
             Model model,
             @RequestParam(defaultValue = "1") Integer pageNo,
-            @RequestParam(defaultValue = "5") Integer pageSize
+            @RequestParam(defaultValue = "10") Integer pageSize
     ){
         viewClaim(model, Status.PAID, Status.PAID, pageNo, pageSize);
         return "view/claim/for_finance";
@@ -66,7 +68,7 @@ public class ClaimController {
     public String myDraft(
             Model model,
             @RequestParam(defaultValue = "1") Integer pageNo,
-            @RequestParam(defaultValue = "2") Integer pageSize
+            @RequestParam(defaultValue = "10") Integer pageSize
     ){
         myClaim(model, Status.DRAFT, Status.DRAFT, pageNo, pageSize);
         return "view/claim/myClaim";
@@ -76,7 +78,7 @@ public class ClaimController {
     public String myPending(
             Model model,
             @RequestParam(defaultValue = "1") Integer pageNo,
-            @RequestParam(defaultValue = "2") Integer pageSize
+            @RequestParam(defaultValue = "10") Integer pageSize
     ){
         myClaim(model, Status.PENDING, Status.PENDING, pageNo, pageSize);
         return "view/claim/myClaim";
@@ -86,7 +88,7 @@ public class ClaimController {
     public String myApproved(
             Model model,
             @RequestParam(defaultValue = "1") Integer pageNo,
-            @RequestParam(defaultValue = "2") Integer pageSize
+            @RequestParam(defaultValue = "10") Integer pageSize
     ){
         myClaim(model, Status.APPROVED, Status.APPROVED, pageNo, pageSize);
         return "view/claim/myClaim";
@@ -96,7 +98,7 @@ public class ClaimController {
     public String myPaid(
             Model model,
             @RequestParam(defaultValue = "1") Integer pageNo,
-            @RequestParam(defaultValue = "2") Integer pageSize
+            @RequestParam(defaultValue = "10") Integer pageSize
     ){
         myClaim(model, Status.PAID, Status.PAID, pageNo, pageSize);
         return "view/claim/myClaim";
@@ -106,7 +108,7 @@ public class ClaimController {
     public String myRejectOrCancel(
             Model model,
             @RequestParam(defaultValue = "1") Integer pageNo,
-            @RequestParam(defaultValue = "2") Integer pageSize
+            @RequestParam(defaultValue = "10") Integer pageSize
     ){
         myClaim(model, Status.REJECTED, Status.CANCELLED, pageNo, pageSize);
         return "view/claim/myClaim";
