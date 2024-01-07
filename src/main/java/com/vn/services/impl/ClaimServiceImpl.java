@@ -13,6 +13,7 @@ import com.vn.repositories.ClaimRepository;
 import com.vn.repositories.WorkingRepository;
 import com.vn.services.ClaimService;
 import com.vn.utils.CurrentUserUtils;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -119,6 +120,31 @@ public class ClaimServiceImpl implements ClaimService {
 //        Add the audit trail
         createTrail("Created on", claim);
         return claimRepository.save(claim);
+    }
+
+    @Override
+    public String submitClaimById(Integer id) {
+        Claim claim;
+        String currentContent;
+        Optional<Claim> existingEntity = claimRepository.findById(id);
+        if (existingEntity.isPresent()) {
+            claim = existingEntity.get();
+            currentContent = claim.getAuditTrail();
+        } else {
+            throw new EntityNotFoundException("Claim with id " + id + " not found");
+        }
+        claim.setStatus(Status.PENDING);
+//        System.out.println("First IF: " + claim.getWorkingByWorkingId().getJobRankId());
+        if (claim.getWorkingByWorkingId().getJobRankId() == 1) {
+//            System.out.println(claim.getWorkingByWorkingId().getJobRankId());
+            claim.setStatus(Status.APPROVED);
+        }
+        claim.setAuditTrail(currentContent + "\n" + "Submitted by " + CurrentUserUtils.getCurrentUserInfo().getName() + " on " + LocalDateTime.now());
+        Claim result = claimRepository.save(claim);
+        if (result != null) {
+            return "The Claim with id " + id + " was sent successfully";
+        }
+        return "The Claim with id " + id + " was sent unsuccessfully";
     }
 
     @Override
@@ -284,4 +310,5 @@ public class ClaimServiceImpl implements ClaimService {
             claim.setAuditTrail(currentAuditTrail);
         }
     }
+
 }

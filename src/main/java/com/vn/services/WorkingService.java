@@ -8,4 +8,6 @@ public interface WorkingService {
     List<Working> findByStaffId(Integer staffId);
 
     Working findById(Integer workingId);
+
+    Working checkRecord(Integer staffId);
 }

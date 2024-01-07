@@ -32,7 +32,7 @@ public class ClaimController {
     public String viewPendingApproval(
             Model model,
             @RequestParam(defaultValue = "1") Integer pageNo,
-            @RequestParam(defaultValue = "5") Integer pageSize
+            @RequestParam(defaultValue = "10") Integer pageSize
     ){
         List<Status> statusList = List.of(Status.PENDING);
         claimPM(model, statusList, pageNo, pageSize);
@@ -43,7 +43,7 @@ public class ClaimController {
     public String viewApprovedOrPaid(
             Model model,
             @RequestParam(defaultValue = "1") Integer pageNo,
-            @RequestParam(defaultValue = "5") Integer pageSize
+            @RequestParam(defaultValue = "10") Integer pageSize
     ){
         List<Status> statusList = List.of(Status.APPROVED, Status.PAID);
         claimPM(model, statusList, pageNo, pageSize);
@@ -54,7 +54,7 @@ public class ClaimController {
     public String viewApproved(
             Model model,
             @RequestParam(defaultValue = "1") Integer pageNo,
-            @RequestParam(defaultValue = "5") Integer pageSize
+            @RequestParam(defaultValue = "10") Integer pageSize
     ){
         List<Status> statusList = List.of(Status.APPROVED);
         viewClaim(model, statusList, pageNo, pageSize);
@@ -65,7 +65,7 @@ public class ClaimController {
     public String viewPaid(
             Model model,
             @RequestParam(defaultValue = "1") Integer pageNo,
-            @RequestParam(defaultValue = "5") Integer pageSize
+            @RequestParam(defaultValue = "10") Integer pageSize
     ){
         List<Status> statusList = List.of(Status.PAID);
         viewClaim(model, statusList, pageNo, pageSize);
@@ -76,7 +76,7 @@ public class ClaimController {
     public String myDraft(
             Model model,
             @RequestParam(defaultValue = "1") Integer pageNo,
-            @RequestParam(defaultValue = "2") Integer pageSize
+            @RequestParam(defaultValue = "10") Integer pageSize
     ){
         List<Status> statusList = List.of(Status.DRAFT);
         myClaim(model, statusList, pageNo, pageSize);
@@ -87,7 +87,7 @@ public class ClaimController {
     public String myPending(
             Model model,
             @RequestParam(defaultValue = "1") Integer pageNo,
-            @RequestParam(defaultValue = "2") Integer pageSize
+            @RequestParam(defaultValue = "10") Integer pageSize
     ){
         List<Status> statusList = List.of(Status.PENDING);
         myClaim(model,statusList, pageNo, pageSize);
@@ -98,7 +98,7 @@ public class ClaimController {
     public String myApproved(
             Model model,
             @RequestParam(defaultValue = "1") Integer pageNo,
-            @RequestParam(defaultValue = "2") Integer pageSize
+            @RequestParam(defaultValue = "10") Integer pageSize
     ){
         List<Status> statusList = List.of(Status.APPROVED);
         myClaim(model, statusList, pageNo, pageSize);
@@ -109,7 +109,7 @@ public class ClaimController {
     public String myPaid(
             Model model,
             @RequestParam(defaultValue = "1") Integer pageNo,
-            @RequestParam(defaultValue = "2") Integer pageSize
+            @RequestParam(defaultValue = "10") Integer pageSize
     ){
         List<Status> statusList = List.of(Status.PAID);
         myClaim(model,statusList, pageNo, pageSize);
@@ -120,7 +120,7 @@ public class ClaimController {
     public String myRejectOrCancel(
             Model model,
             @RequestParam(defaultValue = "1") Integer pageNo,
-            @RequestParam(defaultValue = "2") Integer pageSize
+            @RequestParam(defaultValue = "10") Integer pageSize
     ){
         List<Status> statusList = List.of( Status.REJECTED, Status.CANCELLED);
         myClaim(model,statusList, pageNo, pageSize);
