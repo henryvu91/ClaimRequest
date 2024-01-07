@@ -40,15 +40,15 @@
                     <button th:data-id="${c.claimId}" type="button" class="btn btn-primary detail" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Detail
                     </button>
-                    <a th:if="${#strings.equals(c.claimStatus, 'PENDING')}" class="btn btn-success" th:href="@{/claim/approval/review(claimId=${c.claimId})}">
-                        Review
-                    </a>
-<!--                    <button th:if="${#strings.equals(c.claimStatus, 'PENDING')}" class="btn btn-warning" type="button">-->
-<!--                        Return-->
-<!--                    </button>-->
-<!--                    <button th:if="${#strings.equals(c.claimStatus, 'PENDING')}" class="btn btn-danger" type="button">-->
-<!--                        Reject-->
-<!--                    </button>-->
+                    <button th:if="${#strings.equals(c.claimStatus, 'PENDING')}" class="btn btn-success" type="button">
+                        Approve
+                    </button>
+                    <button th:if="${#strings.equals(c.claimStatus, 'PENDING')}" class="btn btn-warning" type="button">
+                        Return
+                    </button>
+                    <button th:if="${#strings.equals(c.claimStatus, 'PENDING')}" class="btn btn-danger" type="button">
+                        Reject
+                    </button>
                 </td>
             </tr>
         </th:block>

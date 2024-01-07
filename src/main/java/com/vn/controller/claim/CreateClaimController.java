@@ -187,104 +187,20 @@ public class CreateClaimController {
         return "/view/claim/myClaim";
     }
 
-    @GetMapping("/claim/approval/review")
-    public String reviewApproveClaimUI(
+    @GetMapping("/claim/review")
+    public String reviewClaimUI(
             @RequestParam(name = "claimId", required = false) Integer claimId,
             ModelMap modelMap) {
-
-        return showModalAndViewOfApprovalFinance(claimId, modelMap, Status.PENDING,false,"/view/claim/approval/review");
-    }
-
-    @GetMapping("/claim/finance/review")
-    public String reviewFinanceClaimUI(
-            @RequestParam(name = "claimId", required = false) Integer claimId,
-            ModelMap modelMap) {
-
-        return showModalAndViewOfApprovalFinance(claimId, modelMap, Status.APPROVED,true, "/view/claim/finance/review-finance");
-    }
-
-    @PostMapping("/claim/approval/reject")
-    public String rejectClaimInApproval(
-            @ModelAttribute(name = "approvalClaim") ClaimApprovalDTO claimApprovalDTO,
-            ModelMap modelMap,
-            RedirectAttributes redirectAttributes) {
-        return approveReturnReject(claimApprovalDTO,Status.REJECTED,"Rejected", modelMap, redirectAttributes);
-    }
-
-    @PostMapping("/claim/approval/approve")
-    public String approveClaimInApproval(
-            @ModelAttribute(name = "approvalClaim") ClaimApprovalDTO claimApprovalDTO,
-            ModelMap modelMap,
-            RedirectAttributes redirectAttributes) {
-        return approveReturnReject(claimApprovalDTO,Status.APPROVED,"Approved", modelMap, redirectAttributes);
-    }
-
-    @PostMapping("/claim/approval/return")
-    public String returnClaimInApproval(
-            @ModelAttribute(name = "approvalClaim") ClaimApprovalDTO claimApprovalDTO,
-            ModelMap modelMap,
-            RedirectAttributes redirectAttributes) {
-        return approveReturnReject(claimApprovalDTO,Status.DRAFT,"Returned", modelMap, redirectAttributes);
-    }
-
-    private String approveReturnReject(ClaimApprovalDTO claimApprovalDTO,Status statusAfter,String action, ModelMap modelMap, RedirectAttributes redirectAttributes) {
-        //        Check claim id not null
-        if (claimApprovalDTO != null) {
-
-            boolean isSuccess = claimService.approveReturnReject(claimApprovalDTO, statusAfter);
-
-//        Check claim is cancelled
-            if (isSuccess) {
-                redirectAttributes.addFlashAttribute("message", action+" the claim successfully");
-                return "redirect:/claim/pendingApproval";
-            }
-        }
-
-        modelMap.addAttribute("message",  action+" the claim failed");
-        return "view/claim/for_approval";
-    }
-
-    @PostMapping("/claim/finance/paid")
-    public String paidClaimFinance(
-            @ModelAttribute(name = "approvalClaim") ClaimApprovalDTO claimApprovalDTO,
-            ModelMap modelMap,
-            RedirectAttributes redirectAttributes) {
-        return paidRejectFinance(claimApprovalDTO,Status.PAID,"Paid", modelMap, redirectAttributes);
-    }
-
-    @PostMapping("/claim/finance/reject")
-    public String rejectClaimFinance(
-            @ModelAttribute(name = "approvalClaim") ClaimApprovalDTO claimApprovalDTO,
-            ModelMap modelMap,
-            RedirectAttributes redirectAttributes) {
-        return paidRejectFinance(claimApprovalDTO,Status.REJECTED,"Rejected", modelMap, redirectAttributes);
-    }
-
-    private String paidRejectFinance(ClaimApprovalDTO claimApprovalDTO,Status statusAfter,String action, ModelMap modelMap, RedirectAttributes redirectAttributes) {
-        //        Check claim id not null
-        if (claimApprovalDTO != null) {
-
-            boolean isSuccess = claimService.paidRejectFinance(claimApprovalDTO, statusAfter);
-
-//        Check claim is cancelled
-            if (isSuccess) {
-                redirectAttributes.addFlashAttribute("message", action+" the claim successfully");
-                return "redirect:/claim/approved";
-            }
-        }
-
-        modelMap.addAttribute("message",  action+" the claim failed");
-        return "view/claim/for_finance";
-    }
-
-    private String showModalAndViewOfApprovalFinance(Integer claimId, ModelMap modelMap,Status status,boolean isFinance,String view) {
+//        //        Add information of user
+//        StaffViewDetailDto currentUser = CurrentUserUtils.getCurrentUserInfo();
+//        modelMap.addAttribute("currentUser", currentUser);
         String message;
 //        Check claim id not null
         if (claimId == null) {
             message = "Cannot find the claim";
         } else {
 
-            Claim reviewClaim = claimService.review(claimId,status,isFinance);
+            Claim reviewClaim = claimService.review(claimId);
 //        Check claim is existed in the database
             if (reviewClaim != null) {
 
@@ -294,7 +210,7 @@ public class CreateClaimController {
 
                 modelMap.addAttribute("viewApprovalClaim", viewApprovalDTO);
                 modelMap.addAttribute("approvalClaim", approvalDTO);
-                return view;
+                return "/view/claim/approval/review";
             } else {
                 message = "Cannot find the claim";
             }
@@ -303,10 +219,8 @@ public class CreateClaimController {
         modelMap.addAttribute("viewApprovalClaim", new ClaimViewApprovalDTO());
         modelMap.addAttribute("approvalClaim", new ClaimApprovalDTO());
         modelMap.addAttribute("message", message);
-        return view;
+        return "/view/claim/approval/review";
     }
-
-
 
     private void addCurrentUserAndProjectList(ModelMap modelMap) {
         //        Add information of user

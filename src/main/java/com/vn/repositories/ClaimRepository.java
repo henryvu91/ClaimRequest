@@ -1,10 +1,13 @@
 package com.vn.repositories;
 
+import com.vn.dto.view.ClaimTotalDTO;
 import com.vn.model.Claim;
 import com.vn.utils.Status;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -38,14 +41,6 @@ public interface ClaimRepository extends JpaRepository<Claim, Integer> {
                 WHERE w.staffId = :staffId AND w.jobRankId = 1)
 """)
     Claim findClaimByIdAndPMAndStatus(Integer id, Status status, Integer staffId);
-
-    @Query("""
-        SELECT c FROM Claim c
-        WHERE
-        c.id = :id AND
-        c.status = :status
-""")
-    Claim findClaimByIdAndStatus(Integer id, Status status);
 
     @Query("SELECT c FROM Claim c WHERE c.workingByWorkingId.staffByStaffId.id = :id AND c.status IN (:status, :status2)")
     Page<Claim> findClaimByStatusAndStaffId(Integer id, Status status, Status status2, Pageable pageable);
