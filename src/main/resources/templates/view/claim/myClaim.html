@@ -49,6 +49,9 @@
                         <button th:data-id="${c.claimId}" th:if="${#strings.equals(c.claimStatus, 'DRAFT')}" class="btn btn-danger" type="button">
                             Cancel
                         </button>
+<!--                        <button class="btn btn-success" th:if="${#strings.equals(c.claimStatus, 'DRAFT')}" th:data-id="${c.claimId}" type="button">-->
+<!--                            <a th:href="@{/claim/review(claimId=${c.claimId})}">Review</a>-->
+<!--                        </button>-->
                     </td>
                 </tr>
             </th:block>

@@ -43,12 +43,7 @@
                     <a th:if="${#strings.equals(c.claimStatus, 'PENDING')}" class="btn btn-success" th:href="@{/claim/approval/review(claimId=${c.claimId})}">
                         Review
                     </a>
-<!--                    <button th:if="${#strings.equals(c.claimStatus, 'PENDING')}" class="btn btn-warning" type="button">-->
-<!--                        Return-->
-<!--                    </button>-->
-<!--                    <button th:if="${#strings.equals(c.claimStatus, 'PENDING')}" class="btn btn-danger" type="button">-->
-<!--                        Reject-->
-<!--                    </button>-->
+
                 </td>
             </tr>
         </th:block>

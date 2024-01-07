@@ -1,7 +1,6 @@
 $(document).ready(function () {
     $(document).off('click').on('click', '.detail',function () {
         let recordId = $(this).data("id");
-        console.log(recordId)
         $.ajax({
             url : "/claim/detail",
             type : "GET",
