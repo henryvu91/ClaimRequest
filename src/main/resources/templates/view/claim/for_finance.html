@@ -39,7 +39,9 @@
                     <button th:data-id="${c.claimId}" type="button" class="btn btn-primary detail" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Detail
                     </button>
-                    <button class="btn btn-success">Paid</button>
+                    <button class="btn btn-success" th:if="${#strings.equals(c.claimStatus, 'APPROVED')}" th:data-id="${c.claimId}" type="button">
+                        <a th:href="@{/claim/review(claimId=${c.claimId})}">Review</a>
+                    </button>
                 </td>
             </tr>
         </th:block>

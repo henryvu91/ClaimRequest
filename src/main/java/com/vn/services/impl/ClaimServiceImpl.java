@@ -41,23 +41,23 @@ public class ClaimServiceImpl implements ClaimService {
     @Autowired
     ClaimUpdateMapper claimUpdateMapper;
     @Override
-    public Page<ClaimTotalDTO> findClaimByStatus(Status status, Status status2, Integer pageNo, Integer pageSize) {
+    public Page<ClaimTotalDTO> findClaimByStatus(List<Status> statusList, Integer pageNo, Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        Page<Claim> claimByStatus = claimRepository.findClaimByStatus(status, status2, pageable);
+        Page<Claim> claimByStatus = claimRepository.findClaimByStatus(statusList, pageable);
         return claimByStatus.map(claimTotalMapper::toDto);
     }
 
     @Override
-    public Page<ClaimTotalDTO> findClaimByStatusAndStaffId(Integer id, Status status, Status status2, Integer pageNo, Integer pageSize) {
+    public Page<ClaimTotalDTO> findClaimByStatusAndStaffId(Integer id, List<Status> statusList, Integer pageNo, Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        Page<Claim> claimByStatus = claimRepository.findClaimByStatusAndStaffId(id, status, status2, pageable);
+        Page<Claim> claimByStatus = claimRepository.findClaimByStatusAndStaffId(id, statusList, pageable);
         return claimByStatus.map(claimTotalMapper::toDto);
     }
 
     @Override
-    public Page<ClaimTotalDTO> findClaimByPMAndStatus(Status status, Status status2, Integer staffId, Integer pageNo, Integer pageSize) {
+    public Page<ClaimTotalDTO> findClaimByPMAndStatus( List<Status> statusList, Integer staffId, Integer pageNo, Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        Page<Claim> claimByPMAndStatus = claimRepository.findClaimByPMAndStatus(status, status2, staffId, pageable);
+        Page<Claim> claimByPMAndStatus = claimRepository.findClaimByPMAndStatus(statusList, staffId, pageable);
         System.out.println(claimByPMAndStatus);
         return claimByPMAndStatus.map(claimTotalMapper::toDto);
     }
