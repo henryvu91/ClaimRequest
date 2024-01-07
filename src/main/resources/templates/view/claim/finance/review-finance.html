@@ -2,7 +2,7 @@
 <html lang="vi" th:replace="~{layout/template::areas(~{::title}, ~{::main}, ~{::script})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Review Claim</title>
+    <title>Finance Claim</title>
 
 </head>
 <body>
@@ -10,12 +10,12 @@
 <main>
     <div>
         <div class="border-bottom border-1 mb-5 p-2 ">
-            <h1>Review Claim</h1>
+            <h1>Finance Claim</h1>
 
         </div>
         <div class="border border-1 rounded-3 mb-5 ">
             <div class="border-bottom border-1 bg-body-secondary">
-                <p class="p-2 m-0">Form to review claim</p>
+                <p class="p-2 m-0">Form to paid/ unpaid a claim</p>
             </div>
             <div class="p-3 w70">
                 <div class="mb-3" th:if="${not #strings.isEmpty(message)}">
@@ -164,7 +164,8 @@
                         <textarea
                                 class="form-control shadow-none reset" id="form-reviewClaimDetail__remarks"
                                 required
-                                style="resize: vertical; overflow: auto;" name="remarks"  placeholder="Input the remark"></textarea>
+                                style="resize: vertical; overflow: auto;" name="remarks"
+                                placeholder="Input the remarks"></textarea>
                         <div class="text-danger"
                              th:errors="*{remarks}"
                              th:if="${#fields.hasErrors('remarks')}">
@@ -172,16 +173,13 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-success" id="approveBtn" value="Approve" type="button" data-bs-toggle="modal"
-                            data-bs-target="#confirmModal">Approve
-                    </button>
-                    <button class="btn btn-success" id="returnBtn" value="Return" type="button" data-bs-toggle="modal"
-                            data-bs-target="#confirmModal">Return
+                    <button class="btn btn-success" id="paidBtn" value="Approve" type="button" data-bs-toggle="modal"
+                            data-bs-target="#confirmModal">Paid
                     </button>
                     <button class="btn btn-success" id="rejectBtn" value="Reject" type="button" data-bs-toggle="modal"
                             data-bs-target="#confirmModal">Reject
                     </button>
-                    <a class="btn btn-success" th:href="@{/claim/pendingApproval}">Close</a>
+                    <a class="btn btn-success" th:href="@{/claim/approved}">Close</a>
                     <!-- Modal -->
                     <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                          aria-hidden="true">
@@ -211,6 +209,6 @@
     </div>
 
 </main>
-<script th:src="@{/javascript/claim/approval/review-claim.js}"></script>
+<script th:src="@{/javascript/claim/finance/review-finance-claim.js}"></script>
 </body>
 </html>

@@ -32,6 +32,4 @@ public interface ClaimService {
     boolean approveReturnReject(ClaimApprovalDTO claimApprovalDTO, Status statusAfter);
 
     boolean paidRejectFinance(ClaimApprovalDTO claimApprovalDTO, Status statusAfter);
-
-    String submitClaimById(Integer id);
 }
