@@ -14,10 +14,8 @@ $(document).ready(function () {
             },
         })
     });
-
     $(document).on("click", ".btn-submit-claimByIds", function () {
-        let recordId =
-            (this).data("id");
+        let recordId = $(this).data("id");
         let url = "/api/claim/myDraft/submitClaim";
         let title = "Submit Claim";
         if (confirm("Are you sure you want to submit this record?")) {
@@ -31,8 +29,8 @@ $(document).ready(function () {
             type: "POST",
             data: {id: recordId},
             success: function (data) {
+                sessionStorage.setItem('submittedClaim', JSON.stringify({message: data.message, title: title}));
                 window.location.reload();
-                handleSuccessfulClaimSubmission(data, title)
             },
             error: function (xhr, status, error) {
                 alert("Error: " + error.message);
@@ -40,8 +38,18 @@ $(document).ready(function () {
         });
     }
 
-    function handleSuccessfulClaimSubmission(data, title) {
-        var toast = createToast(title, data.message);
+    $(function () {
+        var submittedClaimData = sessionStorage.getItem('submittedClaim');
+        if (submittedClaimData) {
+            submittedClaimData = JSON.parse(submittedClaimData);
+            handleSuccessfulClaimSubmission(submittedClaimData.message, submittedClaimData.title);
+            // Clear the session storage flag
+            sessionStorage.removeItem('submittedClaim');
+        }
+    });
+
+    function handleSuccessfulClaimSubmission(message, title) {
+        var toast = createToast(title, message);
         $('.toast-container').append(toast);
         var toastElement = new bootstrap.Toast(toast[0]);
         toastElement.show();

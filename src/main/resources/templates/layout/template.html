@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 -->
 <!DOCTYPE html>
-<html lang="vi" th:fragment="areas(title, body,script)" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" th:fragment="areas(title, body, script)" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <!--    <meta content="IE=edge" http-equiv="X-UA-Compatible">-->
@@ -29,6 +29,8 @@
             <div th:replace="${body}"></div>
         </div>
 
+        <div class="position-fixed bottom-0 end-0 m-4 toast-container position-static">
+        </div>
     </div>
 </main>
 <script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.bundle.js}"></script>
