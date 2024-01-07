@@ -32,4 +32,6 @@ public class ClaimViewApprovalDTO implements Serializable {
     private LocalDate projectStartDate;
     private LocalDate projectEndDate;
     private String jobRankName;
+    private String remarks;
+
 }

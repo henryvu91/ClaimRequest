@@ -42,6 +42,14 @@ public interface ClaimRepository extends JpaRepository<Claim, Integer> {
 """)
     Claim findClaimByIdAndPMAndStatus(Integer id, Status status, Integer staffId);
 
+    @Query("""
+        SELECT c FROM Claim c
+        WHERE
+        c.id = :id AND
+        c.status = :status
+""")
+    Claim findClaimByIdAndStatus(Integer id, Status status);
+
     @Query("SELECT c FROM Claim c WHERE c.workingByWorkingId.staffByStaffId.id = :id AND c.status IN (:status, :status2)")
     Page<Claim> findClaimByStatusAndStaffId(Integer id, Status status, Status status2, Pageable pageable);
 
