@@ -1,11 +1,14 @@
 package com.vn.config;
 
+import com.vn.services.WorkingService;
+import com.vn.utils.CurrentUserUtils;
 import com.vn.utils.auth.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorViewResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,8 +22,16 @@ import org.springframework.web.servlet.ModelAndView;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final CustomUserDetailsService userDetailsService;
+
+
+    private final WorkingService workingService;
+
     @Autowired
-    private CustomUserDetailsService userDetailsService;
+    public SecurityConfig(CustomUserDetailsService userDetailsService, WorkingService workingService) {
+        this.userDetailsService = userDetailsService;
+        this.workingService = workingService;
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -40,6 +51,11 @@ public class SecurityConfig {
                                 .requestMatchers("/stylesheets/**", "/assets/**", "/javascript/**", "/node_modules/**", "/register").permitAll()
                                 .requestMatchers("/project/**", "/staff/**").hasRole("ADMIN")
                                 .requestMatchers("/claim/approved/**", "/claim/paid/**").hasRole("FINANCE")
+                                .requestMatchers("/claim/pendingApproval/**","/claim/approvedOrPaid/**")
+                                .access((authentication, object) -> {
+                                    Boolean checkedRecord = workingService.checkRecord((CurrentUserUtils.getCurrentUserInfo().getId()));
+                                    return new AuthorizationDecision(checkedRecord);
+                                })
                                 .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login").permitAll()

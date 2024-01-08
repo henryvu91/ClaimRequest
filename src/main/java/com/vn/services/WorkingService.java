@@ -9,5 +9,5 @@ public interface WorkingService {
 
     Working findById(Integer workingId);
 
-    Working checkRecord(Integer staffId);
+    Boolean checkRecord(Integer staffId);
 }
