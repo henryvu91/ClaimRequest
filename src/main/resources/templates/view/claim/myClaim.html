@@ -12,7 +12,7 @@
 <body>
 <main>
     <div class="border-bottom border-1 mb-5 p-2">
-        <h1>My Claim</h1>
+        <h1 th:text="${titlePage}">My Claim</h1>
     </div>
     <table class="table table-bordered" th:if="${totalPage > 0}">
         <thead>
@@ -48,18 +48,18 @@
                             th:if="${#strings.equals(c.claimStatus, 'DRAFT')}" type="button">
                         Submit
                     </button>
-                    <button class="btn btn-warning" th:if="${#strings.equals(c.claimStatus, 'DRAFT')}" type="button">
+                    <a class="btn btn-warning" th:if="${#strings.equals(c.claimStatus, 'DRAFT')}" th:href="@{/claim/update(claimId=${c.claimId})}">
                         Update
-                    </button>
-                    <button class="btn btn-danger" th:data-id="${c.claimId}"
-                            th:if="${#strings.equals(c.claimStatus, 'DRAFT')}" type="button">
+                    </a>
+                    <button class="btn btn-danger btn-cancel-claim" th:data-id="${c.claimId}" data-bs-target="#cancelModal"
+                            data-bs-toggle="modal" th:if="${#strings.equals(c.claimStatus, 'DRAFT')}" type="button">
                         Cancel
                     </button>
-                    <!--                        <button class="btn btn-success" th:if="${#strings.equals(c.claimStatus, 'DRAFT')}" th:data-id="${c.claimId}" type="button">-->
-                    <!--                            <a th:href="@{/claim/review(claimId=${c.claimId})}">Review</a>-->
-                    <!--                        </button>-->
                 </td>
+
             </tr>
+
+
         </th:block>
         </tbody>
     </table>
@@ -102,6 +102,7 @@
             </div>
         </div>
     </div>
+
     <div id="modalBootstrap">
         <div aria-hidden="true" aria-labelledby="staticBackdropLabel" class="modal fade"
              data-bs-backdrop="static" data-bs-keyboard="false"
@@ -109,7 +110,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Submit Claim</h1>
+                        <h5 class="modal-title fs-5" id="staticBackdropLabel">Submit Claim</h5>
                         <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
                                 type="button"></button>
                     </div>
@@ -125,6 +126,29 @@
                             Ok
                         </button>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cancel Modal -->
+    <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fs-5" id="cancelModalLabel">Cancel Claim</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="cancel-modal-content">
+                    <div>This action will cancel Claim.</div>
+                    <div>Please click ‘OK’ to cancel the claim or ‘Cancel’ to close the dialog.</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel
+                    </button>
+                    <a class="btn btn-primary" id="btn-cancel-modal">OK</a>
                 </div>
             </div>
         </div>

@@ -21,7 +21,8 @@ $(document).ready(function () {
     })
 
     $(document).on("click", ".btn-cancel-claimByIds", function () {
-        $('#btn-ok-claimById').removeAttr("data-id");
+        let recordId = $(this).data("id");
+        $('#btn-ok-claimById').attr("data-id", recordId);
     })
 
 
@@ -89,4 +90,14 @@ $(document).ready(function () {
             clearInterval(intervalId);
         });
     }
+
+//     Function to cancel a claim
+    $('.btn-cancel-claim').click(function () {
+        let id =$(this).attr('data-id');
+        $('#btn-cancel-modal').attr('href','/claim/cancel?claimId='+id);
+    })
+    
+    $('#btn-cancel-modal').click(function () {
+        window.location.href=$(this).attr('href');
+    })
 });

@@ -10,7 +10,7 @@
 <body>
 <main>
     <div class="border-bottom border-1 mb-5 p-2">
-        <h1>Claims for Finance</h1>
+        <h1 th:text="${titlePage}">Claims for Finance</h1>
     </div>
     <table th:if="${totalPage > 0}" class="table table-bordered">
         <thead>
