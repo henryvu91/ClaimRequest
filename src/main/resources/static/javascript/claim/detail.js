@@ -21,7 +21,7 @@ $(document).ready(function () {
     })
 
     $(document).on("click", ".btn-cancel-claimByIds", function () {
-        $('#btn-submit-claimById').removeData("id");
+        $('#btn-ok-claimById').removeAttr("data-id");
     })
 
 
