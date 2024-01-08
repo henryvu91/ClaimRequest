@@ -1,10 +1,6 @@
 package com.vn.controller;
 
-import com.vn.dto.form.ClaimApprovalDTO;
 import com.vn.dto.view.ClaimTotalDTO;
-import com.vn.dto.view.ClaimViewApprovalDTO;
-import com.vn.mapper.form.ClaimApprovalMapper;
-import com.vn.mapper.view.ClaimViewApprovalMapper;
 import com.vn.model.Claim;
 import com.vn.services.ClaimService;
 import com.vn.utils.CurrentUserUtils;
@@ -13,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
