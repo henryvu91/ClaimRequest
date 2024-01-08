@@ -14,13 +14,22 @@ $(document).ready(function () {
             },
         })
     });
-    $(document).on("click", ".btn-submit-claimByIds", function () {
+
+    $(document).on("click", ".btn-submitClaim", function () {
+        let recordId = $(this).data("id");
+        $('#btn-ok-claimById').attr("data-id", recordId);
+    })
+
+    $(document).on("click", ".btn-cancel-claimByIds", function () {
+        $('#btn-submit-claimById').removeData("id");
+    })
+
+
+    $(document).on("click", ".btn-ok-claimByIds", function () {
         let recordId = $(this).data("id");
         let url = "/api/claim/myDraft/submitClaim";
         let title = "Submit Claim";
-        if (confirm("Are you sure you want to submit this record?")) {
-            submitClaim(recordId, url, title);
-        }
+        submitClaim(recordId, url, title);
     });
 
     function submitClaim(recordId, url, title) {
@@ -33,7 +42,8 @@ $(document).ready(function () {
                 window.location.reload();
             },
             error: function (xhr, status, error) {
-                alert("Error: " + error.message);
+                sessionStorage.setItem('submittedClaim', JSON.stringify({message: error.message, title: title}));
+                window.location.reload();
             },
         });
     }

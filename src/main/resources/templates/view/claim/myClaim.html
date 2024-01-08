@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="vi" th:replace="~{layout/template::areas(~{::title}, ~{::main}, ~{::script})}" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" th:replace="~{layout/template::areas(~{::title}, ~{::main}, ~{::script})}"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
@@ -13,48 +14,53 @@
     <div class="border-bottom border-1 mb-5 p-2">
         <h1>My Claim</h1>
     </div>
-    <table th:if="${totalPage > 0}" class="table table-bordered">
+    <table class="table table-bordered" th:if="${totalPage > 0}">
         <thead>
-            <tr class="bg-secondary">
-                <th>Claim Id</th>
-                <th>Staff Name</th>
-                <th>Project Name</th>
-                <th>Project Duration</th>
-                <th>Total Working Hour</th>
-                <th>Action</th>
-            </tr>
+        <tr class="bg-secondary">
+            <th>Claim Id</th>
+            <th>Staff Name</th>
+            <th>Project Name</th>
+            <th>Project Duration</th>
+            <th>Total Working Hour</th>
+            <th>Action</th>
+        </tr>
         </thead>
         <tbody>
-            <th:block th:each="c : ${claims}">
-                <tr data-toggle="modal" data-target="#exampleModalCenter" data-rowid="1">
-                    <td th:text="${c.claimId}"></td>
-                    <td th:text="${c.claimStaffName}"></td>
-                    <td th:text="${c.claimProjectName}"></td>
-                    <td>
-                        <input type="date" hidden="hidden" th:value="${c.claimProjectStartDate}" class="start-date">
-                        <input type="date" hidden="hidden" th:value="${c.claimProjectEndDate}" class="end-date">
-                        <span class="duration"></span>
-                    </td>
-                    <td th:text="${c.claimTotalHours}"></td>
-                    <td>
-                        <button th:data-id="${c.claimId}" type="button" class="btn btn-primary detail " data-bs-toggle="modal" data-bs-target="#exampleModal">
-                           Detail
-                        </button>
-                        <button  th:data-id="${c.claimId}" th:if="${#strings.equals(c.claimStatus, 'DRAFT')}" class="btn btn-success btn-submit-claimByIds" type="button">
-                            Submit
-                        </button>
-                        <button th:if="${#strings.equals(c.claimStatus, 'DRAFT')}" class="btn btn-warning" type="button">
-                            Update
-                        </button>
-                        <button th:data-id="${c.claimId}" th:if="${#strings.equals(c.claimStatus, 'DRAFT')}" class="btn btn-danger" type="button">
-                            Cancel
-                        </button>
-<!--                        <button class="btn btn-success" th:if="${#strings.equals(c.claimStatus, 'DRAFT')}" th:data-id="${c.claimId}" type="button">-->
-<!--                            <a th:href="@{/claim/review(claimId=${c.claimId})}">Review</a>-->
-<!--                        </button>-->
-                    </td>
-                </tr>
-            </th:block>
+        <th:block th:each="c : ${claims}">
+            <tr data-rowid="1" data-target="#exampleModalCenter" data-toggle="modal">
+                <td th:text="${c.claimId}"></td>
+                <td th:text="${c.claimStaffName}"></td>
+                <td th:text="${c.claimProjectName}"></td>
+                <td>
+                    <input class="start-date" hidden="hidden" th:value="${c.claimProjectStartDate}" type="date">
+                    <input class="end-date" hidden="hidden" th:value="${c.claimProjectEndDate}" type="date">
+                    <span class="duration"></span>
+                </td>
+                <td th:text="${c.claimTotalHours}"></td>
+                <td>
+                    <button class="btn btn-primary detail " data-bs-target="#exampleModal" data-bs-toggle="modal"
+                            th:data-id="${c.claimId}" type="button">
+                        Detail
+                    </button>
+                    <button class="btn btn-success btn-submitClaim" data-bs-target="#staticBackdrop"
+                            data-bs-toggle="modal"
+                            th:data-id="${c.claimId}"
+                            th:if="${#strings.equals(c.claimStatus, 'DRAFT')}" type="button">
+                        Submit
+                    </button>
+                    <button class="btn btn-warning" th:if="${#strings.equals(c.claimStatus, 'DRAFT')}" type="button">
+                        Update
+                    </button>
+                    <button class="btn btn-danger" th:data-id="${c.claimId}"
+                            th:if="${#strings.equals(c.claimStatus, 'DRAFT')}" type="button">
+                        Cancel
+                    </button>
+                    <!--                        <button class="btn btn-success" th:if="${#strings.equals(c.claimStatus, 'DRAFT')}" th:data-id="${c.claimId}" type="button">-->
+                    <!--                            <a th:href="@{/claim/review(claimId=${c.claimId})}">Review</a>-->
+                    <!--                        </button>-->
+                </td>
+            </tr>
+        </th:block>
         </tbody>
     </table>
 
@@ -85,14 +91,41 @@
         <p>No data available</p>
     </div>
 
-   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Claim Detail</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
                 </div>
                 <div class="modal-body" id="modal-body-content"></div>
+            </div>
+        </div>
+    </div>
+    <div id="modalBootstrap">
+        <div aria-hidden="true" aria-labelledby="staticBackdropLabel" class="modal fade"
+             data-bs-backdrop="static" data-bs-keyboard="false"
+             id="staticBackdrop" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Submit Claim</h1>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
+                                type="button"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div>This action will Submit Claim.</div>
+                        <div>Please click ‘OK’ to submit the claim or ‘Cancel’ to close the dialog.</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary btn-cancel-claimByIds" data-bs-dismiss="modal" type="button">
+                            Cancel
+                        </button>
+                        <button class="btn btn-primary btn-ok-claimByIds" id="btn-ok-claimById" type="button">
+                            Ok
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
