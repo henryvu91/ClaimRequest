@@ -23,8 +23,11 @@ public class WorkingServiceImpl implements WorkingService {
     }
 
     @Override
-    public Working checkRecord(Integer staffId) {
+    public Boolean checkRecord(Integer staffId) {
        List<Working> workingList =  workingRepository.findByStaffIdAndJobRankId(staffId, 1);
-       return null;
+       if(!workingList.isEmpty()){
+           return true;
+       }
+       return false;
     }
 }
