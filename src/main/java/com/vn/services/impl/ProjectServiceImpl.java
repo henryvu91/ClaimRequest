@@ -70,20 +70,13 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Integer countRecords() {
-        return Math.toIntExact(projectRepository.count());
-    }
-
-    @Override
     @Transactional
     public String deleteProject(Integer projectId) {
         try {
             projectRepository.deleteById(projectId);
-            return "Delete Project successfully!";
+            return "Delete Project id " + projectId + " successfully!";
         } catch (Exception e) {
-            // Log the exception and handle it accordingly
-            // logger.error("Error deleting project: ", e);
-            return "Delete Project failed due to an error!";
+            return "Delete Project id " + projectId + " failed due to an error!";
         }
     }
 }

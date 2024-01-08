@@ -24,7 +24,7 @@
         </div>
         <div class="border border-1 rounded-3 mb-5">
             <div class="border-bottom border-1 bg-body-secondary">
-                <p class="p-2 m-0">View Project List</p>
+                <p class="p-2 m-0">Project Information</p>
             </div>
             <div class="p-3">
                 <table class="table table-bordered table-rounded">
@@ -47,8 +47,16 @@
                         <td th:text="${project.projectEndDate}"></td>
                         <!--                            <td><a th:href="@{/project/edit/{id}(id=${project.projectId})}">Edit</a></td>-->
                         <td>
-                            <a class="btn btn-outline-danger btn-delete-projectById"
-                               th:data-id="${project.projectId}">Delete</a>
+                            <button class="btn btn-outline-primary btn-edit-projectById"
+                                    data-bs-target="#staticBackdrop"
+                                    data-bs-toggle="modal" th:data-id="${project.projectId}"
+                                    type="button">Edit
+                            </button>
+                            <button class="btn btn-outline-danger btn-delete-projectById"
+                                    data-bs-target="#staticBackdrop"
+                                    data-bs-toggle="modal" th:data-id="${project.projectId}"
+                                    type="button">Delete
+                            </button>
                         </td>
                         <!--                            <td><a th:href="@{/project/view/{id}(id=${project.projectId})}">View</a></td>-->
                     </tr>

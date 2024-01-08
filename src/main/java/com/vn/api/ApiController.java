@@ -2,20 +2,17 @@ package com.vn.api;
 
 import com.vn.dto.view.JobRankDTO;
 import com.vn.dto.view.StaffIdNameDto;
-import com.vn.model.Claim;
-import com.vn.repositories.ClaimRepository;
 import com.vn.services.ClaimService;
 import com.vn.services.JobRankService;
+import com.vn.services.ProjectService;
 import com.vn.services.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -26,11 +23,14 @@ public class ApiController {
 
     private final ClaimService claimService;
 
+    private final ProjectService projectService;
+
     @Autowired
-    public ApiController(StaffService staffService, JobRankService jobRankService, ClaimService claimService) {
+    public ApiController(StaffService staffService, JobRankService jobRankService, ClaimService claimService, ProjectService projectService) {
         this.staffService = staffService;
         this.jobRankService = jobRankService;
         this.claimService = claimService;
+        this.projectService = projectService;
     }
 
     @GetMapping("/search-staff")
@@ -47,6 +47,14 @@ public class ApiController {
     public ResponseEntity<Map<String, String>> submitClaim(@RequestParam Integer id) {
         Map<String, String> resultMessage = new HashMap<>();
         String message = claimService.submitClaimById(id);
+        resultMessage.put("message", message);
+        return ResponseEntity.ok(resultMessage);
+    }
+
+    @PostMapping("/project/delete")
+    public ResponseEntity<Map<String, String>> deleteProjectPost(@RequestParam("id") Integer id) {
+        Map<String, String> resultMessage = new HashMap<>();
+        String message = projectService.deleteProject(id);
         resultMessage.put("message", message);
         return ResponseEntity.ok(resultMessage);
     }

@@ -17,15 +17,21 @@ $(document).ready(function () {
 
     $(document).on("click", ".btn-submitClaim", function () {
         let recordId = $(this).data("id");
-        $('#btn-ok-claimById').attr("data-id", recordId);
+        let $modal = $('#modalBootstrap');
+        let contentPopup = $('<div>This action will Submit Claim.</div>' +
+            '<div>Please click ‘OK’ to submit the claim or ‘Cancel’ to close the dialog.</div>');
+
+        $modal.find('.modal-header').find('h1').text('SubMit Claim');
+        $modal.find('.modal-body').html(contentPopup);
+        $('#btn-okPopup').attr("data-id", recordId);
     })
 
-    $(document).on("click", ".btn-cancel-claimByIds", function () {
-        $('#btn-ok-claimById').removeAttr("data-id");
+    $(document).on("click", ".btn-cancelPopups", function () {
+        $('#btn-okPopup').removeAttr("data-id");
     })
 
 
-    $(document).on("click", ".btn-ok-claimByIds", function () {
+    $(document).on("click", ".btn-okPopups", function () {
         let recordId = $(this).data("id");
         let url = "/api/claim/myDraft/submitClaim";
         let title = "Submit Claim";
@@ -38,55 +44,13 @@ $(document).ready(function () {
             type: "POST",
             data: {id: recordId},
             success: function (data) {
-                sessionStorage.setItem('submittedClaim', JSON.stringify({message: data.message, title: title}));
+                sessionStorage.setItem('toastMessage', JSON.stringify({message: data.message, title: title}));
                 window.location.reload();
             },
             error: function (xhr, status, error) {
-                sessionStorage.setItem('submittedClaim', JSON.stringify({message: error.message, title: title}));
+                sessionStorage.setItem('toastMessage', JSON.stringify({message: error.message, title: title}));
                 window.location.reload();
             },
-        });
-    }
-
-    $(function () {
-        var submittedClaimData = sessionStorage.getItem('submittedClaim');
-        if (submittedClaimData) {
-            submittedClaimData = JSON.parse(submittedClaimData);
-            handleSuccessfulClaimSubmission(submittedClaimData.message, submittedClaimData.title);
-            // Clear the session storage flag
-            sessionStorage.removeItem('submittedClaim');
-        }
-    });
-
-    function handleSuccessfulClaimSubmission(message, title) {
-        var toast = createToast(title, message);
-        $('.toast-container').append(toast);
-        var toastElement = new bootstrap.Toast(toast[0]);
-        toastElement.show();
-        updateTimestampEverySecond(toast);
-    }
-
-    function createToast(title, message) {
-        return $('<div class="toast" role="alert" aria-live="assertive" aria-atomic="true"/>')
-            .append($('<div class="toast-header"/>')
-                .append('<strong class="me-auto">' + title + '</strong>')
-                .append('<small class="text-muted time-ago">Just now</small>')
-                .append('<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>')
-            )
-            .append($('<div class="toast-body"/>').text(message));
-    }
-
-    function updateTimestampEverySecond(toast) {
-        var startTime = Date.now();
-        var intervalId = setInterval(function () {
-            var elapsedTime = Date.now() - startTime;
-            var seconds = Math.round(elapsedTime / 1000);
-            var timeAgoText = seconds < 2 ? 'Just now' : seconds + ' seconds ago';
-            toast.find('.time-ago').text(timeAgoText);
-        }, 1000);
-
-        toast.on('hidden.bs.toast', function () {
-            clearInterval(intervalId);
         });
     }
 });

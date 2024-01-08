@@ -76,10 +76,11 @@ public class ProjectController {
         return PROJECT_CREATE_LINK;
     }
 
-    @PostMapping("/delete")
-    public String deleteProjectPost(@RequestParam("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
-        String message = projectService.deleteProject(id);
-        redirectAttributes.addFlashAttribute("message", message);
-        return "redirect:/project/view";
-    }
+//    @PostMapping("/delete")
+//    public String deleteProjectPost(@RequestParam("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+//        return projectService.deleteProject(id);
+//        //        String message = projectService.deleteProject(id);
+////        redirectAttributes.addFlashAttribute("message", message);
+////        return "redirect:/project/view";
+//    }
 }
