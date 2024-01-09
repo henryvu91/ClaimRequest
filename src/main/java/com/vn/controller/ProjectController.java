@@ -77,8 +77,8 @@ public class ProjectController {
         return PROJECT_CREATE_LINK;
     }
 
-    @GetMapping("/edit")
-    public String editProjectGet(@RequestParam("id") Integer id, Model model) {
+    @GetMapping("/edit/{id}")
+    public String editProjectGet(@PathVariable("id") Integer id, Model model) {
         if (model.containsAttribute("message")) {
             String message = (String) model.asMap().get("message");
             model.addAttribute("message", message);

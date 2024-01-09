@@ -47,10 +47,10 @@
                         <td th:text="${project.projectEndDate}"></td>
                         <!--                            <td><a th:href="@{/project/edit/{id}(id=${project.projectId})}">Edit</a></td>-->
                         <td>
-                            <button class="btn btn-outline-primary btn-edit-projectById"
-                                    th:data-id="${project.projectId}"
-                                    type="button">Edit
-                            </button>
+                            <a class="btn btn-outline-primary btn-edit-projectById"
+                               th:href="@{/project/edit/{id}(id=${project.projectId})}"
+                               type="button">Edit
+                            </a>
                             <button class="btn btn-outline-danger btn-delete-projectById"
                                     data-bs-target="#staticBackdrop"
                                     data-bs-toggle="modal" th:data-id="${project.projectId}"
