@@ -343,7 +343,7 @@ public class ClaimServiceImpl implements ClaimService {
 
     //    Method to create new audit trail
     private void createTrail(String prefixMessage, Claim claim) {
-        String newLine = prefixMessage + " " + LocalDateTime.now().toString() + " by " + CurrentUserUtils.getCurrentUserInfo().getName();
+        String newLine = prefixMessage + " " + LocalDateTime.now() + " by " + CurrentUserUtils.getCurrentUserInfo().getName();
         String currentAuditTrail = claim.getAuditTrail();
 
         if (currentAuditTrail == null) {
@@ -368,7 +368,6 @@ public class ClaimServiceImpl implements ClaimService {
     }
 
     private void sendEmailToFinanceTeam(Claim claim, String template, String url, String content) {
-        Integer claimId = claim.getId();
 //        Find the finance team
         List<Staff> financeTeam = staffRepository.findStaffByRoleId(2);
         if (!financeTeam.isEmpty()) {
