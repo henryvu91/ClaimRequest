@@ -2,8 +2,11 @@ package com.vn.services.impl;
 
 import com.vn.dto.form.AddProjectFormDTO;
 import com.vn.dto.form.AddWorkByProjectDTO;
+import com.vn.dto.view.EditProjectDTO;
 import com.vn.mapper.form.AddProjectFormMapper;
 import com.vn.mapper.form.AddWorkByProjectMapper;
+import com.vn.mapper.view.EditProjectMapper;
+import com.vn.mapper.view.EditWorkingByProjectMapper;
 import com.vn.model.Project;
 import com.vn.model.Working;
 import com.vn.repositories.ProjectRepository;
@@ -22,18 +25,20 @@ import java.util.Optional;
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
-
     private final WorkingRepository workingRepository;
     private final AddProjectFormMapper addProjectFormMapper;
-
     private final AddWorkByProjectMapper addWorkByProjectMapper;
+    private final EditProjectMapper editProjectMapper;
+    private final EditWorkingByProjectMapper editWorkingByProjectMapper;
 
     @Autowired
-    public ProjectServiceImpl(ProjectRepository projectRepository, WorkingRepository workingRepository, AddProjectFormMapper addProjectFormMapper, AddWorkByProjectMapper addWorkByProjectMapper) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, WorkingRepository workingRepository, AddProjectFormMapper addProjectFormMapper, AddWorkByProjectMapper addWorkByProjectMapper, EditProjectMapper editProjectMapper, EditWorkingByProjectMapper editWorkingByProjectMapper) {
         this.projectRepository = projectRepository;
         this.workingRepository = workingRepository;
         this.addProjectFormMapper = addProjectFormMapper;
         this.addWorkByProjectMapper = addWorkByProjectMapper;
+        this.editProjectMapper = editProjectMapper;
+        this.editWorkingByProjectMapper = editWorkingByProjectMapper;
     }
 
     @Override
@@ -82,8 +87,8 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public AddProjectFormDTO getProjectById(Integer id) {
+    public EditProjectDTO getProjectById(Integer id) {
         Optional<Project> project = projectRepository.findById(id);
-        return project.map(addProjectFormMapper::toDto).orElse(null);
+        return project.map(editProjectMapper::toDto).orElse(null);
     }
 }

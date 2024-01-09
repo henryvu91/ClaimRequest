@@ -1,6 +1,7 @@
 package com.vn.services;
 
 import com.vn.dto.form.AddProjectFormDTO;
+import com.vn.dto.view.EditProjectDTO;
 import org.springframework.data.domain.Page;
 
 public interface ProjectService {
@@ -10,5 +11,5 @@ public interface ProjectService {
 
     String deleteProject(Integer projectId);
 
-    AddProjectFormDTO getProjectById(Integer id);
+    EditProjectDTO getProjectById(Integer id);
 }

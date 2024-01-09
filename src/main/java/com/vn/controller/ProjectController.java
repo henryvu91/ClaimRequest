@@ -1,6 +1,7 @@
 package com.vn.controller;
 
 import com.vn.dto.form.AddProjectFormDTO;
+import com.vn.dto.view.EditProjectDTO;
 import com.vn.services.ProjectService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -82,8 +83,8 @@ public class ProjectController {
             String message = (String) model.asMap().get("message");
             model.addAttribute("message", message);
         }
-        AddProjectFormDTO addProjectFormDTO = projectService.getProjectById(id);
-        model.addAttribute("editProjectForm", addProjectFormDTO);
+        EditProjectDTO editProjectDTO = projectService.getProjectById(id);
+        model.addAttribute("editProjectForm", editProjectDTO);
         return "view/project/edit";
     }
 }

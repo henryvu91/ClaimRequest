@@ -79,18 +79,50 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Job Rank</th>
                                     <th scope="col">Start Date</th>
+                                    <th scope="col">End Date</th>
                                     <th scope="col">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr th:each="projectWorking, iterStat : ${editProjectForm.projectWorkingsById}">
-                                    <th scope="row" th:text="${projectWorking.workingId}"></th>
-                                    <td th:text="${projectWorking.workingStaffId}"></td>
-                                    <td th:text="${projectWorking.workingJobRankId}"></td>
-                                    <td th:text="${projectWorking.workingStartDate}"></td>
+                                    <input hidden="hidden" th:value="${projectWorking.workingId}" type="text">
+                                    <th scope="row" th:text="${iterStat.count}"></th>
+                                    <td>
+                                        <input class="form-control shadow-none reset" disabled
+                                               th:id="form-editProject__workingStaffName- + ${iterStat.count}"
+                                               th:value="${projectWorking.workingStaffName}"
+                                               type="text">
+                                    </td>
+                                    <td>
+                                        <input class="form-control shadow-none reset" disabled
+                                               th:id="form-editProject__workingJobRankName- + ${iterStat.count}"
+                                               th:value="${projectWorking.workingJobRankName}"
+                                               type="text">
+                                    </td>
+                                    <td>
+                                        <input class="form-control shadow-none reset" disabled
+                                               th:id="form-editProject__workingStartDate- + ${iterStat.count}"
+                                               th:value="${projectWorking.workingStartDate}"
+                                               type="date">
+                                    </td>
+                                    <td>
+                                        <input class="form-control shadow-none reset"
+                                               th:id="form-editProject__workingEndDate- + ${iterStat.count}"
+                                               th:value="${projectWorking.workingEndDate}"
+                                               type="date">
+                                    </td>
+                                    <td>
+                                        <div class="btn-box-editProjectForm d-flex justify-content-around">
+                                            <button class="btn btn-outline-primary edit-record-btn"
+                                                    id="btn-editWorking-editRecord"
+                                                    type="button">
+                                                Edit
+                                            </button>
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">3</th>
+                                    <th scope="row">X</th>
                                     <td>
                                         <div class="autocomplete-dropdown position-relative">
                                             <input class="autocomplete-staff-id"
@@ -117,6 +149,16 @@
                                                    hidden="hidden"></label>
                                             <input class="form-control shadow-none reset startDateRecord"
                                                    id="form-addWorking__startDate-03"
+                                                   name="projectWorkingsById[2].workingStartDate"
+                                                   type="date">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="autocomplete-dropdown">
+                                            <label class="form-label" for="form-addWorking__endDate-03"
+                                                   hidden="hidden"></label>
+                                            <input class="form-control shadow-none reset startDateRecord"
+                                                   id="form-addWorking__endDate-03"
                                                    name="projectWorkingsById[2].workingStartDate"
                                                    type="date">
                                         </div>
