@@ -27,4 +27,6 @@ public interface StaffRepository extends JpaRepository<Staff, Integer> {
     StaffViewDetailDto findStaffViewDetailById(@Param("id") Integer id);
 
     List<StaffIdNameDto> findByNameLike(String query);
+
+    List<Staff> findStaffByRoleId(Integer id);
 }

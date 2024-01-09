@@ -5,14 +5,15 @@ import com.vn.dto.form.ClaimUpdateDTO;
 import com.vn.dto.view.ClaimTotalDTO;
 import com.vn.dto.view.StaffViewDetailDto;
 import com.vn.mapper.form.ClaimUpdateMapper;
+import com.vn.mapper.view.ClaimEmailMapper;
 import com.vn.mapper.view.ClaimTotalMapper;
-import com.vn.model.Claim;
-import com.vn.model.Project;
-import com.vn.model.Working;
+import com.vn.model.*;
 import com.vn.repositories.ClaimRepository;
+import com.vn.repositories.StaffRepository;
 import com.vn.repositories.WorkingRepository;
 import com.vn.services.ClaimService;
 import com.vn.utils.CurrentUserUtils;
+import com.vn.utils.email.EmailService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,17 +32,34 @@ import java.util.Optional;
 @Service
 public class ClaimServiceImpl implements ClaimService {
 
+    public static final String APPROVED_CONTENT_TO_FINANCE = "is approved and pending for your action.";
+    public static final String RETURNED_CONTENT_TO_CLAIMER = "is returned.";
+    public static final String REJECTED_CONTENT_TO_CLAIMER = "is rejected";
+    public static final String PENDING_CONTENT_TO_APPROVER = "is submitted and waiting for approval.";
+    public static final String APPROVED_URL_TO_FINANCE = "/claim/finance/review?claimId=";
+    public static final String RETURNED_URL_TO_CLAIMER = "/claim/update?claimId=";
+    public static final String REJECT_URL_TO_CLAIMER = "/claim/myRejectOrCancel";
+    public static final String PENDING_URL_TO_APPROVER = "/claim/approval/review?claimId=";
+    public static final String PAID_CONTENT_TO_CLAIMER = "is paid";
+    public static final String PAID_URL_TO_CLAIMER = "/claim/approvedOrPaid";
     @Autowired
     ClaimRepository claimRepository;
 
     @Autowired
     WorkingRepository workingRepository;
+    @Autowired
+    StaffRepository staffRepository;
 
     @Autowired
     ClaimTotalMapper claimTotalMapper;
 
     @Autowired
     ClaimUpdateMapper claimUpdateMapper;
+
+    @Autowired
+    EmailService emailService;
+    @Autowired
+    ClaimEmailMapper claimEmailMapper;
 
     @Override
     public Page<ClaimTotalDTO> findClaimByStatus(List<Status> statusList, Integer pageNo, Integer pageSize) {
@@ -58,7 +76,7 @@ public class ClaimServiceImpl implements ClaimService {
     }
 
     @Override
-    public Page<ClaimTotalDTO> findClaimByPMAndStatus( List<Status> statusList, Integer staffId, Integer pageNo, Integer pageSize) {
+    public Page<ClaimTotalDTO> findClaimByPMAndStatus(List<Status> statusList, Integer staffId, Integer pageNo, Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         Page<Claim> claimByPMAndStatus = claimRepository.findClaimByPMAndStatus(statusList, staffId, pageable);
         System.out.println(claimByPMAndStatus);
@@ -125,11 +143,11 @@ public class ClaimServiceImpl implements ClaimService {
     @Override
     public String submitClaimById(Integer id) {
         Claim claim;
-        String currentContent;
+//        String currentContent;
         Optional<Claim> existingEntity = claimRepository.findById(id);
         if (existingEntity.isPresent()) {
             claim = existingEntity.get();
-            currentContent = claim.getAuditTrail();
+//            currentContent = claim.getAuditTrail();
         } else {
             throw new EntityNotFoundException("Claim with id " + id + " not found");
         }
@@ -138,8 +156,15 @@ public class ClaimServiceImpl implements ClaimService {
         if (claim.getWorkingByWorkingId().getJobRankId() == 1) {
 //            System.out.println(claim.getWorkingByWorkingId().getJobRankId());
             claim.setStatus(Status.APPROVED);
+//            Send email
+//            Send email to finance
+            sendEmailToFinanceTeam(claim, EmailService.EMAIL_TEMP, APPROVED_URL_TO_FINANCE+claim.getId(), APPROVED_CONTENT_TO_FINANCE);
+        } else {
+//            Send email to approver
+            sendEmailToPM(claim, EmailService.EMAIL_TEMP, PENDING_URL_TO_APPROVER + claim.getId(), PENDING_CONTENT_TO_APPROVER);
         }
-        claim.setAuditTrail(currentContent + "\n" + "Submitted by " + CurrentUserUtils.getCurrentUserInfo().getName() + " on " + LocalDateTime.now());
+        createTrail("Submitted on", claim);
+//        claim.setAuditTrail(currentContent + "\n" + "Submitted by " + CurrentUserUtils.getCurrentUserInfo().getName() + " on " + LocalDateTime.now());
         Claim result = claimRepository.save(claim);
         if (result != null) {
             return "The Claim with id " + id + " was sent successfully";
@@ -241,14 +266,24 @@ public class ClaimServiceImpl implements ClaimService {
         if (claim == null) {
             return false;
         }
-
+        Integer claimId = claim.getId();
+        String auditMessage;
         claim.setStatus(statusAfter);
-        String auditMessage = switch (statusAfter) {
-            case REJECTED -> "Rejected on";
-            case APPROVED -> "Approved on";
-            case DRAFT -> "Returned on";
-            default -> "Unknown action on";
-        };
+        switch (statusAfter) {
+            case REJECTED -> {
+                auditMessage = "Rejected on";
+                sendEmailToClaimer(claim, EmailService.EMAIL_TEMP, REJECT_URL_TO_CLAIMER, REJECTED_CONTENT_TO_CLAIMER);
+            }
+            case APPROVED -> {
+                auditMessage = "Approved on";
+                sendEmailToFinanceTeam(claim, EmailService.EMAIL_TEMP, APPROVED_URL_TO_FINANCE + claimId, APPROVED_CONTENT_TO_FINANCE);
+            }
+            case DRAFT -> {
+                auditMessage = "Returned on";
+                sendEmailToClaimer(claim, EmailService.EMAIL_TEMP, RETURNED_URL_TO_CLAIMER + claimId, RETURNED_CONTENT_TO_CLAIMER);
+            }
+            default -> auditMessage = "Unknown action on";
+        }
         createTrail(auditMessage, claim);
         claim.setRemarks(claimApprovalDTO.getRemarks());
         claimRepository.save(claim);
@@ -258,19 +293,27 @@ public class ClaimServiceImpl implements ClaimService {
     @Override
     public boolean paidRejectFinance(ClaimApprovalDTO claimApprovalDTO, Status statusAfter) {
         StaffViewDetailDto staffViewDetailDto = CurrentUserUtils.getCurrentUserInfo();
-        if(!staffViewDetailDto.getRoleName().equals("ROLE_FINANCE")){
+        if (!staffViewDetailDto.getRoleName().equals("ROLE_FINANCE")) {
             return false;
         }
 
 //        Find the claim and check the claim is Approved
-        Claim claim = claimRepository.findClaimByIdAndStatus(claimApprovalDTO.getId(),Status.APPROVED);
+        Claim claim = claimRepository.findClaimByIdAndStatus(claimApprovalDTO.getId(), Status.APPROVED);
 
         if (claim == null) {
             return false;
         }
 
         claim.setStatus(statusAfter);
-        String auditMessage = statusAfter.equals(Status.PAID)? "Paid on" : "Rejected on";
+        String auditMessage;
+        if (statusAfter.equals(Status.PAID)) {
+            auditMessage = "Paid on";
+            sendEmailToClaimer(claim,EmailService.EMAIL_TEMP, PAID_URL_TO_CLAIMER, PAID_CONTENT_TO_CLAIMER);
+        } else {
+            auditMessage = "Rejected on";
+            sendEmailToClaimer(claim, EmailService.EMAIL_TEMP, REJECT_URL_TO_CLAIMER, REJECTED_CONTENT_TO_CLAIMER);
+        }
+//        String auditMessage = statusAfter.equals(Status.PAID)? "Paid on" : "Rejected on";
         createTrail(auditMessage, claim);
         claim.setRemarks(claimApprovalDTO.getRemarks());
         claimRepository.save(claim);
@@ -311,4 +354,39 @@ public class ClaimServiceImpl implements ClaimService {
         }
     }
 
+    private void sendEmailToPM(Claim claim, String template, String url, String content) {
+        Integer claimId = claim.getId();
+//        Find the PM by project id
+        Integer projectId = claimRepository.findProjectIdByClaimId(claimId);
+
+        Staff pm = workingRepository.findPMByProjectId(projectId);
+        if (pm != null) {
+            List<String> toList = List.of(pm.getEmail());
+
+            emailService.sendHtmlEmail(claimEmailMapper.toDto(claim), toList, pm.getName(), template, url, content);
+        }
+    }
+
+    private void sendEmailToFinanceTeam(Claim claim, String template, String url, String content) {
+        Integer claimId = claim.getId();
+//        Find the finance team
+        List<Staff> financeTeam = staffRepository.findStaffByRoleId(2);
+        if (!financeTeam.isEmpty()) {
+
+            List<String> toList = financeTeam.stream().map(Staff::getEmail).toList();
+            emailService.sendHtmlEmail(claimEmailMapper.toDto(claim), toList, "Finance Team", template, url, content);
+
+        }
+
+    }
+
+    private void sendEmailToClaimer(Claim claim, String template, String url, String content) {
+        Integer claimId = claim.getId();
+        Staff staff = claimRepository.findStaffByClaimId(claimId);
+        if (staff != null) {
+            List<String> toList = List.of(staff.getEmail());
+            emailService.sendHtmlEmail(claimEmailMapper.toDto(claim), toList, staff.getName(), template, url, content);
+        }
+
+    }
 }

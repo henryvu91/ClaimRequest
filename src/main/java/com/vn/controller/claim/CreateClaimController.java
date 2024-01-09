@@ -236,6 +236,7 @@ public class CreateClaimController {
 //        Check claim is cancelled
             if (isSuccess) {
                 redirectAttributes.addFlashAttribute("message", action+" the claim successfully");
+
                 return "redirect:/claim/pendingApproval";
             }
         }

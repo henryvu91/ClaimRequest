@@ -1,6 +1,7 @@
 package com.vn.repositories;
 
 import com.vn.model.Claim;
+import com.vn.model.Staff;
 import com.vn.utils.Status;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -76,5 +77,14 @@ public interface ClaimRepository extends JpaRepository<Claim, Integer> {
     //    Find claim based on staffId and claimId
     @Query("SELECT c FROM Claim c WHERE c.id = :claimId AND c.workingByWorkingId.staffId = :staffId")
     Claim findClaimByIdAndStaffId(Integer claimId,Integer staffId);
+
+    @Query("SELECT c.workingByWorkingId.projectId FROM Claim c WHERE c.id = :id")
+    Integer findProjectIdByClaimId(Integer id);
+
+    @Query("SELECT c.workingByWorkingId.staffByStaffId FROM Claim c WHERE c.id = :id AND c.workingByWorkingId.jobRankId = 1")
+    Staff findPMByClaimId(Integer id);
+
+    @Query("SELECT c.workingByWorkingId.staffByStaffId FROM Claim c WHERE c.id = :id")
+    Staff findStaffByClaimId(Integer id);
 
 }
