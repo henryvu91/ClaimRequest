@@ -76,11 +76,14 @@ public class ProjectController {
         return PROJECT_CREATE_LINK;
     }
 
-//    @PostMapping("/delete")
-//    public String deleteProjectPost(@RequestParam("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
-//        return projectService.deleteProject(id);
-//        //        String message = projectService.deleteProject(id);
-////        redirectAttributes.addFlashAttribute("message", message);
-////        return "redirect:/project/view";
-//    }
+    @GetMapping("/edit")
+    public String editProjectGet(@RequestParam("id") Integer id, Model model) {
+        if (model.containsAttribute("message")) {
+            String message = (String) model.asMap().get("message");
+            model.addAttribute("message", message);
+        }
+        AddProjectFormDTO addProjectFormDTO = projectService.getProjectById(id);
+        model.addAttribute("editProjectForm", addProjectFormDTO);
+        return "view/project/edit";
+    }
 }

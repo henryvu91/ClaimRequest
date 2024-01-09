@@ -48,8 +48,7 @@
                         <!--                            <td><a th:href="@{/project/edit/{id}(id=${project.projectId})}">Edit</a></td>-->
                         <td>
                             <button class="btn btn-outline-primary btn-edit-projectById"
-                                    data-bs-target="#staticBackdrop"
-                                    data-bs-toggle="modal" th:data-id="${project.projectId}"
+                                    th:data-id="${project.projectId}"
                                     type="button">Edit
                             </button>
                             <button class="btn btn-outline-danger btn-delete-projectById"
@@ -74,7 +73,7 @@
             <li class="page-item"
                 th:classappend="${pageNo == i || (pageNo == 0 && i == 1) ? 'active' : ''}"
                 th:each="i : ${#numbers.sequence(1, totalPages)}"
-                th:if="${i <= pageNo + 3 && i >= pageNo - 3}">
+                th:if="${i <= pageNo + 2 && i >= pageNo - 2}">
                 <a class="page-link" th:href="@{'?pageNo='+${i}}" th:text="${i}"></a>
             </li>
             <li class="page-item" th:if="${pageNo < totalPages}">

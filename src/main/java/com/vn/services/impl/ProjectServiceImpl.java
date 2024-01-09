@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -78,5 +79,11 @@ public class ProjectServiceImpl implements ProjectService {
         } catch (Exception e) {
             return "Delete Project id " + projectId + " failed due to an error!";
         }
+    }
+
+    @Override
+    public AddProjectFormDTO getProjectById(Integer id) {
+        Optional<Project> project = projectRepository.findById(id);
+        return project.map(addProjectFormMapper::toDto).orElse(null);
     }
 }
